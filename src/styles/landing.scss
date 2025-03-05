@@ -1,0 +1,57 @@
+@import 'variables.scss';
+
+.landing {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, rgba(126, 81, 81, 0.1),
+      rgba(0, 0, 0, 0.3)),
+    url(https://i.pinimg.com/736x/9b/02/6b/9b026baec4ff7c0e6d52aacc4c34d54e.jpg);
+  background-size: auto 100%;
+  background-position: center;
+  font-size: 16px;
+  @include nunito-sans(900);
+  display: flex;
+  align-items: center;
+  flex-flow: column wrap;
+
+  &__description {
+    margin-top: 2.4rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+  }
+
+  &__title {
+    display: flex;
+    flex-flow: column wrap;
+    @include nunito-sans(900);
+    margin-right: 3rem;
+    font-size: 3rem;
+    margin-top: 1rem;
+
+    &--span:last-child {
+      color: $button-color;
+    }
+  }
+
+  .landing__button-container {
+    position: absolute; // Lo coloca en una posición específica
+    bottom: 20px; // Ajusta la distancia desde la parte inferior
+    left: 50%; // Centra horizontalmente
+    transform: translateX(-50%); // Asegura que esté bien centrado
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      background-color: #ffcc00; // Cambia según tu diseño
+      color: #000;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+
+
+}

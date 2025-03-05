@@ -1,0 +1,58 @@
+@mixin align-items-center {
+  display: flex;
+  place-content: center;
+}
+
+@mixin list-no-styles {
+  text-decoration: none;
+}
+
+@mixin primary-text {
+  font-size: 24px;
+}
+
+@mixin no-margin-no-padding {
+  margin: 0;
+  padding: 0;
+}
+
+$background-color: #1E1E1E;
+$button-color: #FFD112;
+
+
+$white: #FDFCFC;
+$color-2: #1E1E1E;
+
+$dark-1: #070505;
+$dark-2: #141212;
+
+@mixin nunito-sans($weight) {
+  font-family: "Nunito Sans", serif;
+  font-optical-sizing: auto;
+  font-weight: $weight;
+  font-style: normal;
+  font-variation-settings:
+    "wdth"100,
+    "YTLC"500;
+}
+
+@for $i from 4 through 9 {
+  .nunito-sans-#{$i}00 {
+    @include nunito-sans(#{$i}00);
+  }
+}
+
+@mixin roboto($weigth) {
+  font-family: "Roboto", serif;
+  font-optical-sizing: auto;
+  font-weight: $weigth;
+  font-style: normal;
+  font-variation-settings:
+    "wdth"100;
+}
+
+@for $i from 4 through 9 {
+  .roboto#{$i}00 {
+    @include roboto(#{$i}00)
+  }
+}
