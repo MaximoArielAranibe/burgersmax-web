@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/navbar.scss';
-import logo from '../assets/icons8-shopping-cart-24.png'
+import logo from '../assets/icons8-shopping-cart-24.png';
+import maxburgerslogo from '../assets/burgers-max-logo-blanco.svg'
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -8,6 +9,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar__wrapper">
         <div className="navbar__logo">
+{/*           <img className='navbar__logo--img' src={maxburgerslogo} alt='maxburgerslogo' /> */}
           <span className="navbar__logo--text">BURGERS MAX</span>
         </div>
 
