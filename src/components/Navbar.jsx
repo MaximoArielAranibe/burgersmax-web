@@ -20,6 +20,7 @@ const Navbar = () => {
         <div className={`navbar__list ${menuOpen ? 'active' : ''}`}>
           <ul className="navbar__list--lista">
               <li><Link to="/">Menu</Link></li>
+              <li><Link to="/pedidos">Pedidos</Link></li>
               <li><Link to="/promos">Promos</Link></li>
               <li><Link to="/sobre-nosotros">Sobre nosotros</Link></li>
           </ul>

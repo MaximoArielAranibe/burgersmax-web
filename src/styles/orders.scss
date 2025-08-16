@@ -1,0 +1,8 @@
+/* src/styles/orders.scss */
+.orders { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+.orders__list { display: grid; gap: 1rem; }
+.orders__item { background: #fff; border-radius: 12px; padding: 1rem 1.25rem; box-shadow: 0 4px 14px rgba(0,0,0,.06); }
+.orders__header { margin-bottom: .75rem; }
+.orders__lines { display: grid; gap: .5rem; margin: .5rem 0 1rem; }
+.orders__line { display: grid; grid-template-columns: 1fr auto auto; gap: 1rem; align-items: center; }
+.orders__summary { display: flex; gap: 1rem; justify-content: flex-end; font-weight: 600; }
