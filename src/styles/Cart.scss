@@ -1,0 +1,72 @@
+.cart {
+  padding: 2rem;
+  background-color: #fdfcfc;
+  color: #1e1e1e;
+
+  &__item--img{
+    width: 100px;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    font-family: "Nunito Sans", sans-serif;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+
+    li {
+      padding: 1rem;
+      background-color: #f4f4f4;
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      font-family: "Roboto", sans-serif;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+
+      strong {
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      button {
+        background-color: #ffd112;
+        border: none;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        font-weight: bold;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: darken(#ffd112, 10%);
+        }
+      }
+    }
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+  }
+
+  > button {
+    background-color: #e74c3c;
+    color: white;
+    font-weight: bold;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: darken(#e74c3c, 10%);
+    }
+  }
+}

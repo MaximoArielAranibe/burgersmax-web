@@ -1,0 +1,58 @@
+{
+  "jueves": [
+    {
+      "nombre": "Oklahoma Doble X",
+      "precio": 7000
+    },
+    {
+      "nombre": "Cheddar Triple X",
+      "precio": 15500
+    },
+    {
+      "nombre": "Quesita Doble X",
+      "precio": 14500
+    }
+  ],
+  "viernes": [
+    {
+      "nombre": "Promo 1 de Viernes",
+      "precio": 16000
+    },
+    {
+      "nombre": "Promo 2 de Viernes",
+      "precio": 17000
+    },
+    {
+      "nombre": "Promo 3 de Viernes",
+      "precio": 18000
+    }
+  ],
+  "sabado": [
+    {
+      "nombre": "Promo 1 de Sábado",
+      "precio": 19000
+    },
+    {
+      "nombre": "Promo 2 de Sábado",
+      "precio": 20000
+    },
+    {
+      "nombre": "Promo 3 de Sábado",
+      "precio": 21000
+    }
+  ],
+  "domingo": [
+    {
+      "nombre": "Promo 1 de Domingo",
+      "precio": 22000
+    },
+    {
+      "nombre": "Promo 2 de Domingo",
+      "precio": 23000
+    },
+    {
+      "nombre": "Promo 3 de Domingo",
+      "precio": 24000
+    }
+  ]
+}

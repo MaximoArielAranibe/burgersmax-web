@@ -1,0 +1,104 @@
+[
+  {
+    "id": 1,
+    "name": "Completa",
+    "thumbnail": "https://smartremo.es/wp-content/uploads/2020/04/hamburguesa-scaled.jpg",
+    "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
+    "price": [
+      {
+        "simple": 7000
+      },
+      {
+        "doble": 8500
+      },
+      {
+        "triple": 10000
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Cheddar",
+    "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStpXLIdO5PC3HbpkB2d5AXXAGs_uLMFwxYpA&s",
+    "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
+    "price": [
+      {
+        "simple": 6000
+      },
+      {
+        "doble": 7500
+      },
+      {
+        "triple": 9000
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Oklahoma",
+    "thumbnail": "https://images.unsplash.com/photo-1603508102983-99b101395d1a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
+    "price": [
+      {
+        "simple": 7000
+      },
+      {
+        "doble": 8500
+      },
+      {
+        "triple": 10000
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Quesita",
+    "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiMkIZ8-obmFmxJX3KhkhktYWoAerJxp82LA&s",
+    "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
+    "price": [
+      {
+        "simple": 7000
+      },
+      {
+        "doble": 8500
+      },
+      {
+        "triple": 10000
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Panceta y bbq",
+    "thumbnail": "https://www.hamburguesaperfecta.com/sites/default/files/styles/imagen_marca/public/field/imagen_marca/samos_bbq5.jpg?itok=2JEKwkeh",
+    "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
+    "price": [
+      {
+        "simple": 7000
+      },
+      {
+        "doble": 8500
+      },
+      {
+        "triple": 10000
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Picante",
+    "thumbnail": "https://thumbs.dreamstime.com/b/hamburguesa-picante-con-cebollas-adobadas-y-chile-en-tablero-de-madera-aj%C3%AD-sobre-fondo-oscuro-225658881.jpg",
+    "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
+    "price": [
+      {
+        "simple": 6000
+      },
+      {
+        "doble": 7500
+      },
+      {
+        "triple": 9000
+      }
+    ]
+  }
+]

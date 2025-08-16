@@ -1,3 +1,55 @@
+// ===================
+// IMPORTACIÓN DE FUENTES
+// ===================
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+// ===================
+// VARIABLES
+// ===================
+$background-color: #1E1E1E;
+$button-color: #FFD112;
+
+$white: #FDFCFC;
+$color-2: #1E1E1E;
+
+$dark-1: #070505;
+$dark-2: #141212;
+
+$greendark: #19371d;
+
+
+// ===================
+// MIXINS
+// ===================
+
+// Tipografías
+@mixin nunito-sans($weight) {
+  font-family: "Nunito Sans", monospace;
+  font-optical-sizing: auto;
+  font-weight: $weight;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100,
+    "YTLC" 500;
+}
+
+@mixin roboto($weight) {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: $weight;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+@mixin montserrat($weight) {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: $weight;
+  font-style: normal;
+}
+
+// Utilidades
 @mixin align-items-center {
   display: flex;
   place-content: center;
@@ -16,43 +68,49 @@
   padding: 0;
 }
 
-$background-color: #1E1E1E;
-$button-color: #FFD112;
-
-
-$white: #FDFCFC;
-$color-2: #1E1E1E;
-
-$dark-1: #070505;
-$dark-2: #141212;
-
-@mixin nunito-sans($weight) {
-  font-family: "Nunito Sans", serif;
-  font-optical-sizing: auto;
-  font-weight: $weight;
-  font-style: normal;
-  font-variation-settings:
-    "wdth"100,
-    "YTLC"500;
+@mixin responsive($size) {
+  @media (min-width: $size) {
+    @content;
+  }
 }
 
+
+// ===================
+// CLASES GENERADAS POR TIPOGRAFÍA
+// ===================
 @for $i from 4 through 9 {
   .nunito-sans-#{$i}00 {
     @include nunito-sans(#{$i}00);
   }
 }
 
-@mixin roboto($weigth) {
-  font-family: "Roboto", serif;
-  font-optical-sizing: auto;
-  font-weight: $weigth;
-  font-style: normal;
-  font-variation-settings:
-    "wdth"100;
+@for $i from 4 through 9 {
+  .roboto-#{$i}00 {
+    @include roboto(#{$i}00);
+  }
 }
 
 @for $i from 4 through 9 {
-  .roboto#{$i}00 {
-    @include roboto(#{$i}00)
+  .montserrat-#{$i}00 {
+    @include montserrat(#{$i}00);
   }
+}
+
+
+// ===================
+// RESETEOS Y UTILIDADES
+// ===================
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link-reset {
+  all: unset;
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
 }
