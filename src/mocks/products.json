@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Completa",
-    "thumbnail": "https://smartremo.es/wp-content/uploads/2020/04/hamburguesa-scaled.jpg",
+    "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
     "price": [
       {
@@ -86,6 +86,23 @@
   },
   {
     "id": 6,
+    "name": "Provoleta",
+    "thumbnail": "https://i.ibb.co/TMhtPs54/provoleta-triple.jpg" ,
+    "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
+    "price": [
+      {
+        "simple": 7000
+      },
+      {
+        "doble": 8500
+      },
+      {
+        "triple": 10000
+      }
+    ]
+  },
+  {
+    "id": 7,
     "name": "Picante",
     "thumbnail": "https://thumbs.dreamstime.com/b/hamburguesa-picante-con-cebollas-adobadas-y-chile-en-tablero-de-madera-aj%C3%AD-sobre-fondo-oscuro-225658881.jpg",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",

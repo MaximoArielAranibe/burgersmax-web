@@ -29,8 +29,8 @@ export const CartProvider = ({ children }) => {
       const ex = prev.find(i => i.id === product.id && i.tipo === product.tipo);
       return ex
         ? prev.map(i => (i.id === product.id && i.tipo === product.tipo)
-            ? { ...i, quantity: i.quantity + 1 }
-            : i)
+          ? { ...i, quantity: i.quantity + 1 }
+          : i)
         : [...prev, { ...product, quantity: 1 }];
     });
   };
@@ -56,8 +56,45 @@ export const CartProvider = ({ children }) => {
    *   readyAt?: string ISO (p.ej: '2025-08-16T20:30:00-03:00' o null)
    *   paid?: boolean
    *   paymentMethod?: 'efectivo' | 'transferencia' | null
+   *   note?: string  // comentario adicional del pedido
    * }
    */
+
+  // 👉 Actualizar estado (Pendiente/Finalizado)
+  const updateOrderStatus = (orderId, status) => {
+    // status: 'PENDING' | 'FINISHED'
+    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status } : o));
+  };
+
+  // 👉 Actualizar pago (paid + método)
+  const updateOrderPayment = (orderId, paid, method = null) => {
+    setOrders(prev => prev.map(o => {
+      if (o.id !== orderId) return o;
+      return {
+        ...o,
+        payment: {
+          paid: !!paid,
+          method: paid ? (method || o.payment?.method || 'efectivo') : null,
+        }
+      };
+    }));
+  };
+
+  // 👉 Alternar pagado sin tocar método (útil si ya tenía uno)
+  const toggleOrderPaid = (orderId) => {
+    setOrders(prev => prev.map(o => {
+      if (o.id !== orderId) return o;
+      const nextPaid = !o.payment?.paid;
+      return {
+        ...o,
+        payment: { paid: nextPaid, method: nextPaid ? (o.payment?.method || 'efectivo') : null }
+      };
+    }));
+  };
+
+
+
+
   const checkout = (options = {}) => {
     if (!cart.length) return null;
 
@@ -67,6 +104,7 @@ export const CartProvider = ({ children }) => {
       readyAt = null,
       paid = false,
       paymentMethod = null,
+      note = ''
     } = options;
 
     const envio = includeEnvio ? costoEnvio : 0;
@@ -97,6 +135,7 @@ export const CartProvider = ({ children }) => {
         paid,
         method: paid ? paymentMethod : null,
       },
+      note, // <- comentario adicional
       status: 'CREATED',
     };
 
@@ -106,11 +145,62 @@ export const CartProvider = ({ children }) => {
     return order;
   };
 
+  // Eliminar un pedido por ID
+  const deleteOrder = (orderId) => {
+    setOrders(prev => prev.filter(o => o.id !== orderId));
+  };
+
+  // Eliminar TODOS los pedidos
+  const deleteAllOrders = () => {
+    setOrders([]);
+    // Si querés reiniciar numeración:
+    // setOrderCounter(0);
+  };
+
+  // Actualizar la nota/comentario de un pedido
+  const updateOrderNote = (orderId, newNote) => {
+    setOrders(prev =>
+      prev.map(o => o.id === orderId ? { ...o, note: newNote } : o)
+    );
+  };
+
+  // 👉 Cambiar si la orden lleva envío o no (y recalcular totales)
+  const updateOrderShipping = (orderId, includeEnvio) => {
+    setOrders(prev => prev.map(o => {
+      if (o.id !== orderId) return o;
+
+      const subtotal = o.summary?.subtotal ??
+        o.items.reduce((acc, it) => acc + (it.unitPrice * it.quantity), 0);
+
+      const envio = includeEnvio ? costoEnvio : 0;
+      const total = subtotal + envio;
+
+      return {
+        ...o,
+        logistics: { ...(o.logistics || {}), includeEnvio },
+        summary: { subtotal, envio, total },
+      };
+    }));
+  };
+
+  // 👉 Editar datos de entrega (nombre/teléfono/dirección)
+  const updateOrderAddress = (orderId, patch) => {
+    setOrders(prev => prev.map(o => {
+      if (o.id !== orderId) return o;
+      return { ...o, buyer: { ...(o.buyer || {}), ...patch } };
+    }));
+  };
+
+
   return (
     <CartContext.Provider value={{
       cart, addToCart, removeFromCart, clearCart,
       costoEnvio, subtotal,
-      orders, checkout
+      orders, checkout,
+      deleteOrder, deleteAllOrders, updateOrderNote,
+      updateOrderStatus, updateOrderPayment, toggleOrderPaid,
+      // 👇 nuevas
+      updateOrderShipping, updateOrderAddress
     }}>
       {children}
     </CartContext.Provider>

@@ -2,6 +2,7 @@
 
 .products {
   &__container {
+    background-color: #000;
     width: 100%;
     display: flex;
     flex-flow: column wrap;
@@ -19,8 +20,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 90%;
-    margin: 2rem 0;
+    width: 80%;
+    margin: 3rem 0 0;
 
     &--dark {
       background-color: #121212;
@@ -43,7 +44,7 @@
 
     &__image {
       width: 100%;
-      height: 380px;
+      height: 250px;
       aspect-ratio: 1 / 1;
       object-fit: cover;
     }
@@ -57,6 +58,7 @@
         align-items: center;
 
         &-title {
+          @include montserrat(600);
           font-size: 1.1rem;
           font-weight: 700;
           text-transform: uppercase;
@@ -67,6 +69,7 @@
         margin-top: 0.5rem;
         font-size: 0.9rem;
         color: #ccc;
+        @include roboto(400);
       }
     }
 
@@ -77,32 +80,166 @@
       flex-direction: column;
       gap: 1rem;
 
+      /* Izquierda: bloque (label+precio apilados) | Derecha: botón */
       &-row {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: minmax(0,1fr) auto;
         align-items: center;
+        column-gap: 1rem;
       }
 
+      /* Bloque de texto apilado y alineado a la izquierda */
       &-price {
-        font-weight: bold;
-        color: #ffd700;
-        font-size: 1.2rem;
-      }
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;     /* ✅ mejor para escaneo */
+        justify-self: start;
+        gap: .125rem;
+        text-align: left;
+        text-transform: uppercase;
+        color: #fff;
+        font-size: 1rem;
+        letter-spacing: .01em;
+        font-variant-numeric: tabular-nums;
+        line-height: 1.1;
+        @include nunito-sans(800);   /* SIMPLE / DOBLE / TRIPLE */
 
-      &-btn {
-        background-color: #ffd700;
-        color: #000;
-        border: none;
-        padding: 0.5rem 1rem;
-        font-weight: bold;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-
-        &:hover {
-          background-color: #e0c200;
+        span {                       /* $precio */
+          @include nunito-sans(600);
+          color: #ffd700;
+          font-size: .9rem;
+          line-height: 1;
         }
       }
+
+      /* Botón: más compacto en mobile, con estados y accesible */
+      &-btn {
+        background-color: $button-color;
+        color: #000;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: .4rem;                    /* un poco menos de separación */
+        min-width: 120px;              /* antes 140 */
+        height: 40px;                  /* antes 44 */
+
+        padding: 0 .8rem;              /* antes 0 .9rem */
+        border: 1px solid rgba(0,0,0,.12);
+        border-radius: .65rem;         /* antes .75rem */
+        cursor: pointer;
+
+        @include montserrat(700);      /* o @include nunito-sans(700); */
+        letter-spacing: .01em;
+        font-size: .9rem;              /* antes .95rem */
+
+        box-shadow: 0 2px 0 rgba(0,0,0,.16),
+                    0 6px 16px rgba(255,209,18,.14);
+        transition:
+          background-color .2s ease,
+          box-shadow .2s ease,
+          transform .06s ease;
+
+        &:hover {
+          background-color: #f2ca00;
+          box-shadow: 0 1px 0 rgba(0,0,0,.2),
+                      0 10px 24px rgba(255,209,18,.20);
+        }
+
+        &:active {
+          background-color: #e0bd00;
+          transform: translateY(1px);
+          box-shadow: 0 1px 0 rgba(0,0,0,.22),
+                      0 6px 16px rgba(255,209,18,.22);
+        }
+
+        &:focus-visible {
+          outline: 3px solid rgba(255,209,18,.35);
+          outline-offset: 2px;
+        }
+
+        &:disabled,
+        &[aria-disabled="true"] {
+          opacity: .55;
+          cursor: not-allowed;
+          box-shadow: none;
+        }
+
+        svg, i {
+          width: 16px;                 /* antes 18 */
+          height: 16px;
+          flex: 0 0 auto;
+        }
+      }
+
+      /* Escala en tablet+ */
+      @media (min-width: 768px) {
+        &-btn {
+          min-width: 150px;            /* antes 160 */
+          height: 44px;
+          font-size: .95rem;
+          border-radius: .75rem;
+          svg, i { width: 18px; height: 18px; }
+        }
+      }
+
+      /* Muy angosto: apilar label y precio centrados (opcional) */
+      @media (max-width: 360px) {
+        &-price { align-items: center; text-align: center; }
+      }
+    }
+  }
+}
+
+/* --- Breakpoints --- */
+
+/* Tablets (>= 768px) */
+@media (min-width: 768px) {
+  .products {
+    &__container {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    &__card {
+      width: 45%; /* 2 cards por fila */
+      margin: 1rem 0;
+    }
+  }
+}
+
+/* Laptops (>= 1024px) */
+@media (min-width: 1024px) {
+  .products {
+    &__card {
+      width: 30%; /* 3 cards por fila */
+    }
+
+    &__card__image {
+      height: 300px;
+    }
+
+    &__card__info-header-title {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+/* Desktop grandes (>= 1440px) */
+@media (min-width: 1440px) {
+  .products {
+    &__container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    &__card {
+      width: 22%; /* 4 cards por fila */
+    }
+
+    &__card__image {
+      height: 280px;
     }
   }
 }

@@ -29,30 +29,34 @@
   ],
   "sabado": [
     {
-      "nombre": "Promo 1 de Sábado",
-      "precio": 19000
+      "nombre": "2 CHEDDAR DOBLE PROMO",
+      "precio": 14500
     },
     {
-      "nombre": "Promo 2 de Sábado",
-      "precio": 20000
+      "nombre": "2 CHEDDAR TRIPLE PROMO",
+      "precio": 17500
     },
     {
-      "nombre": "Promo 3 de Sábado",
+      "nombre": "2 QUESITA DOBLE PROMO",
       "precio": 21000
+    },
+    {
+      "nombre": "Dos picante doble PROMO",
+      "precio": 16500
     }
   ],
   "domingo": [
     {
-      "nombre": "Promo 1 de Domingo",
-      "precio": 22000
+      "nombre": "2 CHEDDAR DOBLE PROMO",
+      "precio": 14500
     },
     {
-      "nombre": "Promo 2 de Domingo",
-      "precio": 23000
+      "nombre": "2 CHEDDAR TRIPLE PROMO",
+      "precio": 17500
     },
     {
-      "nombre": "Promo 3 de Domingo",
-      "precio": 24000
+      "nombre": "1 PANCETA Y BBQ TRIPLE",
+      "precio": 9500
     }
   ]
 }

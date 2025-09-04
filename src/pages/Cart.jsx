@@ -1,10 +1,9 @@
 // src/pages/Cart.jsx
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useCart } from '../context/CartContext.jsx';
 import '../styles/Cart.scss';
 
 function buildReadyAtISO(timeStr) {
-  // timeStr: "HH:MM"
   if (!timeStr) return null;
   const now = new Date();
   const [hh, mm] = timeStr.split(':').map(Number);
@@ -14,23 +13,27 @@ function buildReadyAtISO(timeStr) {
     now.getDate(),
     isNaN(hh) ? 0 : hh,
     isNaN(mm) ? 0 : mm,
-    0,
-    0
+    0, 0
   );
   return d.toISOString();
 }
 
 const Cart = () => {
-  const {
-    cart, removeFromCart, clearCart,
-    subtotal, costoEnvio, checkout
-  } = useCart();
+  const { cart, removeFromCart, clearCart, subtotal, costoEnvio, checkout } = useCart();
 
-  // NUEVOS CONTROLES
+  // Opciones de compra
   const [includeEnvio, setIncludeEnvio] = useState(false);
-  const [readyTime, setReadyTime] = useState(''); // type="time" => "HH:MM"
+  const [readyTime, setReadyTime] = useState('');
   const [paid, setPaid] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('efectivo'); // default
+  const [paymentMethod, setPaymentMethod] = useState('efectivo');
+  const [note, setNote] = useState('');
+
+  // Datos de envío (solo si includeEnvio)
+  const [buyerName, setBuyerName] = useState('');
+  const [buyerPhone, setBuyerPhone] = useState('');
+  const [buyerAddress, setBuyerAddress] = useState('');
+  const [formError, setFormError] = useState('');
+  const addressRef = useRef(null);
 
   const envioCalc = includeEnvio && cart.length > 0 ? costoEnvio : 0;
   const totalCalc = useMemo(() => subtotal + envioCalc, [subtotal, envioCalc]);
@@ -38,14 +41,40 @@ const Cart = () => {
   const [lastOrder, setLastOrder] = useState(null);
 
   const handleCheckout = () => {
+    // Validación: si quiere envío, la dirección es obligatoria
+    if (includeEnvio && buyerAddress.trim() === '') {
+      setFormError('Ingresá una dirección para el envío.');
+      addressRef.current?.focus();
+      return;
+    }
+    setFormError('');
+
     const order = checkout({
-      buyer: { nombre: 'Invitado' },
+      buyer: {
+        nombre: buyerName?.trim() || 'Invitado',
+        telefono: buyerPhone?.trim() || '',
+        direccion: includeEnvio ? buyerAddress.trim() : '',
+        nota: note?.trim() || ''
+      },
       includeEnvio,
       readyAt: buildReadyAtISO(readyTime),
       paid,
-      paymentMethod: paid ? paymentMethod : null
+      paymentMethod: paid ? paymentMethod : null,
+      note
     });
-    if (order) setLastOrder(order);
+
+    if (order) {
+      setLastOrder(order);
+      // limpiar formulario (opcional)
+      setIncludeEnvio(false);
+      setReadyTime('');
+      setPaid(false);
+      setPaymentMethod('efectivo');
+      setNote('');
+      setBuyerName('');
+      setBuyerPhone('');
+      setBuyerAddress('');
+    }
   };
 
   if (cart.length === 0 && !lastOrder) {
@@ -73,7 +102,7 @@ const Cart = () => {
             ))}
           </ul>
 
-          {/* CONTROLES NUEVOS */}
+          {/* Opciones */}
           <div className="cart__options">
             <label className="opt">
               <input
@@ -83,6 +112,49 @@ const Cart = () => {
               />
               Agregar envío (${costoEnvio})
             </label>
+
+            {includeEnvio && (
+              <>
+                <label className="opt opt--full">
+                  Dirección de entrega *
+                  <input
+                    ref={addressRef}
+                    type="text"
+                    value={buyerAddress}
+                    onChange={(e) => setBuyerAddress(e.target.value)}
+                    placeholder="Calle 123, depto 4B, barrio…"
+                    aria-invalid={!!formError}
+                    aria-describedby="addr-error"
+                  />
+                </label>
+
+                <div className="cart__two">
+                  <label className="opt">
+                    Nombre del receptor
+                    <input
+                      type="text"
+                      value={buyerName}
+                      onChange={(e) => setBuyerName(e.target.value)}
+                      placeholder="Nombre y apellido"
+                    />
+                  </label>
+
+                  <label className="opt">
+                    Teléfono
+                    <input
+                      type="tel"
+                      value={buyerPhone}
+                      onChange={(e) => setBuyerPhone(e.target.value)}
+                      placeholder="Ej: 11 5555 5555"
+                    />
+                  </label>
+                </div>
+
+                {formError && (
+                  <p id="addr-error" className="form-error">{formError}</p>
+                )}
+              </>
+            )}
 
             <label className="opt">
               Hora de entrega / listo:
@@ -113,6 +185,16 @@ const Cart = () => {
                 <option value="transferencia">Transferencia</option>
               </select>
             </label>
+
+            <label className="opt opt--full">
+              Comentarios / Nota del pedido:
+              <textarea
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                rows={3}
+                placeholder="Sin cebolla, extra cheddar, dejar en portería, etc."
+              />
+            </label>
           </div>
 
           <div className="cart__totals">
@@ -131,7 +213,7 @@ const Cart = () => {
       {lastOrder && (
         <div className="order-confirm">
           <h3>¡Gracias por tu compra!</h3>
-          <p>Nº de orden: <b>{lastOrder.id}</b></p>
+          <p>Nº de orden: <b>#{lastOrder.number}</b></p>
 
           {lastOrder.logistics?.readyAt && (
             <p>
@@ -139,15 +221,30 @@ const Cart = () => {
               <b>{new Date(lastOrder.logistics.readyAt).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}</b>
             </p>
           )}
+
           <p>
             Envío: <b>{lastOrder.logistics?.includeEnvio ? 'Sí' : 'No'}</b>
           </p>
+
+          {lastOrder.logistics?.includeEnvio && (
+            <p>
+              Entrega a: <b>{lastOrder.buyer?.nombre || 'Invitado'}</b>
+              {lastOrder.buyer?.telefono ? ` — ${lastOrder.buyer.telefono}` : ''}
+              <br />
+              {lastOrder.buyer?.direccion}
+            </p>
+          )}
+
           <p>
             Pagado: <b>{lastOrder.payment?.paid ? 'Sí' : 'No'}</b>
             {lastOrder.payment?.paid && lastOrder.payment?.method && (
               <> — Método: <b>{lastOrder.payment.method}</b></>
             )}
           </p>
+
+          {lastOrder.note && (
+            <p><b>Nota:</b> {lastOrder.note}</p>
+          )}
 
           <ul>
             {lastOrder.items.map(it => (

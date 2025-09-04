@@ -70,3 +70,40 @@
     }
   }
 }
+
+
+/* 2 columnas para nombre/teléfono, responsive */
+.cart__two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 560px) {
+  .cart__two { grid-template-columns: 1fr; }
+}
+
+/* inputs de texto/teléfono con mismo estilo que time/select/textarea */
+.cart .cart__options input[type="text"],
+.cart .cart__options input[type="tel"] {
+  width: 100%;
+  background: #f9fafb;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.cart .cart__options input[type="text"]:focus,
+.cart .cart__options input[type="tel"]:focus {
+  outline: none;
+  border-color: color-mix(in oklab, var(--ring) 55%, var(--border));
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--ring) 18%, transparent);
+}
+
+/* mensaje de error */
+.cart .form-error {
+  color: var(--danger);
+  font-weight: 700;
+  margin: -4px 0 6px;
+}

@@ -1,8 +1,242 @@
-/* src/styles/orders.scss */
-.orders { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-.orders__list { display: grid; gap: 1rem; }
-.orders__item { background: #fff; border-radius: 12px; padding: 1rem 1.25rem; box-shadow: 0 4px 14px rgba(0,0,0,.06); }
-.orders__header { margin-bottom: .75rem; }
-.orders__lines { display: grid; gap: .5rem; margin: .5rem 0 1rem; }
-.orders__line { display: grid; grid-template-columns: 1fr auto auto; gap: 1rem; align-items: center; }
-.orders__summary { display: flex; gap: 1rem; justify-content: flex-end; font-weight: 600; }
+/* =============== Orders (Pedidos) =============== */
+/* Tema claro fijo */
+:root {
+  --bg: #ffffff;
+  --card-bg: #ffffff;
+  --text: #111111;
+  --muted: #6b7280;
+  --primary: #111111;
+  --primary-contrast: #ffffff;
+  --danger: #d92d20;
+  --danger-contrast: #ffffff;
+  --ring: #2563eb;
+  --border: #e5e7eb;
+  --shadow: 0 8px 24px rgba(17,24,39,0.08);
+  --radius: 14px;
+  --radius-sm: 10px;
+  --gap: 16px;
+  --gap-lg: 24px;
+  --content-max: 1000px;
+}
+
+/* Red de contención: nada de scroll lateral global */
+html, body { overflow-x: hidden; }
+
+.orders {
+  --pad-x: clamp(12px, 4vw, 28px);
+
+  width: 90%;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  padding: calc(var(--gap-lg) + 8px) var(--pad-x) var(--gap-lg);
+  overflow-x: clip;                /* <- corta cualquier “sangrado” residual */
+  container-type: inline-size;     /* ayuda a cálculos de layout en mobile */
+
+  /* Centrado consistente */
+  .orders__list,
+  .orders__topbar,
+  .orders__empty {
+    max-width: var(--content-max);
+    margin-inline: auto;
+  }
+
+  /* Topbar: sticky sin desbordes */
+  .orders__topbar {
+    position: sticky;
+    inset-block-start: 60px;       /* equivalente a top: 60px */
+    inset-inline: 0;               /* asegura que no mida más que el viewport */
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap);
+
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(6px);
+    padding: 10px 0;
+    margin-bottom: var(--gap-lg);
+    border-bottom: 1px solid var(--border);
+
+    h2 {
+      font-size: clamp(22px, 2.4vw, 28px);
+      font-weight: 800;
+      margin: 0;
+      letter-spacing: -0.02em;
+      min-width: 0;               /* <- permite encoger */
+    }
+
+    .orders__deleteall {
+      appearance: none;
+      border: 1px solid color-mix(in oklab, var(--danger) 35%, var(--border));
+      background: color-mix(in oklab, var(--danger) 8%, var(--card-bg));
+      color: var(--danger);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      max-width: 100%;            /* <- no se pasa de ancho */
+      white-space: normal;        /* <- permite salto de línea si hace falta */
+      transition: transform .12s ease, background .2s ease, border-color .2s ease;
+      &:hover { transform: translateY(-1px); }
+      &:active { transform: translateY(0); }
+      &:focus-visible { outline: 3px solid color-mix(in oklab, var(--danger) 30%, var(--ring)); outline-offset: 2px; }
+    }
+  }
+
+  .orders__list {
+    display: grid;
+    gap: var(--gap-lg);
+    padding-inline: 0;
+  }
+
+  .orders__item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: clamp(14px, 2.6vw, 22px);
+    display: grid;
+    gap: 14px;
+    max-width: 100%;              /* <- nunca más ancho que su contenedor */
+    /* Ojo: si usabas `contain: layout paint`, quitalo: puede generar scroll interno */
+  }
+
+  .orders__header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    align-items: center;
+    font-size: 15px;
+    min-width: 0;                 /* <- clave en flex para poder encoger */
+    overflow-wrap: anywhere;      /* <- por si aparece algún string largo */
+    strong { font-weight: 800; }
+    em { color: var(--muted); font-style: normal; }
+  }
+
+  .orders__note {
+    background: #f8fafc;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    color: var(--text);
+    line-height: 1.4;
+    b { margin-right: 6px; }
+  }
+
+  .orders__noteedit {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+
+    label {
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-weight: 700;
+      min-width: 0;
+    }
+
+    textarea {
+      width: 90%;
+      min-height: 48px;
+      resize: vertical;
+      background: #f9fafb;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      transition: border-color .2s ease, box-shadow .2s ease;
+      &:focus {
+        outline: none;
+        border-color: color-mix(in oklab, var(--ring) 55%, var(--border));
+        box-shadow: 0 0 0 4px color-mix(in oklab, var(--ring) 18%, transparent);
+      }
+    }
+
+    button {
+      justify-self: start;
+      appearance: none;
+      border: none;
+      background: var(--primary);
+      color: var(--primary-contrast);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .12s ease, filter .2s ease;
+      &:hover { transform: translateY(-1px); filter: brightness(1.03); }
+      &:active { transform: translateY(0); }
+      &:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+    }
+  }
+
+  .orders__lines {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .orders__line {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 12px;
+    align-items: center;
+    font-size: clamp(14px, 1.6vw, 15px);
+    min-width: 0;
+
+    span { min-width: 0; }
+    span:nth-child(2), span:nth-child(3) {
+      white-space: nowrap;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    em { font-style: normal; color: var(--muted); font-weight: 600; }
+
+    @media (max-width: 560px) {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      span:nth-child(2), span:nth-child(3) { color: var(--text); }
+    }
+  }
+
+  .orders__summary {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    gap: 14px 18px;
+    justify-content: end;
+    align-items: center;
+    padding-top: 6px;
+    border-top: 1px dashed var(--border);
+    font-weight: 800;
+    min-width: 0;
+
+    @media (max-width: 560px) {
+      grid-template-columns: 1fr;  /* <- en mobile, una sola columna */
+      justify-items: end;
+      gap: 6px;
+    }
+  }
+
+  .orders__actions {
+    display: flex;
+    justify-content: flex-end;
+    min-width: 0;
+
+    .orders__delete {
+      appearance: none;
+      border: 1px solid color-mix(in oklab, var(--danger) 35%, var(--border));
+      background: color-mix(in oklab, var(--danger) 10%, var(--card-bg));
+      color: var(--danger);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .12s ease, background .2s ease, border-color .2s ease;
+      &:hover { transform: translateY(-1px); }
+      &:active { transform: translateY(0); }
+      &:focus-visible { outline: 3px solid color-mix(in oklab, var(--danger) 30%, var(--ring)); outline-offset: 2px; }
+    }
+  }
+}
