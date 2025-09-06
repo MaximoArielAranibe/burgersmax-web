@@ -45,7 +45,7 @@
 
     &__image {
       width: 100%;
-      height: 250px;
+      height: 200px;
       aspect-ratio: 1 / 1;
       object-fit: cover;
     }
@@ -81,39 +81,40 @@
       flex-direction: column;
       gap: 1rem;
 
-      /* Izquierda: bloque (label+precio apilados) | Derecha: botón */
       &-row {
         display: grid;
-        grid-template-columns: minmax(0,1fr) auto;
+        grid-template-columns: minmax(0, 1fr) auto;
         align-items: center;
         column-gap: 1rem;
       }
 
-      /* Bloque de texto apilado y alineado a la izquierda */
+      /* Variante + precio juntos */
       &-price {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;     /* ✅ mejor para escaneo */
+        gap: 0.4rem;
         justify-self: start;
-        gap: .125rem;
-        text-align: left;
+        display: flex;
+        flex-flow: column;
         text-transform: uppercase;
         color: #fff;
         font-size: 1rem;
         letter-spacing: .01em;
         font-variant-numeric: tabular-nums;
         line-height: 1.1;
-        @include nunito-sans(800);   /* SIMPLE / DOBLE / TRIPLE */
+        @include nunito-sans(800);
 
-        span {                       /* $precio */
+        &-type {
+          display: inline-block;
+        }
+
+        &-value {
           @include nunito-sans(600);
           color: #ffd700;
           font-size: .9rem;
           line-height: 1;
+          display: inline-block;
         }
       }
 
-      /* Botón: más compacto en mobile, con estados y accesible */
       &-btn {
         background-color: $button-color;
         color: #000;
@@ -121,18 +122,18 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: .4rem;                    /* un poco menos de separación */
-        min-width: 120px;              /* antes 140 */
-        height: 40px;                  /* antes 44 */
+        gap: .4rem;
+        min-width: 120px;
+        height: 40px;
 
-        padding: 0 .8rem;              /* antes 0 .9rem */
+        padding: 0 .8rem;
         border: 1px solid rgba(0,0,0,.12);
-        border-radius: .65rem;         /* antes .75rem */
+        border-radius: .65rem;
         cursor: pointer;
 
-        @include montserrat(700);      /* o @include nunito-sans(700); */
+        @include montserrat(700);
         letter-spacing: .01em;
-        font-size: .9rem;              /* antes .95rem */
+        font-size: .9rem;
 
         box-shadow: 0 2px 0 rgba(0,0,0,.16),
                     0 6px 16px rgba(255,209,18,.14);
@@ -167,16 +168,15 @@
         }
 
         svg, i {
-          width: 16px;                 /* antes 18 */
+          width: 16px;
           height: 16px;
           flex: 0 0 auto;
         }
       }
 
-      /* Escala en tablet+ */
       @media (min-width: 768px) {
         &-btn {
-          min-width: 150px;            /* antes 160 */
+          min-width: 150px;
           height: 35px;
           font-size: .95rem;
           border-radius: .75rem;
@@ -184,9 +184,10 @@
         }
       }
 
-      /* Muy angosto: apilar label y precio centrados (opcional) */
       @media (max-width: 360px) {
-        &-price { align-items: center; text-align: center; }
+        &-price {
+          text-align: center;
+        }
       }
     }
   }
@@ -194,7 +195,6 @@
 
 /* --- Breakpoints --- */
 
-/* Tablets (>= 768px) */
 @media (min-width: 768px) {
   .products {
     &__container {
@@ -204,17 +204,16 @@
     }
 
     &__card {
-      width: 45%; /* 2 cards por fila */
+      width: 45%;
       margin: 1rem 0;
     }
   }
 }
 
-/* Laptops (>= 1024px) */
 @media (min-width: 1024px) {
   .products {
     &__card {
-      width: 30%; /* 3 cards por fila */
+      width: 30%;
     }
 
     &__card__image {
@@ -227,7 +226,6 @@
   }
 }
 
-/* Desktop grandes (>= 1440px) */
 @media (min-width: 1440px) {
   .products {
     &__container {
@@ -236,7 +234,7 @@
     }
 
     &__card {
-      width: 22%; /* 4 cards por fila */
+      width: 22%;
     }
 
     &__card__image {
