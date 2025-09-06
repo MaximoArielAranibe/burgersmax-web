@@ -22,6 +22,7 @@
     flex-direction: column;
     width: 80%;
     margin: 3rem 0 0;
+    height: min-content;
 
     &--dark {
       background-color: #121212;
@@ -50,7 +51,7 @@
     }
 
     &__info {
-      padding: 1rem;
+      padding: 0 1rem;
 
       &-header {
         display: flex;
@@ -176,7 +177,7 @@
       @media (min-width: 768px) {
         &-btn {
           min-width: 150px;            /* antes 160 */
-          height: 44px;
+          height: 35px;
           font-size: .95rem;
           border-radius: .75rem;
           svg, i { width: 18px; height: 18px; }
