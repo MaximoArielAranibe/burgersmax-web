@@ -82,5 +82,45 @@
       { "doble": 7500 },
       { "triple": 9000 }
     ]
+  },
+  {
+    "id": 8,
+    "name": "Papas individuales",
+    "thumbnail": "https://i.ibb.co/3d9wM6K/papas-individuales.jpg",
+    "imagePosition": "50% 50%",
+    "description": "Porción individual de papas fritas",
+    "price": [
+      { "simple": 1500 }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Bandeja de papas",
+    "thumbnail": "https://i.ibb.co/9rS3j0Q/bandeja-papas.jpg",
+    "imagePosition": "50% 50%",
+    "description": "Bandeja de papas fritas simples",
+    "price": [
+      { "simple": 4500 }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Bandeja de papas con cheddar",
+    "thumbnail": "https://i.ibb.co/4YdLzVx/bandeja-papas-cheddar.jpg",
+    "imagePosition": "50% 50%",
+    "description": "Bandeja de papas fritas con cheddar",
+    "price": [
+      { "simple": 5500 }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Bandeja de papas con cheddar y panceta",
+    "thumbnail": "https://i.ibb.co/Nt6Z0Gt/bandeja-papas-cheddar-panceta.jpg",
+    "imagePosition": "50% 50%",
+    "description": "Bandeja de papas fritas con cheddar y panceta",
+    "price": [
+      { "simple": 6500 }
+    ]
   }
 ]
