@@ -25,13 +25,16 @@ export default React.memo(function ProductCard({ product, onAdd }) {
     <div id={id} className="products__card products__card--dark">
       <div className="products__card__tag">Nuevo</div>
 
-      <img
-        loading="lazy"
-        src={thumbnail}
-        alt={`Hamburguesa ${name}`}
-        className="products__card__image"
-        style={{ objectPosition: product.imagePosition || "50% 50%" }}
-      />
+      <div className="products__card__media">
+        <img
+          loading="lazy"
+          src={thumbnail}
+          alt={`Hamburguesa ${name}`}
+          className="products__card__image"
+          style={{ objectPosition: product.imagePosition || "50% 50%" }}
+        />
+      </div>
+
 
       <div className="products__card__info">
         <div className="products__card__info-header">

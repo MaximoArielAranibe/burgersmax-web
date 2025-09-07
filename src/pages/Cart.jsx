@@ -113,22 +113,7 @@ const Cart = () => {
               Agregar envío (${costoEnvio})
             </label>
 
-            {includeEnvio && (
-              <>
-                <label className="opt opt--full">
-                  Dirección de entrega *
-                  <input
-                    ref={addressRef}
-                    type="text"
-                    value={buyerAddress}
-                    onChange={(e) => setBuyerAddress(e.target.value)}
-                    placeholder="Calle 123, depto 4B, barrio…"
-                    aria-invalid={!!formError}
-                    aria-describedby="addr-error"
-                  />
-                </label>
-
-                <div className="cart__two">
+            <div className="cart__two">
                   <label className="opt">
                     Nombre del receptor
                     <input
@@ -149,6 +134,21 @@ const Cart = () => {
                     />
                   </label>
                 </div>
+
+            {includeEnvio && (
+              <>
+                <label className="opt opt--full">
+                  Dirección de entrega *
+                  <input
+                    ref={addressRef}
+                    type="text"
+                    value={buyerAddress}
+                    onChange={(e) => setBuyerAddress(e.target.value)}
+                    placeholder="Calle 123, depto 4B, barrio…"
+                    aria-invalid={!!formError}
+                    aria-describedby="addr-error"
+                  />
+                </label>
 
                 {formError && (
                   <p id="addr-error" className="form-error">{formError}</p>

@@ -37,8 +37,8 @@ const Navbar = () => {
             ☰
           </button>
 
-          {/* Admin: login/logout */}
-{/*           {isAdmin ? (
+          {/*-Admin: login/logout */}
+          {isAdmin ? (
             <button className="navbar__admin" onClick={logout} title="Salir del modo admin">
               Salir
             </button>
@@ -47,7 +47,6 @@ const Navbar = () => {
               Admin
             </Link>
           )}
- */}
           <Link to='/cart' className="icon" aria-label="Ir al carrito">
             <img src={logo} alt="Carrito" />
             {itemCount > 0 && (

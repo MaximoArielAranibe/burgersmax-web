@@ -6,7 +6,6 @@
   position: fixed;
   z-index: 999;
 
-
   &__wrapper {
     background-color: $dark-2;
     max-width: 100%;
@@ -33,7 +32,6 @@
 
     .navbar__list {
       flex-grow: 1;
-
       position: absolute;
       top: 60px;
       right: 0;
@@ -86,11 +84,11 @@
 
     .navbar__icons {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
+      gap: 12px;
       margin-right: 1rem;
 
-
-      .navbar__toggle{
+      .navbar__toggle {
         color: $button-color;
         font-size: 24px;
         display: block;
@@ -105,8 +103,68 @@
         display: flex;
         align-items: center;
         cursor: pointer;
+        position: relative;
 
-        span{
+        img {
+          width: 24px;
+          height: 24px;
+        }
+
+        .icon__badge {
+          position: absolute;
+          top: -6px;
+          right: -6px;
+          background-color: #e74c3c;
+          color: #fff;
+          font-size: 10px;
+          font-weight: 700;
+          border-radius: 50%;
+          width: 18px;
+          height: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .icon__total {
+          margin-left: 6px;
+          font-weight: 700;
+          font-size: 14px;
+        }
+      }
+
+      // Admin button / link
+      .navbar__admin {
+        font-weight: 700;
+        font-size: 14px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        transition: background-color 0.2s, transform 0.1s;
+
+        // Link (Entrar admin)
+        &.active-link, &:not(button) {
+          background-color: $button-color;
+          color: #fff;
+        }
+
+        // Botón (Salir)
+        &.btn-logout, button {
+          background-color: #e74c3c;
+          color: #fff;
+          border: none;
+        }
+
+        &:hover,
+        &:focus {
+          transform: scale(1.05);
+          outline: none;
+        }
+
+        &:focus-visible {
+          box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
         }
       }
     }
@@ -115,7 +173,6 @@
   @media (min-width: 768px) {
     .navbar__wrapper {
       justify-content: space-between;
-
 
       .navbar__list {
         position: static;
@@ -138,12 +195,22 @@
         display: none;
       }
 
-
-      .navbar__icons{
+      .navbar__icons {
         min-width: 110px;
         margin-right: 0.4rem;
       }
     }
+  }
 
+  @media (max-width: 767px) {
+    .navbar__icons {
+      flex-direction: row;
+      gap: 8px;
+
+      .navbar__admin {
+        padding: 4px 8px;
+        font-size: 12px;
+      }
+    }
   }
 }
