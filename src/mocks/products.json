@@ -122,5 +122,15 @@
     "price": [
       { "simple": 6500 }
     ]
+  },
+  {
+    "id": 12,
+    "name": "Lomo completo + papas",
+    "thumbnail": "https://i.ibb.co/Nt6Z0Gt/bandeja-papas-cheddar-panceta.jpg",
+    "imagePosition": "50% 50%",
+    "description": "220grs lomo, jamón, queso, lechuga, tomate, doble huevo",
+    "price": [
+      { "simple": 12500 }
+    ]
   }
 ]

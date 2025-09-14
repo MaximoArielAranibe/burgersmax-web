@@ -1,62 +1,23 @@
 {
   "jueves": [
-    {
-      "nombre": "Oklahoma Doble X",
-      "precio": 7000
-    },
-    {
-      "nombre": "Cheddar Triple X",
-      "precio": 15500
-    },
-    {
-      "nombre": "Quesita Doble X",
-      "precio": 14500
-    }
+    { "nombre": "1 Doble Oklahoma PROMO", "precio": 7000 },
+    { "nombre": "2 Triple Cheddar PROMO", "precio": 15500 },
+    { "nombre": "2 Doble Quesita PROMO", "precio": 14500 }
   ],
   "viernes": [
-    {
-      "nombre": "Promo 1 de Viernes",
-      "precio": 16000
-    },
-    {
-      "nombre": "Promo 2 de Viernes",
-      "precio": 17000
-    },
-    {
-      "nombre": "Promo 3 de Viernes",
-      "precio": 18000
-    }
+    { "nombre": "2 Doble Cheddar PROMO", "precio": 14500 },
+    { "nombre": "4 Simple Chedda PROMO r", "precio": 23000 },
+    { "nombre": "2 Doble panceta y bbq", "precio": 18000 }
   ],
   "sabado": [
-    {
-      "nombre": "2 CHEDDAR DOBLE PROMO",
-      "precio": 14500
-    },
-    {
-      "nombre": "2 CHEDDAR TRIPLE PROMO",
-      "precio": 17500
-    },
-    {
-      "nombre": "2 QUESITA DOBLE PROMO",
-      "precio": 21000
-    },
-    {
-      "nombre": "Dos picante doble PROMO",
-      "precio": 16500
-    }
+    { "nombre": "2 Doble Cheddar PROMO", "precio": 14500 },
+    { "nombre": "2 Triple Cheddar PROMO", "precio": 17500 },
+    { "nombre": "2 Doble Quesita PROMO", "precio": 16500 },
+    { "nombre": "2 Doble Picante PROMO", "precio": 12500 }
   ],
   "domingo": [
-    {
-      "nombre": "2 CHEDDAR DOBLE PROMO",
-      "precio": 14500
-    },
-    {
-      "nombre": "2 CHEDDAR TRIPLE PROMO",
-      "precio": 17500
-    },
-    {
-      "nombre": "1 PANCETA Y BBQ TRIPLE",
-      "precio": 9500
-    }
+    { "nombre": "2 Doble Cheddar PROMO", "precio": 14500 },
+    { "nombre": "2 Triple Cheddar PROMO", "precio": 17500 },
+    { "nombre": "1 Triple panceta y bbq PROMO", "precio": 9500 }
   ]
 }

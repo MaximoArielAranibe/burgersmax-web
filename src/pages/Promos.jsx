@@ -1,17 +1,26 @@
 // src/pages/Promos.jsx
 import React, { useState, useMemo } from "react";
-import promos from "../mocks/promos.json";
+import promosPorDia from "../mocks/promos.json";
 import { useCart } from "../context/CartContext.jsx";
-import "../styles/products.scss"; // opcional si querés estilos ya existentes
+import "../styles/products.scss";
 
 const fmtARS = (n) =>
   n.toLocaleString("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 });
 
+// Combos fijos que siempre están disponibles
+const combosFijos = [
+  { nombre: "2 Dobles Cheddar + Bandeja de Papas con Cheddar", precio: 19500 },
+  { nombre: "2 Dobles Cheddar + Bandeja de Papas con Cheddar y Panceta", precio: 20500 },
+  { nombre: "2 Panceta & BBQ Triples + Bandeja de Papas con Cheddar y Panceta", precio: 25500 },
+  { nombre: "2 Dobles Cheddar Picante + Bandeja de Papas con Cheddar y Panceta", precio: 19000 },
+  { nombre: "2 Completas Triples + Bandeja de Papas con Cheddar", precio: 24500 },
+  { nombre: "2 Completas Dobles + Bandeja de Papas con Cheddar", precio: 21500 },
+];
+
 export const Promos = () => {
-  const [dia, setDia] = useState(new Date().getDay()); // 0..6 (dom..sáb)
+  const [dia, setDia] = useState(new Date().getDay());
   const { addToCart } = useCart();
 
-  // Relacionamos el número del día con su clave en el JSON
   const diasMap = useMemo(
     () => ({
       0: "domingo",
@@ -23,17 +32,19 @@ export const Promos = () => {
   );
 
   const nombreDia = diasMap[dia];
-  const promosDelDia = (nombreDia && promos[nombreDia]) || [];
+  const promosDelDia = (nombreDia && promosPorDia[nombreDia]) || [];
+
+  // Mezclamos los combos del día + los combos fijos
+  const todosPromos = [...promosDelDia, ...combosFijos];
 
   const handleAdd = (promo, index) => {
-    // ID estable por promo (día + índice)
-    const id = `promo-${nombreDia}-${index}`;
+    const id = `promo-${index}-${promo.nombre.replace(/\s+/g, "-").toLowerCase()}`;
     addToCart({
       id,
       name: promo.nombre,
-      tipo: "promo",                 // clave para agrupar en el carrito
+      tipo: "promo",
       precio: promo.precio,
-      thumbnail: promo.thumbnail || null, // si en el futuro agregás imagen en el JSON
+      thumbnail: promo.thumbnail || null,
     });
   };
 
@@ -46,7 +57,6 @@ export const Promos = () => {
             : "Promos"}
         </h2>
 
-        {/* (Opcional) selector para probar otros días */}
         <select
           value={dia}
           onChange={(e) => setDia(Number(e.target.value))}
@@ -60,11 +70,11 @@ export const Promos = () => {
         </select>
       </header>
 
-      {promosDelDia.length ? (
+      {todosPromos.length ? (
         <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: 12 }}>
-          {promosDelDia.map((promo, i) => (
+          {todosPromos.map((promo, i) => (
             <li
-              key={`${nombreDia}-${i}`}
+              key={`promo-${i}`}
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr auto",
@@ -81,7 +91,6 @@ export const Promos = () => {
                 <div style={{ fontWeight: 800 }}>{promo.nombre}</div>
                 <div style={{ color: "#6b7280", fontWeight: 700 }}>{fmtARS(promo.precio)}</div>
               </div>
-
               <button
                 onClick={() => handleAdd(promo, i)}
                 style={{
