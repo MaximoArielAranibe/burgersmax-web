@@ -22,8 +22,9 @@ const calcMedallones = (items) =>
   }, 0);
 
 // Conteos generales
-const totalBurgersCount = (items) =>
-  items.filter((it) => it.tipo).reduce((acc, it) => acc + it.quantity, 0);
+const totalBurgersCount = (items) => (
+  items.filter((it) => it.tipo).reduce((acc, it) => acc + it.quantity, 0)
+)
 
 // Papas por tipo (buscadores en nombre)
 const totalFriesIndividual = (items) =>
@@ -157,17 +158,28 @@ export default function Orders() {
     if (window.confirm("¿Eliminar TODOS los pedidos? Esta acción no se puede deshacer."))
       deleteAllOrders();
   };
-  const handleSaveNote = (id) =>
-    updateOrderNote(id, (drafts[id] ?? "").trim());
-  const handleStatusChange = (id, value) =>
-    updateOrderStatus(id, value === "FINISHED" ? "FINISHED" : "PENDING");
+
+  const handleSaveNote = (id) => (
+    updateOrderNote(id, (drafts[id] ?? "").trim())
+  );
+
+  const handleStatusChange = (id, value) => (
+
+    updateOrderStatus(id, value === "FINISHED" ? "FINISHED" : "PENDING")
+  );
+
   const handlePaidToggle = (o) => toggleOrderPaid(o.id);
+
   const handleMethodChange = (o, value) => {
     updateOrderPayment(o.id, true, value);
     setPmDraft((prev) => ({ ...prev, [o.id]: value }));
   };
-  const handleShippingToggle = (o, checked) =>
-    updateOrderShipping(o.id, checked);
+
+  const handleShippingToggle = (o, checked) => (
+
+    updateOrderShipping(o.id, checked)
+  );
+
   const onAddrChange = (id, key, value, o) =>
     setAddrDraft((prev) => ({
       ...prev,
@@ -178,6 +190,7 @@ export default function Orders() {
         [key]: value,
       },
     }));
+
   const saveAddress = (o) => {
     const draft = addrDraft[o.id] || {};
     updateOrderAddress(o.id, {
@@ -564,7 +577,7 @@ export default function Orders() {
                       = $
                       {fmt(
                         it.subtotal ??
-                          (it.unitPrice ?? it.price ?? 0) * (it.quantity ?? 1)
+                        (it.unitPrice ?? it.price ?? 0) * (it.quantity ?? 1)
                       )}
                     </span>
                   </li>

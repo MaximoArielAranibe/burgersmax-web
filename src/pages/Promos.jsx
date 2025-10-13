@@ -4,15 +4,29 @@ import promosPorDia from "../mocks/promos.json";
 import { useCart } from "../context/CartContext.jsx";
 import "../styles/products.scss";
 
+// Utilidad para formatear precios en ARS
 const fmtARS = (n) =>
-  n.toLocaleString("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 });
+  n.toLocaleString("es-AR", {
+    style: "currency",
+    currency: "ARS",
+    maximumFractionDigits: 0,
+  });
 
 // Combos fijos que siempre están disponibles
 const combosFijos = [
   { nombre: "2 Dobles Cheddar + Bandeja de Papas con Cheddar", precio: 19500 },
-  { nombre: "2 Dobles Cheddar + Bandeja de Papas con Cheddar y Panceta", precio: 20500 },
-  { nombre: "2 Panceta & BBQ Triples + Bandeja de Papas con Cheddar y Panceta", precio: 25500 },
-  { nombre: "2 Dobles Cheddar Picante + Bandeja de Papas con Cheddar y Panceta", precio: 19000 },
+  {
+    nombre: "2 Dobles Cheddar + Bandeja de Papas con Cheddar y Panceta",
+    precio: 20500,
+  },
+  {
+    nombre: "2 Panceta & BBQ Triples + Bandeja de Papas con Cheddar y Panceta",
+    precio: 25500,
+  },
+  {
+    nombre: "2 Dobles Cheddar Picante + Bandeja de Papas con Cheddar y Panceta",
+    precio: 19000,
+  },
   { nombre: "2 Completas Triples + Bandeja de Papas con Cheddar", precio: 24500 },
   { nombre: "2 Completas Dobles + Bandeja de Papas con Cheddar", precio: 21500 },
 ];
@@ -21,6 +35,7 @@ export const Promos = () => {
   const [dia, setDia] = useState(new Date().getDay());
   const { addToCart } = useCart();
 
+  // Mapeo explícito de días
   const diasMap = useMemo(
     () => ({
       0: "domingo",
@@ -38,7 +53,10 @@ export const Promos = () => {
   const todosPromos = [...promosDelDia, ...combosFijos];
 
   const handleAdd = (promo, index) => {
-    const id = `promo-${index}-${promo.nombre.replace(/\s+/g, "-").toLowerCase()}`;
+    const id =
+      promo.id ||
+      `promo-${index}-${promo.nombre.replace(/\s+/g, "-").toLowerCase()}`;
+
     addToCart({
       id,
       name: promo.nombre,
@@ -49,8 +67,13 @@ export const Promos = () => {
   };
 
   return (
-    <section className="promos" style={{ maxWidth: 900, margin: "0 auto", padding: "16px" }}>
-      <header style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+    <section
+      className="promos"
+      style={{ maxWidth: 900, margin: "0 auto", padding: "16px" }}
+    >
+      <header
+        style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}
+      >
         <h2 style={{ margin: 0 }}>
           {nombreDia
             ? `Promos de ${nombreDia.charAt(0).toUpperCase() + nombreDia.slice(1)}`
@@ -71,10 +94,17 @@ export const Promos = () => {
       </header>
 
       {todosPromos.length ? (
-        <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: 12 }}>
+        <ul
+          style={{
+            listStyle: "none",
+            padding: 0,
+            display: "grid",
+            gap: 12,
+          }}
+        >
           {todosPromos.map((promo, i) => (
             <li
-              key={`promo-${i}`}
+              key={promo.id || `promo-${i}`}
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr auto",
@@ -89,7 +119,9 @@ export const Promos = () => {
             >
               <div style={{ minWidth: 0 }}>
                 <div style={{ fontWeight: 800 }}>{promo.nombre}</div>
-                <div style={{ color: "#6b7280", fontWeight: 700 }}>{fmtARS(promo.precio)}</div>
+                <div style={{ color: "#6b7280", fontWeight: 700 }}>
+                  {fmtARS(promo.precio)}
+                </div>
               </div>
               <button
                 onClick={() => handleAdd(promo, i)}

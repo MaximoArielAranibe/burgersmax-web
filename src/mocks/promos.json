@@ -1,23 +1,123 @@
 {
   "jueves": [
-    { "nombre": "1 Doble Oklahoma PROMO", "precio": 7000 },
-    { "nombre": "2 Triple Cheddar PROMO", "precio": 15500 },
-    { "nombre": "2 Doble Quesita PROMO", "precio": 14500 }
+    {
+      "nombre": "1 Doble Oklahoma PROMO",
+      "precio": 7000,
+      "markers": {
+        "hamburgesas": 1,
+        "medallones": 2
+      }
+    },
+    {
+      "nombre": "2 Triple Cheddar PROMO",
+      "precio": 15500,
+      "markers": {
+        "hamburgesas": 2,
+        "medallones": 6
+      }
+    },
+    {
+      "nombre": "2 Doble Quesita PROMO",
+      "precio": 14500,
+      "markers": {
+        "hamburgesas": 2,
+        "medallones": 4
+      }
+    }
   ],
   "viernes": [
-    { "nombre": "2 Doble Cheddar PROMO", "precio": 14500 },
-    { "nombre": "4 Simple Chedda PROMO r", "precio": 23000 },
-    { "nombre": "2 Doble panceta y bbq", "precio": 18000 }
+    {
+      "nombre": "2 Doble Cheddar PROMO",
+      "precio": 14500,
+      "markers": {
+        "hamburgesas": 2,
+        "medallones": 4
+      }
+    },
+    {
+      "nombre": "4 Simple Cheddar PROMO",
+      "precio": 23000,
+      "markers": {
+        "hamburgesas": 4,
+        "medallones": 4
+      }
+    },
+    {
+      "nombre": "2 Doble Panceta y BBQ PROMO",
+      "precio": 18000,
+      "markers": {
+        "hamburgesas": 2,
+        "medallones": 4
+      }
+    }
   ],
   "sabado": [
-    { "nombre": "2 Doble Cheddar PROMO", "precio": 14500 },
-    { "nombre": "2 Triple Cheddar PROMO", "precio": 17500 },
-    { "nombre": "2 Doble Quesita PROMO", "precio": 16500 },
-    { "nombre": "2 Doble Picante PROMO", "precio": 12500 }
+    {
+      "nombre": "2 Doble Cheddar PROMO",
+      "precio": 14500,
+      "markers": {
+        "hamburgesas": 2,
+        "medallones": 4
+      }
+    },
+    {
+      "nombre": "2 Triple Cheddar PROMO",
+      "precio": 17500,
+      "markers": {
+        "hamburgesas": 2,
+        "medallones": 6
+      }
+    },
+    {
+      "nombre": "2 Doble Quesita PROMO",
+      "precio": 16500,
+      "markers": {
+        "hamburgesas": 2,
+        "medallones": 4
+      }
+    },
+    {
+      "nombre": "2 Doble Picante PROMO",
+      "precio": 12500,
+      "markers": {
+        "hamburgesas": 2,
+        "medallones": 4
+      }
+    },
+    {
+      "nombre": "1 Doble CHEDDAR + PAPAS INDIVIDAULES PROMO",
+      "precio": 8500,
+      "markers": {
+        "hamburgesas": 1,
+        "medallones": 4,
+        "papas": 1
+      }
+    }
   ],
   "domingo": [
-    { "nombre": "2 Doble Cheddar PROMO", "precio": 14500 },
-    { "nombre": "2 Triple Cheddar PROMO", "precio": 17500 },
-    { "nombre": "1 Triple panceta y bbq PROMO", "precio": 9500 }
+    {
+      "nombre": "2 Doble Cheddar PROMO",
+      "precio": 14500,
+      "markers": {
+        "hamburgesas": 2,
+        "medallones": 4
+      }
+    },
+    {
+      "nombre": "2 Triple Cheddar PROMO",
+      "precio": 17500,
+      "markers": {
+        "hamburgesas": 2,
+        "medallones": 6
+      }
+    },
+    {
+      "nombre": "1 Triple Panceta y BBQ PROMO",
+      "precio": 9500,
+      "markers": {
+        "hamburgesas": 1,
+        "medallones": 3
+      }
+    }
   ]
 }

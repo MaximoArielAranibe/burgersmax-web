@@ -9,6 +9,7 @@ import img1Desktop from '../assets/landing-image-7-large.jpg';
 import img2Desktop from '../assets/landing-image-6-grande.jpg';
 import img3Desktop from '../assets/landing-image-3.jpg';
 import Products from './Products';
+import Footer from '../components/Footer';
 
 const slides = [
   { mobile: img1Mobile, desktop: img1Desktop, position: "55%", size: "cover", positionDesktop: "calc(220px - 20%) calc(60%)", sizeDesktop: "cover" },
@@ -62,6 +63,7 @@ const Landing = () => {
       <section>
         <Products />
       </section>
+      <Footer />
     </main>
   );
 };

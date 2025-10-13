@@ -20,7 +20,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar__wrapper">
         <div className="navbar__logo">
-          <Link to='/' className="navbar__logo--text">BURGERS MAX</Link>
+          <Link to='/' className="navbar__logo--text" onClick={() =>window.scrollTo({top: 0, behavior:'smooth'})}>BURGERS MAX</Link>
         </div>
 
         <div className={`navbar__list ${menuOpen ? 'active' : ''}`}>
