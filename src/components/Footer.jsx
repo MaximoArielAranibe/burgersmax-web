@@ -1,6 +1,6 @@
-import React from 'react'
 import '../styles/footer.scss'
 import logo from "../assets/BURGUERS-MAX-NEGATIVO.png"
+import WhatsappVerde from './WhatsappVerdeIcon'
 
 const Footer = () => {
   return (
@@ -20,7 +20,7 @@ const Footer = () => {
         <div className="footer__row__content">
           <h4>Hacenos tu pedido</h4>
           <p><strong>📞 Tel/WhatsApp:</strong> +54 9 2477 451081</p>
-          <p><strong>⏰ Horarios:</strong> Jueves a Domingo 19:00 a 23:30</p>
+          <p><strong>⏰ Horarios:</strong> Jueves a Domingo 20:00 a 23:30</p>
         </div>
       </div>
 

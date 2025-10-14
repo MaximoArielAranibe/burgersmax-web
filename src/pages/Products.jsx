@@ -1,4 +1,3 @@
-import React from "react";
 import { useCart } from '../context/CartContext.jsx';
 import products from '../mocks/products.json';
 import ProductCard from "../components/ProductCard.jsx";

@@ -1,0 +1,44 @@
+@import 'variables.scss';
+
+.whatsapp {
+  position: fixed;
+  bottom: 20px;
+  right: 5px;
+  background-color: $button-color; // tu color amarillo
+  border-radius: 50% 50% 50% 5px;
+  padding: 1.5px;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulso 3s infinite ease-in-out;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  &__icon {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@keyframes pulso {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (min-width: 720px){
+  .whatsapp{
+    right: 20px;
+  }
+}

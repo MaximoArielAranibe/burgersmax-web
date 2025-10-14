@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 //import Products from './components/Products';
 import Landing from './pages/Landing'
@@ -10,6 +9,8 @@ import Orders from './pages/Orders'
 import { AdminProvider } from './context/AdminContext';
 import ProtectedRoute from './components/ProtectecRoute.jsx';
 import AdminLogin from './pages/AdminLogin.jsx';
+import WhatsappVerde from './components/WhatsappVerdeIcon.jsx';
+import './styles/App.scss';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Router>
           <Navbar />
           <main style={{ paddingTop: '60px' }}>
+
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/cart" element={<Cart />} />
@@ -37,6 +39,7 @@ const App = () => {
               />
             </Routes>
           </main>
+          <WhatsappVerde className='main__whatsapp' />
         </Router>
       </AdminProvider>
     </CartProvider>

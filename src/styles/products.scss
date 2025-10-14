@@ -1,6 +1,7 @@
 @import 'variables.scss';
 
 .products {
+  // Contenedor principal
   &__container {
     background-color: #000;
     width: 100%;
@@ -11,6 +12,7 @@
     @include nunito-sans(800);
   }
 
+  // Tarjeta de Producto individual
   &__card {
     background-color: #fff;
     border-radius: 1rem;
@@ -18,11 +20,15 @@
     color: #000;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
     position: relative;
+
+    // Cambios CRUCIALES para la altura uniforme:
     display: flex;
-    flex-direction: column;
-    width: 80%;
+    flex-direction: column; // Organiza el contenido en columna
+    height: 100%; // Asegura que el flex item tome toda la altura disponible en la fila (gracias al padre)
+    // Fin de cambios cruciales
+
+    width: 64%;
     margin: 3rem 0 0;
-    height: min-content;
 
     &--dark {
       background-color: #121212;
@@ -46,12 +52,16 @@
     &__image {
       width: 100%;
       height: 200px;
+      min-height: 200px;
       aspect-ratio: 1 / 1;
       object-fit: cover;
     }
 
+    // Sección de info/descripción
     &__info {
       padding: 0 1rem;
+      // CRUCIAL: Esto hace que el área de contenido se estire y empuje el footer hacia abajo.
+      flex-grow: 1;
 
       &-header {
         display: flex;
@@ -75,6 +85,7 @@
     }
 
     &__footer {
+      // 'margin-top: auto' es buena práctica, pero 'flex-grow: 1' en info es más potente aquí
       margin-top: auto;
       padding: 1rem;
       display: flex;
@@ -198,6 +209,9 @@
 @media (min-width: 768px) {
   .products {
     &__container {
+      // CRUCIAL: Esto hace que todos los ítems flexibles (las tarjetas) se estiren
+      // a la altura del ítem más alto de esa fila.
+      align-items: stretch; // CAMBIO CLAVE
       flex-direction: row;
       flex-wrap: wrap;
       gap: 2rem;

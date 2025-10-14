@@ -10,7 +10,7 @@
   align-items: center;
 
   // Propiedades del contenedor principal
-  color: $white;
+  color: black;
   gap: 2rem;
   @include montserrat(500);
 
@@ -44,7 +44,7 @@
   }
 
   &__row {
-    max-width: 250px;
+    min-width: 100%;
     text-align: center;
     display: flex;
     flex-flow: column nowrap;
@@ -61,21 +61,22 @@
     }
 
     &__content {
+      width: 100%;
+      background-color: black;
       h4 {
-
         font-size: 1.3rem;
         font-weight: 800;
         color: yellow; // título en color de acento
         text-transform: uppercase;
         background-color: black;
+        margin: 1rem 0;
       }
 
       p {
-        margin: 0.25rem 0;
-        font-size: 0.95rem;
-        line-height: 1.5;
-        color: lighten($white, 10%);
-        text-decoration: underline;
+        font-size: 0.9rem;
+        color: #FFF;
+        background-color: black;
+        margin: 0 0 1rem 0;
       }
 
       a {
@@ -96,9 +97,6 @@
 /* Mobile first */
 @media (max-width: 768px) {
   .footer {
-    flex-flow: column nowrap;
-    align-items: center;
-    text-align: center;
 
     &__row {
       max-width: 100%;
