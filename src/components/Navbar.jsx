@@ -1,26 +1,38 @@
 // src/components/Navbar.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../styles/navbar.scss';
 import logo from '../assets/icons8-shopping-cart-24.png';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext.jsx';
 import { useAdmin } from '../context/AdminContext.jsx';
 
-const fmtARS = (n) =>
-  n.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { cart, subtotal } = useCart();
   const { isAdmin, logout } = useAdmin();
 
-  const itemCount = cart.reduce((acc, i) => acc + i.quantity, 0);
+  const safeInt = (v) => {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  };
+
+  const fmtARS = (n) => {
+    const v = Number.isFinite(n) ? n : 0;
+    return v.toLocaleString('es-AR', {
+      style: 'currency',
+      currency: 'ARS',
+      maximumFractionDigits: 0
+    });
+  };
+
+  const itemCount = cart.reduce((acc, i) => acc + safeInt(i.quantity), 0);
 
   return (
     <nav className="navbar">
       <div className="navbar__wrapper">
         <div className="navbar__logo">
-          <Link to='/' className="navbar__logo--text" onClick={() =>window.scrollTo({top: 0, behavior:'smooth'})}>BURGERS MAX</Link>
+          <Link to='/' className="navbar__logo--text" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>BURGERS MAX</Link>
         </div>
 
         <div className={`navbar__list ${menuOpen ? 'active' : ''}`}>

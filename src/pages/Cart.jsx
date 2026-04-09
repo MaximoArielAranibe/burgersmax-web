@@ -1,7 +1,8 @@
 // src/pages/Cart.jsx
-import React, { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useCart } from '../context/CartContext.jsx';
 import '../styles/Cart.scss';
+import { printOrder } from '../services/printer.js';
 
 function buildReadyAtISO(timeStr) {
   if (!timeStr) return null;
@@ -13,7 +14,8 @@ function buildReadyAtISO(timeStr) {
     now.getDate(),
     isNaN(hh) ? 0 : hh,
     isNaN(mm) ? 0 : mm,
-    0, 0
+    0,
+    0
   );
   return d.toISOString();
 }
@@ -21,14 +23,14 @@ function buildReadyAtISO(timeStr) {
 const Cart = () => {
   const { cart, removeFromCart, clearCart, subtotal, costoEnvio, checkout } = useCart();
 
-  // Opciones de compra
+  // Opciones
   const [includeEnvio, setIncludeEnvio] = useState(false);
   const [readyTime, setReadyTime] = useState('');
   const [paid, setPaid] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('efectivo');
   const [note, setNote] = useState('');
 
-  // Datos de envío (solo si includeEnvio)
+  // Datos cliente
   const [buyerName, setBuyerName] = useState('');
   const [buyerPhone, setBuyerPhone] = useState('');
   const [buyerAddress, setBuyerAddress] = useState('');
@@ -40,13 +42,14 @@ const Cart = () => {
 
   const [lastOrder, setLastOrder] = useState(null);
 
-  const handleCheckout = () => {
-    // Validación: si quiere envío, la dirección es obligatoria
+  // ✅ CHECKOUT + IMPRESIÓN
+  const handleCheckout = async () => {
     if (includeEnvio && buyerAddress.trim() === '') {
       setFormError('Ingresá una dirección para el envío.');
       addressRef.current?.focus();
       return;
     }
+
     setFormError('');
 
     const order = checkout({
@@ -65,7 +68,11 @@ const Cart = () => {
 
     if (order) {
       setLastOrder(order);
-      // limpiar formulario (opcional)
+
+      // 🔥 imprimir ticket
+      await printOrder(order);
+
+      // limpiar form
       setIncludeEnvio(false);
       setReadyTime('');
       setPaid(false);
@@ -77,6 +84,7 @@ const Cart = () => {
     }
   };
 
+  // 👉 carrito vacío
   if (cart.length === 0 && !lastOrder) {
     return (
       <div className='cart'>
@@ -95,14 +103,22 @@ const Cart = () => {
           <ul>
             {cart.map((item, index) => (
               <li key={`${item.id}-${item.tipo}-${index}`}>
-                <img className='cart__item--img' src={item.thumbnail} alt={item.name} />
-                <strong>{item.name}</strong> - {item.tipo} - ${item.precio} x {item.quantity} = ${item.precio * item.quantity}
-                <button onClick={() => removeFromCart(item.id, item.tipo)}>Eliminar</button>
+                <img
+                  className='cart__item--img'
+                  src={item.thumbnail}
+                  alt={item.name}
+                />
+                <strong>{item.name}</strong> - {item.tipo} - $
+                {Number(item.precio) || 0} x {Number(item.quantity) || 0} = $
+                {(Number(item.precio) || 0) * (Number(item.quantity) || 0)}
+                <button onClick={() => removeFromCart(item.id, item.tipo)}>
+                  Eliminar
+                </button>
               </li>
             ))}
           </ul>
 
-          {/* Opciones */}
+          {/* OPCIONES */}
           <div className="cart__options">
             <label className="opt">
               <input
@@ -114,50 +130,45 @@ const Cart = () => {
             </label>
 
             <div className="cart__two">
-                  <label className="opt">
-                    Nombre del receptor
-                    <input
-                      type="text"
-                      value={buyerName}
-                      onChange={(e) => setBuyerName(e.target.value)}
-                      placeholder="Nombre y apellido"
-                    />
-                  </label>
+              <label className="opt">
+                Nombre
+                <input
+                  type="text"
+                  value={buyerName}
+                  onChange={(e) => setBuyerName(e.target.value)}
+                />
+              </label>
 
-                  <label className="opt">
-                    Teléfono
-                    <input
-                      type="tel"
-                      value={buyerPhone}
-                      onChange={(e) => setBuyerPhone(e.target.value)}
-                      placeholder="Ej: 11 5555 5555"
-                    />
-                  </label>
-                </div>
+              <label className="opt">
+                Teléfono
+                <input
+                  type="tel"
+                  value={buyerPhone}
+                  onChange={(e) => setBuyerPhone(e.target.value)}
+                />
+              </label>
+            </div>
 
             {includeEnvio && (
               <>
                 <label className="opt opt--full">
-                  Dirección de entrega *
+                  Dirección *
                   <input
                     ref={addressRef}
                     type="text"
                     value={buyerAddress}
                     onChange={(e) => setBuyerAddress(e.target.value)}
-                    placeholder="Calle 123, depto 4B, barrio…"
-                    aria-invalid={!!formError}
-                    aria-describedby="addr-error"
                   />
                 </label>
 
                 {formError && (
-                  <p id="addr-error" className="form-error">{formError}</p>
+                  <p className="form-error">{formError}</p>
                 )}
               </>
             )}
 
             <label className="opt">
-              Hora de entrega / listo:
+              Hora:
               <input
                 type="time"
                 value={readyTime}
@@ -175,7 +186,7 @@ const Cart = () => {
             </label>
 
             <label className="opt">
-              Método de pago:
+              Método:
               <select
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
@@ -187,75 +198,40 @@ const Cart = () => {
             </label>
 
             <label className="opt opt--full">
-              Comentarios / Nota del pedido:
+              Nota:
               <textarea
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
-                rows={3}
-                placeholder="Sin cebolla, extra cheddar, dejar en portería, etc."
               />
             </label>
           </div>
 
+          {/* TOTALES */}
           <div className="cart__totals">
             <p>Subtotal: ${subtotal}</p>
             <p>Envío: ${envioCalc}</p>
             <p><b>Total: ${totalCalc}</b></p>
           </div>
 
+          {/* ACCIONES */}
           <div className="cart__actions">
-            <button onClick={clearCart} className="btn-danger">Vaciar carrito</button>
-            <button onClick={handleCheckout} className="btn-primary">Comprar</button>
+            <button onClick={clearCart} className="btn-danger">
+              Vaciar carrito
+            </button>
+            <button onClick={handleCheckout} className="btn-primary">
+              Comprar
+            </button>
           </div>
         </>
       )}
 
+      {/* CONFIRMACIÓN */}
       {lastOrder && (
         <div className="order-confirm">
           <h3>¡Gracias por tu compra!</h3>
-          <p>Nº de orden: <b>#{lastOrder.number}</b></p>
+          <p>Nº orden: <b>#{lastOrder.number}</b></p>
 
-          {lastOrder.logistics?.readyAt && (
-            <p>
-              Hora lista:{" "}
-              <b>{new Date(lastOrder.logistics.readyAt).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}</b>
-            </p>
-          )}
-
-          <p>
-            Envío: <b>{lastOrder.logistics?.includeEnvio ? 'Sí' : 'No'}</b>
-          </p>
-
-          {lastOrder.logistics?.includeEnvio && (
-            <p>
-              Entrega a: <b>{lastOrder.buyer?.nombre || 'Invitado'}</b>
-              {lastOrder.buyer?.telefono ? ` — ${lastOrder.buyer.telefono}` : ''}
-              <br />
-              {lastOrder.buyer?.direccion}
-            </p>
-          )}
-
-          <p>
-            Pagado: <b>{lastOrder.payment?.paid ? 'Sí' : 'No'}</b>
-            {lastOrder.payment?.paid && lastOrder.payment?.method && (
-              <> — Método: <b>{lastOrder.payment.method}</b></>
-            )}
-          </p>
-
-          {lastOrder.note && (
-            <p><b>Nota:</b> {lastOrder.note}</p>
-          )}
-
-          <ul>
-            {lastOrder.items.map(it => (
-              <li key={`${it.id}-${it.tipo}`}>
-                {it.name} - {it.tipo} x {it.quantity} = ${it.subtotal}
-              </li>
-            ))}
-          </ul>
-          <p>Subtotal: ${lastOrder.summary.subtotal}</p>
-          <p>Envío: ${lastOrder.summary.envio}</p>
-          <p><b>Total: ${lastOrder.summary.total}</b></p>
+          <p>Total: <b>${lastOrder.summary.total}</b></p>
         </div>
       )}
     </div>

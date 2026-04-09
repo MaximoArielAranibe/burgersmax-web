@@ -1,8 +1,9 @@
 // src/components/ProductCard.jsx
+
 import React from "react";
 import { toARS } from "../utils/currency";
 
-// Función para parsear variantes y ocultar "tipo" en productos de papas
+// La lógica para parsear las variantes es correcta y se mantiene igual.
 function parseVariants(product) {
   const { price, name } = product;
   if (!price) return [];
@@ -18,7 +19,6 @@ function parseVariants(product) {
         return { tipo: k, valor: Number.isNaN(n) ? null : n };
       });
 
-  // Si es un producto de papas, no mostrar tipo
   if (name.toLowerCase().includes("papas")) {
     return variants.map(v => ({ tipo: null, valor: v.valor }));
   }
@@ -34,6 +34,7 @@ export default React.memo(function ProductCard({ product, onAdd }) {
     <div id={id} className="products__card products__card--dark">
       <div className="products__card__tag">Nuevo</div>
 
+      {/* 1. Bloque de Imagen */}
       <div className="products__card__media">
         <img
           loading="lazy"
@@ -44,6 +45,7 @@ export default React.memo(function ProductCard({ product, onAdd }) {
         />
       </div>
 
+      {/* 2. Bloque de Información (Este crecerá para empujar el footer) */}
       <div className="products__card__info">
         <div className="products__card__info-header">
           <h2 className="products__card__info-header-title">{name}</h2>
@@ -51,6 +53,7 @@ export default React.memo(function ProductCard({ product, onAdd }) {
         <p>{description}</p>
       </div>
 
+      {/* 3. Bloque Footer (Quedará siempre alineado abajo) */}
       <div className="products__card__footer">
         {variants.map(({ tipo, valor }) => {
           const hasPrice = typeof valor === "number" && Number.isFinite(valor);
@@ -58,13 +61,10 @@ export default React.memo(function ProductCard({ product, onAdd }) {
 
           return (
             <div key={`${id}-${tipo}`} className="products__card__footer-row">
-              {/* Bloque IZQ: variante + precio */}
               <div className="products__card__footer-price">
                 {tipo && <span className="products__card__footer-price-type">{tipo}</span>}
                 <span className="products__card__footer-price-value">{shown}</span>
               </div>
-
-              {/* Bloque DER: botón */}
               <button
                 className="products__card__footer-btn"
                 disabled={!hasPrice}

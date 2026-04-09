@@ -6,9 +6,9 @@
     "imagePosition": "50% 74%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
     "price": [
-      { "simple": 7000 },
-      { "doble": 8500 },
-      { "triple": 10000 }
+      { "simple": 8000 },
+      { "doble": 11000 },
+      { "triple": 14000 }
     ]
   },
   {
@@ -18,21 +18,21 @@
     "imagePosition": "50% 80%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
     "price": [
-      { "simple": 6000 },
-      { "doble": 7500 },
-      { "triple": 9000 }
+      { "simple": 8000 },
+      { "doble": 11000 },
+      { "triple": 14000 }
     ]
   },
   {
     "id": 3,
     "name": "Oklahoma",
     "thumbnail": "https://images.unsplash.com/photo-1603508102983-99b101395d1a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "imagePosition": "50% 50%",
+    "imagePosition": "50% 38%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
     "price": [
-      { "simple": 7000 },
-      { "doble": 8500 },
-      { "triple": 10000 }
+      { "simple": 8000 },
+      { "doble": 11000 },
+      { "triple": 14000 }
     ]
   },
   {
@@ -42,9 +42,9 @@
     "imagePosition": "50% 40%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
     "price": [
-      { "simple": 7000 },
-      { "doble": 8500 },
-      { "triple": 10000 }
+      { "simple": 8000 },
+      { "doble": 11000 },
+      { "triple": 14000 }
     ]
   },
   {
@@ -54,21 +54,21 @@
     "imagePosition": "60% 50%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
     "price": [
-      { "simple": 7000 },
-      { "doble": 8500 },
-      { "triple": 10000 }
+      { "simple": 8000 },
+      { "doble": 11000 },
+      { "triple": 14000 }
     ]
   },
   {
     "id": 6,
     "name": "Provoleta",
     "thumbnail": "https://i.ibb.co/TMhtPs54/provoleta-triple.jpg",
-    "imagePosition": "50% 35%",
+    "imagePosition": "50% 65%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
     "price": [
-      { "simple": 7000 },
-      { "doble": 8500 },
-      { "triple": 10000 }
+      { "simple": 8000 },
+      { "doble": 11000 },
+      { "triple": 14000 }
     ]
   },
   {
@@ -78,9 +78,9 @@
     "imagePosition": "50% 50%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
     "price": [
-      { "simple": 6000 },
-      { "doble": 7500 },
-      { "triple": 9000 }
+      { "simple": 8000 },
+      { "doble": 11000 },
+      { "triple": 14000 }
     ]
   },
   {
@@ -90,7 +90,7 @@
     "imagePosition": "50% 50%",
     "description": "Porción individual de papas fritas",
     "price": [
-      { "simple": 1500 }
+      { "simple": 2500 }
     ]
   },
   {
@@ -100,7 +100,7 @@
     "imagePosition": "50% 50%",
     "description": "Bandeja de papas fritas simples",
     "price": [
-      { "simple": 4500 }
+      { "simple": 6000 }
     ]
   },
   {
@@ -110,7 +110,7 @@
     "imagePosition": "50% 50%",
     "description": "Bandeja de papas fritas con cheddar",
     "price": [
-      { "simple": 5500 }
+      { "simple": 7500 }
     ]
   },
   {
@@ -120,7 +120,7 @@
     "imagePosition": "50% 50%",
     "description": "Bandeja de papas fritas con cheddar y panceta",
     "price": [
-      { "simple": 6500 }
+      { "simple": 9000 }
     ]
   },
   {
@@ -130,7 +130,7 @@
     "imagePosition": "50% 50%",
     "description": "220grs lomo, jamón, queso, lechuga, tomate, doble huevo",
     "price": [
-      { "simple": 12500 }
+      { "simple": 17500 }
     ]
   }
 ]
