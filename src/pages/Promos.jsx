@@ -1,10 +1,14 @@
-// src/pages/Promos.jsx
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import promosPorDia from "../mocks/promos.json";
 import { useCart } from "../context/CartContext.jsx";
-import "../styles/products.scss";
+import "../styles/promos.scss";
+import promo1 from '../assets/PROMO-1.png';
+import promo2 from '../assets/PROMO-2.png';
+import promo3 from '../assets/PROMO-3.png';
+import promo4 from '../assets/PROMO-4.png';
+import promo5 from '../assets/PROMO-5.png';
+import promo6 from '../assets/PROMO-6.png';
 
-// Utilidad para formatear precios en ARS
 const fmtARS = (n) =>
   n.toLocaleString("es-AR", {
     style: "currency",
@@ -12,45 +16,63 @@ const fmtARS = (n) =>
     maximumFractionDigits: 0,
   });
 
-// Combos fijos que siempre están disponibles
 const combosFijos = [
-  { nombre: "2 Dobles Cheddar + Bandeja de Papas con Cheddar", precio: 19500 },
+  {
+    nombre: "2 Dobles Cheddar + Bandeja de Papas con Cheddar",
+    precio: 26000,
+    thumbnail: promo1,
+  },
   {
     nombre: "2 Dobles Cheddar + Bandeja de Papas con Cheddar y Panceta",
-    precio: 20500,
+    precio: 27500,
+    thumbnail: promo2,
   },
   {
-    nombre: "2 Panceta & BBQ Triples + Bandeja de Papas con Cheddar y Panceta",
-    precio: 25500,
+    nombre:
+      "2 Panceta & BBQ Triples + Bandeja de Papas con Cheddar y Panceta",
+    precio: 32500,
+    thumbnail: promo3,
   },
   {
-    nombre: "2 Dobles Cheddar Picante + Bandeja de Papas con Cheddar y Panceta",
-    precio: 19000,
+    nombre:
+      "2 Dobles Cheddar Picante + Bandeja de Papas con Cheddar y Panceta",
+    precio: 27500,
+    thumbnail: promo4,
   },
-  { nombre: "2 Completas Triples + Bandeja de Papas con Cheddar", precio: 24500 },
-  { nombre: "2 Completas Dobles + Bandeja de Papas con Cheddar", precio: 21500 },
+  {
+    nombre: "2 Completas Triples + Bandeja de Papas con Cheddar",
+    precio: 33000,
+    thumbnail: promo5,
+  },
+  {
+    nombre: "2 Completas Dobles + Bandeja de Papas con Cheddar",
+    precio: 28000,
+    thumbnail: promo6,
+  },
 ];
+
+const diasMap = {
+  0: "domingo",
+  4: "jueves",
+  5: "viernes",
+  6: "sabado",
+};
 
 export const Promos = () => {
   const [dia, setDia] = useState(new Date().getDay());
   const { addToCart } = useCart();
 
-  // Mapeo explícito de días
-  const diasMap = useMemo(
-    () => ({
-      0: "domingo",
-      4: "jueves",
-      5: "viernes",
-      6: "sabado",
-    }),
-    []
-  );
-
   const nombreDia = diasMap[dia];
-  const promosDelDia = (nombreDia && promosPorDia[nombreDia]) || [];
 
-  // Mezclamos los combos del día + los combos fijos
-  const todosPromos = [...promosDelDia, ...combosFijos];
+  const promosDelDia = useMemo(() => {
+    if (!nombreDia) return [];
+    return promosPorDia[nombreDia] || [];
+  }, [nombreDia]);
+
+  const promos = useMemo(
+    () => [...promosDelDia, ...combosFijos],
+    [promosDelDia]
+  );
 
   const handleAdd = (promo, index) => {
     const id =
@@ -67,14 +89,11 @@ export const Promos = () => {
   };
 
   return (
-    <section
-      className="promos"
-      style={{ maxWidth: 900, margin: "0 auto", padding: "16px" }}
-    >
-      <header
-        style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}
-      >
-        <h2 style={{ margin: 0 }}>
+    <section className="promos">
+
+      <header className="promos__header">
+
+        <h2>
           {nombreDia
             ? `Promos de ${nombreDia.charAt(0).toUpperCase() + nombreDia.slice(1)}`
             : "Promos"}
@@ -83,7 +102,6 @@ export const Promos = () => {
         <select
           value={dia}
           onChange={(e) => setDia(Number(e.target.value))}
-          style={{ marginLeft: "auto" }}
           aria-label="Elegir día"
         >
           <option value={0}>Domingo</option>
@@ -91,59 +109,86 @@ export const Promos = () => {
           <option value={5}>Viernes</option>
           <option value={6}>Sábado</option>
         </select>
+
       </header>
 
-      {todosPromos.length ? (
-        <ul
-          style={{
-            listStyle: "none",
-            padding: 0,
-            display: "grid",
-            gap: 12,
-          }}
-        >
-          {todosPromos.map((promo, i) => (
-            <li
-              key={promo.id || `promo-${i}`}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr auto",
-                gap: 12,
-                alignItems: "center",
-                background: "#fff",
-                border: "1px solid #e5e7eb",
-                borderRadius: 12,
-                padding: "12px 14px",
-                boxShadow: "0 8px 20px rgba(17,24,39,0.06)",
-              }}
+
+      <div className="promos__container">
+
+        {promos.length ? (
+
+          promos.map((promo, i) => (
+
+            <article
+              key={promo.id || i}
+              className="promos__card"
             >
-              <div style={{ minWidth: 0 }}>
-                <div style={{ fontWeight: 800 }}>{promo.nombre}</div>
-                <div style={{ color: "#6b7280", fontWeight: 700 }}>
-                  {fmtARS(promo.precio)}
-                </div>
+
+              {promo.thumbnail && (
+
+                <img
+                  src={promo.thumbnail}
+                  alt={promo.nombre}
+                  className="promos__image"
+                  loading="lazy"
+                />
+
+              )}
+
+
+              <div className="promos__name">
+
+                {promo.nombre}
+
               </div>
-              <button
-                onClick={() => handleAdd(promo, i)}
-                style={{
-                  appearance: "none",
-                  border: "1px solid #e5e7eb",
-                  background: "#111",
-                  color: "#fff",
-                  borderRadius: 10,
-                  padding: "10px 12px",
-                  fontWeight: 800,
-                  cursor: "pointer",
-                }}
-              >
-                Agregar al carrito
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Hoy no hay promos disponibles</p>
-      )}
+
+
+              <div className="promos__footer">
+
+                <div className="promos__price">
+
+                  <span className="promos__price-label">
+
+                    precio
+
+                  </span>
+
+                  <span className="promos__price-value">
+
+                    {fmtARS(promo.precio)}
+
+                  </span>
+
+                </div>
+
+
+                <button
+                  className="promos__btn"
+                  onClick={() => handleAdd(promo, i)}
+                >
+
+                  Agregar
+
+                </button>
+
+              </div>
+
+            </article>
+
+          ))
+
+        ) : (
+
+          <p style={{ color: "white" }}>
+
+            Hoy no hay promos disponibles
+
+          </p>
+
+        )}
+
+      </div>
+
     </section>
   );
 };

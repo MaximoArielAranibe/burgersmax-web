@@ -1,123 +1,146 @@
 {
   "jueves": [
     {
-      "nombre": "1 Doble Oklahoma PROMO",
-      "precio": 7000,
-      "markers": {
-        "hamburgesas": 1,
-        "medallones": 2
-      }
-    },
-    {
-      "nombre": "2 Triple Cheddar PROMO",
-      "precio": 15500,
-      "markers": {
-        "hamburgesas": 2,
-        "medallones": 6
-      }
-    },
-    {
-      "nombre": "2 Doble Quesita PROMO",
-      "precio": 14500,
+      "nombre": "2 Doble Cheddar PROMO",
+      "precio": 21000,
       "markers": {
         "hamburgesas": 2,
         "medallones": 4
-      }
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
+    },
+    {
+      "nombre": "2 Doble OKLAHOMA + PAPAS",
+      "precio": 20000,
+      "markers": {
+        "hamburgesas": 2,
+        "medallones": 4
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
+    },
+    {
+      "nombre": "4 Simple Cheddar PROMO",
+      "precio": 28000,
+      "markers": {
+        "hamburgesas": 4,
+        "medallones": 4
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
+    },
+    {
+      "nombre": "2 Doble Panceta y BBQ PROMO",
+      "precio": 21500,
+      "markers": {
+        "hamburgesas": 2,
+        "medallones": 4
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
     }
   ],
   "viernes": [
     {
       "nombre": "2 Doble Cheddar PROMO",
-      "precio": 14500,
+      "precio": 21000,
       "markers": {
         "hamburgesas": 2,
         "medallones": 4
-      }
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
     },
     {
       "nombre": "4 Simple Cheddar PROMO",
-      "precio": 23000,
+      "precio": 28000,
       "markers": {
         "hamburgesas": 4,
         "medallones": 4
-      }
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
     },
     {
       "nombre": "2 Doble Panceta y BBQ PROMO",
-      "precio": 18000,
+      "precio": 21500,
       "markers": {
         "hamburgesas": 2,
         "medallones": 4
-      }
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
     }
   ],
   "sabado": [
     {
       "nombre": "2 Doble Cheddar PROMO",
-      "precio": 14500,
+      "precio": 21000,
       "markers": {
         "hamburgesas": 2,
         "medallones": 4
-      }
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
     },
     {
       "nombre": "2 Triple Cheddar PROMO",
-      "precio": 17500,
+      "precio": 26000,
       "markers": {
         "hamburgesas": 2,
         "medallones": 6
-      }
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
     },
     {
       "nombre": "2 Doble Quesita PROMO",
-      "precio": 16500,
+      "precio": 22000,
       "markers": {
         "hamburgesas": 2,
         "medallones": 4
-      }
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
     },
     {
       "nombre": "2 Doble Picante PROMO",
-      "precio": 12500,
+      "precio": 21000,
       "markers": {
         "hamburgesas": 2,
         "medallones": 4
-      }
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
     },
     {
       "nombre": "1 Doble CHEDDAR + PAPAS INDIVIDAULES PROMO",
-      "precio": 8500,
+      "precio": 13000,
       "markers": {
         "hamburgesas": 1,
         "medallones": 4,
         "papas": 1
-      }
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
     }
   ],
   "domingo": [
     {
       "nombre": "2 Doble Cheddar PROMO",
-      "precio": 14500,
+      "precio": 21000,
       "markers": {
         "hamburgesas": 2,
         "medallones": 4
-      }
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
     },
     {
       "nombre": "2 Triple Cheddar PROMO",
-      "precio": 17500,
+      "precio": 26000,
       "markers": {
         "hamburgesas": 2,
         "medallones": 6
-      }
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
     },
     {
       "nombre": "1 Triple Panceta y BBQ PROMO",
-      "precio": 9500,
+      "precio": 13000,
       "markers": {
         "hamburgesas": 1,
         "medallones": 3
-      }
+      },
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
     }
   ]
 }

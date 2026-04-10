@@ -20,7 +20,7 @@
     "price": [
       { "simple": 8000 },
       { "doble": 11000 },
-      { "triple": 14000 }
+      { "triple": 13500 }
     ]
   },
   {
@@ -131,6 +131,16 @@
     "description": "220grs lomo, jamón, queso, lechuga, tomate, doble huevo",
     "price": [
       { "simple": 17500 }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Adicional bacon",
+    "thumbnail": "https://i.ibb.co/Nt6Z0Gt/bandeja-papas-cheddar-panceta.jpg",
+    "imagePosition": "50% 50%",
+    "description": "Adicional bacon para hamburguesa o papas",
+    "price": [
+      { "simple": 1000 }
     ]
   }
 ]
