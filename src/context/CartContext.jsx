@@ -69,7 +69,7 @@ export const CartProvider = ({ children }) => {
   const clearCart = () => setCart([]);
 
   // ---------- Checkout ----------
-  const checkout = (options = {}) => {
+/*   const checkout = (options = {}) => {
     if (!cart.length) return null;
 
     const {
@@ -102,6 +102,94 @@ export const CartProvider = ({ children }) => {
     setOrderCounter(newNumber);
     setCart([]); // atómico respecto al snapshot actual
     return order;
+  }; */
+
+
+  const checkout = (options = {}) => {
+
+    if (!cart.length) return null;
+
+    const {
+      buyer = { nombre: 'Invitado' },
+
+      includeEnvio = false,
+
+      envioCost = costoEnvio, // 👈 recibe el costo elegido
+
+      readyAt = null,
+
+      paid = false,
+
+      paymentMethod = null,
+
+      note = ''
+
+    } = options;
+
+    const envio =
+      includeEnvio
+        ? Number(envioCost || costoEnvio)
+        : 0;
+
+    const total =
+      subtotal + envio;
+
+    const newNumber =
+      Number(orderCounter) + 1;
+
+    const order = {
+
+      id: `ORD-${newNumber}`,
+
+      number: newNumber,
+
+      createdAt: new Date().toISOString(),
+
+      buyer,
+
+      items: cart.map(cartItemToOrderItem),
+
+      summary: {
+
+        subtotal,
+
+        envio,
+
+        total
+
+      },
+
+      logistics: {
+
+        includeEnvio,
+
+        readyAt
+
+      },
+
+      payment: {
+
+        paid: !!paid,
+
+        method:
+          paid ? paymentMethod : null
+
+      },
+
+      note,
+
+      status: 'CREATED',
+
+    };
+
+    setOrders(prev => [order, ...prev]);
+
+    setOrderCounter(newNumber);
+
+    setCart([]);
+
+    return order;
+
   };
 
   // ---------- Gestión pedidos ----------
@@ -149,21 +237,119 @@ export const CartProvider = ({ children }) => {
       })
     );
 
+  /*  const updateOrderShipping = (orderId, includeEnvio) =>
+     setOrders(prev =>
+       prev.map(o => {
+         if (o.id !== orderId) return o;
+         const subtotalSafe =
+           o.summary?.subtotal ??
+           o.items.reduce((a, it) => a + it.unitPrice * it.quantity, 0);
+         const envio = includeEnvio ? costoEnvio : 0;
+         return {
+           ...o,
+           logistics: { ...(o.logistics || {}), includeEnvio },
+           summary: { subtotal: subtotalSafe, envio, total: subtotalSafe + envio }
+         };
+       })
+     ); */
+
+
   const updateOrderShipping = (orderId, includeEnvio) =>
     setOrders(prev =>
       prev.map(o => {
+
         if (o.id !== orderId) return o;
+
         const subtotalSafe =
           o.summary?.subtotal ??
-          o.items.reduce((a, it) => a + it.unitPrice * it.quantity, 0);
-        const envio = includeEnvio ? costoEnvio : 0;
+          o.items.reduce(
+            (a, it) => a + it.unitPrice * it.quantity,
+            0
+          );
+
+        // si ya tenía envío, lo respetamos
+        const currentEnvio =
+          o.summary?.envio ?? costoEnvio;
+
+        const envio =
+          includeEnvio
+            ? currentEnvio
+            : 0;
+
         return {
+
           ...o,
-          logistics: { ...(o.logistics || {}), includeEnvio },
-          summary: { subtotal: subtotalSafe, envio, total: subtotalSafe + envio }
+
+          logistics: {
+
+            ...(o.logistics || {}),
+            includeEnvio
+
+          },
+
+          summary: {
+
+            ...o.summary,
+
+            subtotal: subtotalSafe,
+
+            envio,
+
+            total: subtotalSafe + envio
+
+          }
+
         };
+
       })
     );
+
+    const updateOrderShippingCost = (orderId, cost) =>
+
+      setOrders(prev =>
+
+        prev.map(o => {
+
+          if (o.id !== orderId) return o;
+
+          const envio = Number(cost);
+
+          const subtotalSafe =
+            o.summary?.subtotal ??
+            o.items.reduce(
+              (a, it) => a + it.unitPrice * it.quantity,
+              0
+            );
+
+          return {
+
+            ...o,
+
+            logistics: {
+
+              ...(o.logistics || {}),
+
+              includeEnvio: envio > 0
+
+            },
+
+            summary: {
+
+              ...o.summary,
+
+              envio,
+
+              subtotal: subtotalSafe,
+
+              total: subtotalSafe + envio
+
+            }
+
+          };
+
+        })
+
+      );
 
   const updateOrderAddress = (orderId, patch) =>
     setOrders(prev =>
@@ -191,7 +377,8 @@ export const CartProvider = ({ children }) => {
     updateOrderPayment,
     toggleOrderPaid,
     updateOrderShipping,
-    updateOrderAddress
+    updateOrderAddress,
+    updateOrderShippingCost
   }), [cart, itemCount, subtotal, orders]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

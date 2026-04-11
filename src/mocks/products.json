@@ -7,7 +7,7 @@
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
     "price": [
       { "simple": 8000 },
-      { "doble": 11000 },
+      { "doble": 11500 },
       { "triple": 14000 }
     ]
   },

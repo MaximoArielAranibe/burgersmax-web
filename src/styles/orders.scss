@@ -1,7 +1,7 @@
 .orders {
 
   padding: 20px;
-  background: #f5f5f5;
+  background: #f3f4f6;
   min-height: 100vh;
 
 }
@@ -9,27 +9,27 @@
 
 /* header */
 
-.orders__header {
+.ordersTop {
 
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
   margin-bottom: 20px;
 
 }
 
 
-.orders__summaryGlobal {
+.globalStats {
 
   display: flex;
-  gap: 16px;
-  font-size: 14px;
+  gap: 20px;
+  margin-top: 6px;
+  font-size: 13px;
 
 }
 
 
-.orders__summaryGlobal b {
+.globalStats b {
 
   display: block;
   font-size: 18px;
@@ -37,51 +37,62 @@
 }
 
 
-/* grid pedidos */
+/* grid */
 
-.orders__grid {
-
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.ordersGrid {
 
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(320px,1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill,minmax(340px,1fr));
+  gap: 18px;
 
 }
 
 
-/* card pedido */
+/* card */
 
 .orderCard {
 
   background: white;
-  border-radius: 14px;
-  padding: 14px;
+  border-radius: 16px;
+  padding: 16px;
 
   display: grid;
   gap: 10px;
 
-  box-shadow: 0 4px 12px rgba(0,0,0,.05);
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
 
-  border: 1px solid #eee;
+  border: 1px solid #e5e7eb;
+
+  transition: .15s;
 
 }
 
 
-/* top */
+.orderCard:hover {
 
-.orderCard__top {
+  transform: translateY(-2px);
+
+}
+
+
+.orderCard.FINISHED {
+
+  opacity: .65;
+
+}
+
+
+/* header */
+
+.cardHeader {
 
   display: flex;
   justify-content: space-between;
-  align-items: center;
 
 }
 
 
-.orderCard__number {
+.orderNumber {
 
   font-weight: 800;
   font-size: 18px;
@@ -89,17 +100,17 @@
 }
 
 
-.orderCard__time {
+.orderTime {
 
   font-size: 12px;
-  color: #666;
+  color: #777;
 
 }
 
 
 /* estado */
 
-.badge {
+.status {
 
   padding: 4px 10px;
   border-radius: 999px;
@@ -109,7 +120,7 @@
 }
 
 
-.badge--PENDING {
+.status.PENDING {
 
   background: #fde68a;
   color: #92400e;
@@ -117,7 +128,7 @@
 }
 
 
-.badge--FINISHED {
+.status.FINISHED {
 
   background: #bbf7d0;
   color: #065f46;
@@ -127,40 +138,38 @@
 
 /* cliente */
 
-.orderCard__buyer {
+.client {
 
   font-size: 14px;
-  display: grid;
-  gap: 2px;
 
 }
 
 
-.buyer__name {
+.name {
 
   font-weight: 700;
-  font-size: 15px;
 
 }
 
 
-.buyer__phone {
+.phone {
 
-  color: #444;
+  color: #555;
 
 }
 
 
-.buyer__address {
+.address {
 
-  color: #111;
+  color: black;
+  font-size: 13px;
 
 }
 
 
 /* stats */
 
-.orderCard__stats {
+.stats {
 
   display: flex;
   gap: 6px;
@@ -169,109 +178,61 @@
 }
 
 
-.stat {
+.stats span {
 
-  font-size: 13px;
-  font-weight: 700;
+  background: #111827;
+  color: white;
   padding: 3px 8px;
   border-radius: 999px;
-
-}
-
-
-.stat--burger {
-
-  background: #2563eb;
-  color: white;
-
-}
-
-
-.stat--meat {
-
-  background: #10b981;
-  color: white;
-
-}
-
-
-.stat--fries {
-
-  background: #fde047;
-  color: black;
-
-}
-
-
-.stat--tray {
-
-  background: #f59e0b;
-  color: white;
-
-}
-
-
-.stat--lomo {
-
-  background: #22c55e;
-  color: white;
+  font-size: 12px;
 
 }
 
 
 /* items */
 
-.orderCard__items {
-
-  display: grid;
-  gap: 3px;
-
-  font-size: 14px;
+.items {
 
   border-top: 1px dashed #ddd;
   border-bottom: 1px dashed #ddd;
 
   padding: 6px 0;
 
+  display: grid;
+  gap: 3px;
+
 }
 
 
-.orderCard__items li {
+.item {
 
   display: flex;
   justify-content: space-between;
-  align-items: center;
-
-  gap: 6px;
+  color: black;
+  font-size: 14px;
 
 }
 
 
-.item__qty {
+.qty {
 
   font-weight: 700;
 
 }
 
 
-.item__name {
+.iname {
 
   flex: 1;
+  padding-left: 6px;
 
 }
 
 
-.item__tipo {
+.iname small {
 
-  font-size: 12px;
   color: #777;
-
-}
-
-
-.item__price {
-
-  font-weight: 700;
+  margin-left: 6px;
 
 }
 
@@ -281,27 +242,14 @@
 textarea {
 
   width: 100%;
-
   border-radius: 8px;
   border: 1px solid #ddd;
-
   padding: 6px;
-  font-size: 13px;
-
-  resize: vertical;
-
+  min-height: 100px;
 }
 
 
-textarea:focus {
-
-  outline: none;
-  border-color: #2563eb;
-
-}
-
-
-/* direccion */
+/* address */
 
 .addressBox {
 
@@ -320,17 +268,9 @@ textarea:focus {
 }
 
 
-.addressBox input:focus {
+/* controls */
 
-  outline: none;
-  border-color: #2563eb;
-
-}
-
-
-/* controles */
-
-.orderCard__controls {
+.controls {
 
   display: grid;
   gap: 6px;
@@ -338,7 +278,18 @@ textarea:focus {
 }
 
 
-.orderCard__controls select {
+.check {
+  color: black;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
+  font-size: 13px;
+
+}
+
+
+select {
 
   padding: 6px;
   border-radius: 8px;
@@ -347,58 +298,32 @@ textarea:focus {
 }
 
 
-.orderCard__controls label {
+/* total */
 
-  display: flex;
-  gap: 6px;
-  align-items: center;
+.total {
 
-  font-size: 14px;
-
-}
-
-
-/* footer */
-
-.orderCard__footer {
-
-  display: flex;
-  justify-content: space-between;
-
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 800;
+  text-align: right;
 
 }
 
 
-/* botones */
+/* buttons */
 
-button {
-
-  cursor: pointer;
-
-  border: none;
+.btn {
 
   padding: 6px 10px;
-
   border-radius: 8px;
+  border: none;
+  cursor: pointer;
 
-  font-weight: 600;
-
-  font-size: 13px;
-
-}
-
-
-.btn-danger {
-
-  background: #dc2626;
-  color: white;
+  background: #e5e7eb;
 
 }
 
 
-.btn-print {
+.btn.print {
 
   background: black;
   color: white;
@@ -406,21 +331,137 @@ button {
 }
 
 
-button:hover {
+.btn.danger {
 
-  opacity: .85;
+  background: #dc2626;
+  color: white;
 
 }
 
 
 /* responsive */
 
-@media (max-width: 600px) {
+@media (max-width:600px){
 
-  .orders {
+  .ordersGrid {
 
-    padding: 12px;
+    grid-template-columns: 1fr;
 
   }
+
+}
+
+/* cliente destacado */
+
+.clientBox {
+
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 10px;
+
+  border: 1px solid #e5e7eb;
+
+  display: grid;
+  gap: 4px;
+
+}
+
+
+.clientMain {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+
+}
+
+
+.clientName {
+
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+
+}
+
+
+.clientPhone {
+
+  font-size: 13px;
+  color: #374151;
+  font-weight: 600;
+
+}
+
+
+.clientAddress {
+
+  font-size: 13px;
+  color: #111827;
+
+  padding-top: 4px;
+  border-top: 1px dashed #ddd;
+
+}
+
+.priceBox {
+
+  background: #ffffff;
+
+  border-radius: 12px;
+
+  padding: 12px;
+
+  border: 1px solid #e5e7eb;
+
+  margin-top: 10px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+}
+
+
+.priceLine {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 13px;
+
+  color: #374151;
+
+}
+
+
+.priceLine.envio {
+
+  color: #111827;
+
+  font-weight: 600;
+
+}
+
+
+.priceTotal {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 18px;
+
+  font-weight: 800;
+
+  padding-top: 6px;
+
+  margin-top: 6px;
+
+  border-top: 2px solid #111827;
 
 }
