@@ -14,7 +14,8 @@
       "precio": 20000,
       "markers": {
         "hamburgesas": 2,
-        "medallones": 4
+        "medallones": 4,
+        "papas": 2
       },
       "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"
     },
@@ -108,7 +109,7 @@
       "precio": 13000,
       "markers": {
         "hamburgesas": 1,
-        "medallones": 4,
+        "medallones": 2,
         "papas": 1
       },
       "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png"

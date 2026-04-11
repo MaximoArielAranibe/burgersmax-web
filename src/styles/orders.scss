@@ -1,467 +1,455 @@
-.orders {
+// ─── Design tokens ────────────────────────────────────────────────────────────
 
-  padding: 20px;
-  background: #f3f4f6;
+$color-bg:          #f3f4f6;
+$color-surface:     #ffffff;
+$color-surface-alt: #f9fafb;
+$color-border:      #e5e7eb;
+$color-border-dash: #d1d5db;
+$color-text:        #111827;
+$color-text-muted:  #6b7280;
+$color-text-mid:    #374151;
+
+$color-pending-bg:  #fde68a;
+$color-pending-fg:  #92400e;
+$color-done-bg:     #bbf7d0;
+$color-done-fg:     #065f46;
+
+$color-danger:      #dc2626;
+$color-danger-hover:#b91c1c;
+$color-dark:        #111827;
+$color-dark-hover:  #1f2937;
+
+$radius-sm:  8px;
+$radius-md:  12px;
+$radius-lg:  16px;
+$radius-pill: 999px;
+
+$shadow-card: 0 4px 16px rgba(0, 0, 0, 0.07);
+$transition:  0.15s ease;
+
+// ─── Mixins ───────────────────────────────────────────────────────────────────
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin surface($radius: $radius-lg) {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+}
+
+// ─── Page shell ──────────────────────────────────────────────────────────────
+
+.orders {
+  padding: 24px;
+  background: $color-bg;
   min-height: 100vh;
 
-}
-
-
-/* header */
-
-.ordersTop {
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-
-}
-
-
-.globalStats {
-
-  display: flex;
-  gap: 20px;
-  margin-top: 6px;
-  font-size: 13px;
-
-}
-
-
-.globalStats b {
-
-  display: block;
-  font-size: 18px;
-
-}
-
-
-/* grid */
-
-.ordersGrid {
-
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(340px,1fr));
-  gap: 18px;
-
-}
-
-
-/* card */
-
-.orderCard {
-
-  background: white;
-  border-radius: 16px;
-  padding: 16px;
-
-  display: grid;
-  gap: 10px;
-
-  box-shadow: 0 6px 18px rgba(0,0,0,.06);
-
-  border: 1px solid #e5e7eb;
-
-  transition: .15s;
-
-}
-
-
-.orderCard:hover {
-
-  transform: translateY(-2px);
-
-}
-
-
-.orderCard.FINISHED {
-
-  opacity: .65;
-
-}
-
-
-/* header */
-
-.cardHeader {
-
-  display: flex;
-  justify-content: space-between;
-
-}
-
-
-.orderNumber {
-
-  font-weight: 800;
-  font-size: 18px;
-
-}
-
-
-.orderTime {
-
-  font-size: 12px;
-  color: #777;
-
-}
-
-
-/* estado */
-
-.status {
-
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-
-}
-
-
-.status.PENDING {
-
-  background: #fde68a;
-  color: #92400e;
-
-}
-
-
-.status.FINISHED {
-
-  background: #bbf7d0;
-  color: #065f46;
-
-}
-
-
-/* cliente */
-
-.client {
-
-  font-size: 14px;
-
-}
-
-
-.name {
-
-  font-weight: 700;
-
-}
-
-
-.phone {
-
-  color: #555;
-
-}
-
-
-.address {
-
-  color: black;
-  font-size: 13px;
-
-}
-
-
-/* stats */
-
-.stats {
-
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-
-}
-
-
-.stats span {
-
-  background: #111827;
-  color: white;
-  padding: 3px 8px;
-  border-radius: 999px;
-  font-size: 12px;
-
-}
-
-
-/* items */
-
-.items {
-
-  border-top: 1px dashed #ddd;
-  border-bottom: 1px dashed #ddd;
-
-  padding: 6px 0;
-
-  display: grid;
-  gap: 3px;
-
-}
-
-
-.item {
-
-  display: flex;
-  justify-content: space-between;
-  color: black;
-  font-size: 14px;
-
-}
-
-
-.qty {
-
-  font-weight: 700;
-
-}
-
-
-.iname {
-
-  flex: 1;
-  padding-left: 6px;
-
-}
-
-
-.iname small {
-
-  color: #777;
-  margin-left: 6px;
-
-}
-
-
-/* nota */
-
-textarea {
-
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  padding: 6px;
-  min-height: 100px;
-}
-
-
-/* address */
-
-.addressBox {
-
-  display: grid;
-  gap: 6px;
-
-}
-
-
-.addressBox input {
-
-  padding: 6px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-
-}
-
-
-/* controls */
-
-.controls {
-
-  display: grid;
-  gap: 6px;
-
-}
-
-
-.check {
-  color: black;
-  display: flex;
-  gap: 6px;
-  align-items: center;
-
-  font-size: 13px;
-
-}
-
-
-select {
-
-  padding: 6px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-
-}
-
-
-/* total */
-
-.total {
-
-  font-size: 18px;
-  font-weight: 800;
-  text-align: right;
-
-}
-
-
-/* buttons */
-
-.btn {
-
-  padding: 6px 10px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-
-  background: #e5e7eb;
-
-}
-
-
-.btn.print {
-
-  background: black;
-  color: white;
-
-}
-
-
-.btn.danger {
-
-  background: #dc2626;
-  color: white;
-
-}
-
-
-/* responsive */
-
-@media (max-width:600px){
-
-  .ordersGrid {
-
-    grid-template-columns: 1fr;
-
+  &--empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: $color-text-muted;
   }
 
+  &__title {
+    font-size: 22px;
+    font-weight: 800;
+    color: $color-text;
+    margin: 0;
+  }
+
+  &__emptyMsg {
+    font-size: 15px;
+  }
 }
 
-/* cliente destacado */
+// ─── Top bar ──────────────────────────────────────────────────────────────────
+
+.ordersTop {
+  @include flex-between;
+  margin-bottom: 24px;
+}
+
+.globalStats {
+  display: flex;
+  gap: 24px;
+  margin-top: 8px;
+
+  &__item {
+    margin: 0;
+
+    dt {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: $color-text-muted;
+      margin-bottom: 2px;
+    }
+
+    dd {
+      font-size: 20px;
+      font-weight: 800;
+      color: $color-text;
+      margin: 0;
+    }
+  }
+}
+
+// ─── Grid ────────────────────────────────────────────────────────────────────
+
+.ordersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 18px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Card ────────────────────────────────────────────────────────────────────
+
+.orderCard {
+  @include surface($radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: $shadow-card;
+  transition: transform $transition, box-shadow $transition;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  &--FINISHED {
+    opacity: 0.6;
+  }
+}
+
+// ─── Card header ─────────────────────────────────────────────────────────────
+
+.cardHeader {
+  @include flex-between;
+
+  &__number {
+    display: block;
+    font-size: 18px;
+    font-weight: 800;
+    color: $color-text;
+  }
+
+  &__time {
+    font-size: 12px;
+    color: $color-text-muted;
+  }
+}
+
+// ─── Status badge ─────────────────────────────────────────────────────────────
+
+.statusBadge {
+  padding: 4px 12px;
+  border-radius: $radius-pill;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  &--PENDING  { background: $color-pending-bg; color: $color-pending-fg; }
+  &--FINISHED { background: $color-done-bg;    color: $color-done-fg;    }
+}
+
+// ─── Client box ──────────────────────────────────────────────────────────────
 
 .clientBox {
+  background: $color-surface-alt;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 
-  background: #f9fafb;
-  border-radius: 10px;
-  padding: 10px;
+  &__main {
+    @include flex-between;
+    gap: 8px;
+  }
 
-  border: 1px solid #e5e7eb;
+  &__name {
+    font-size: 15px;
+    font-weight: 700;
+    color: $color-text;
+  }
 
-  display: grid;
-  gap: 4px;
+  &__phone {
+    font-size: 13px;
+    font-weight: 600;
+    color: $color-text-mid;
+  }
 
+  &__address {
+    font-size: 13px;
+    color: $color-text-mid;
+    padding-top: 6px;
+    border-top: 1px dashed $color-border-dash;
+    margin: 0;
+  }
 }
 
+// ─── Stats ───────────────────────────────────────────────────────────────────
 
-.clientMain {
-
+.stats {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  &__badge {
+    background: $color-dark;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: $radius-pill;
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
+
+// ─── Items list ──────────────────────────────────────────────────────────────
+
+.items {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  border-top: 1px dashed $color-border-dash;
+  border-bottom: 1px dashed $color-border-dash;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &__row {
+    display: flex;
+    align-items: baseline;
+    font-size: 14px;
+    color: $color-text;
+  }
+
+  &__qty {
+    font-weight: 700;
+    min-width: 28px;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    flex: 1;
+    padding: 0 6px;
+  }
+
+  &__tag {
+    font-size: 11px;
+    color: $color-text-muted;
+    margin-left: 6px;
+    text-transform: capitalize;
+  }
+
+  &__price {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+}
+
+// ─── Note box ────────────────────────────────────────────────────────────────
+
+.noteBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &__label {
+    font-size: 12px;
+    font-weight: 600;
+    color: $color-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__textarea {
+    width: 100%;
+    min-height: 72px;
+    padding: 8px;
+    border-radius: $radius-sm;
+    border: 1px solid $color-border;
+    font-size: 13px;
+    color: $color-text;
+    resize: vertical;
+    transition: border-color $transition;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: $color-dark;
+    }
+  }
+}
+
+// ─── Envío section ───────────────────────────────────────────────────────────
+
+.envioSection {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 
+  &__costLabel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: $color-text-mid;
+    font-weight: 600;
+  }
 }
 
+// ─── Address box ─────────────────────────────────────────────────────────────
 
-.clientName {
+.addressBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 
-  font-size: 16px;
-  font-weight: 700;
-  color: #111827;
+  &__input {
+    padding: 8px 10px;
+    border-radius: $radius-sm;
+    border: 1px solid $color-border;
+    font-size: 13px;
+    color: $color-text;
+    transition: border-color $transition;
 
+    &:focus {
+      outline: none;
+      border-color: $color-dark;
+    }
+  }
 }
 
+// ─── Controls ────────────────────────────────────────────────────────────────
 
-.clientPhone {
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+// ─── Shared: check label ──────────────────────────────────────────────────────
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 13px;
-  color: #374151;
+  color: $color-text-mid;
+  cursor: pointer;
+  user-select: none;
+
+  input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    accent-color: $color-dark;
+  }
+}
+
+// ─── Shared: select ───────────────────────────────────────────────────────────
+
+.select {
+  padding: 6px 10px;
+  border-radius: $radius-sm;
+  border: 1px solid $color-border;
+  font-size: 13px;
+  color: $color-text;
+  background: $color-surface;
+  cursor: pointer;
+  transition: border-color $transition;
+  flex: 1;
+
+  &:focus {
+    outline: none;
+    border-color: $color-dark;
+  }
+}
+
+// ─── Shared: buttons ─────────────────────────────────────────────────────────
+
+.btn {
+  padding: 7px 12px;
+  border-radius: $radius-sm;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
   font-weight: 600;
+  transition: background $transition, opacity $transition;
 
+  &--secondary {
+    background: $color-border;
+    color: $color-text;
+
+    &:hover { background: darken($color-border, 6%); }
+  }
+
+  &--print {
+    background: $color-dark;
+    color: #fff;
+
+    &:hover { background: $color-dark-hover; }
+  }
+
+  &--danger {
+    background: $color-danger;
+    color: #fff;
+
+    &:hover { background: $color-danger-hover; }
+  }
 }
 
-
-.clientAddress {
-
-  font-size: 13px;
-  color: #111827;
-
-  padding-top: 4px;
-  border-top: 1px dashed #ddd;
-
-}
+// ─── Price summary ───────────────────────────────────────────────────────────
 
 .priceBox {
-
-  background: #ffffff;
-
-  border-radius: 12px;
-
-  padding: 12px;
-
-  border: 1px solid #e5e7eb;
-
-  margin-top: 10px;
-
+  @include surface($radius-md);
+  padding: 12px 14px;
   display: flex;
-
   flex-direction: column;
-
   gap: 4px;
 
-}
+  &__line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: $color-text-mid;
 
+    &--envio {
+      font-weight: 600;
+      color: $color-text;
+    }
+  }
 
-.priceLine {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  font-size: 13px;
-
-  color: #374151;
-
-}
-
-
-.priceLine.envio {
-
-  color: #111827;
-
-  font-weight: 600;
-
-}
-
-
-.priceTotal {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  font-size: 18px;
-
-  font-weight: 800;
-
-  padding-top: 6px;
-
-  margin-top: 6px;
-
-  border-top: 2px solid #111827;
-
+  &__total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 17px;
+    font-weight: 800;
+    color: $color-text;
+    padding-top: 8px;
+    margin-top: 4px;
+    border-top: 2px solid $color-text;
+  }
 }

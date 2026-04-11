@@ -18,16 +18,6 @@ const fmtARS = (n) =>
 
 const combosFijos = [
   {
-    nombre: "PAPAS OFERTA",
-    precio: 1000,
-    thumbnail: promo1,
-  },
-  {
-    nombre: "Triple CHEDDAR PROMO",
-    precio: 12500,
-    thumbnail: promo1,
-  },
-  {
     nombre: "DOBLE CHEDDAR + papas",
     precio: 13000,
     thumbnail: promo1,

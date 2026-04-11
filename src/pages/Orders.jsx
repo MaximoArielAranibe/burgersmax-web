@@ -3,59 +3,182 @@ import { useCart } from "../context/CartContext.jsx";
 import { printOrder } from "../services/printer.js";
 import "../styles/orders.scss";
 
-/* helpers */
+// ─── Formatters ──────────────────────────────────────────────────────────────
 
 const fmt = (n) =>
-  Number(n || 0).toLocaleString("es-AR", {
-    minimumFractionDigits: 0,
-  });
+  Number(n || 0).toLocaleString("es-AR", { minimumFractionDigits: 0 });
 
 const fdate = (iso) =>
-  new Date(iso).toLocaleTimeString("es-AR", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  new Date(iso).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" });
 
-const normalizeStatus = (s) =>
-  s === "FINISHED" ? "FINISHED" : "PENDING";
-
-const statusLabel = (s) =>
-  s === "FINISHED" ? "FINALIZADO" : "PENDIENTE";
-
-const totalBurgersCount = (items) =>
-  items.reduce((acc, it) => {
-    if (it.tipo) acc += it.quantity;
-    return acc;
-  }, 0);
-
-const calcMedallones = (items) =>
-  items.reduce((acc, it) => {
-    if (it.tipo === "simple") acc += 1 * it.quantity;
-    if (it.tipo === "doble") acc += 2 * it.quantity;
-    if (it.tipo === "triple") acc += 3 * it.quantity;
-    return acc;
-  }, 0);
-
-const totalFries = (items) =>
-  items.reduce((acc, it) => {
-    if (it.name.toLowerCase().includes("papas"))
-      acc += it.quantity;
-    return acc;
-  }, 0);
-
-const totalLomos = (items) =>
-  items.reduce((acc, it) => {
-    if (it.name.toLowerCase().includes("lomo"))
-      acc += it.quantity;
-    return acc;
-  }, 0);
-
-/* costos disponibles */
+// ─── Domain helpers ───────────────────────────────────────────────────────────
 
 const ENVIO_OPTIONS = [2000, 2500, 3000, 3500];
 
-export default function Orders() {
+const normalizeStatus = (s) => (s === "FINISHED" ? "FINISHED" : "PENDING");
 
+const STATUS_LABEL = { FINISHED: "Finalizado", PENDING: "Pendiente" };
+
+// Tipos de medallón válidos. "simple" en papas/lomos/adicionales NO cuenta.
+const MEDALLON_WEIGHT = { simple: 1, doble: 2, triple: 3 };
+
+const isFries  = (it) => it.name.toLowerCase().includes("papas");
+const isLomo   = (it) => it.name.toLowerCase().includes("lomo");
+
+// Un ítem es burger solo si su tipo es un tipo de medallón conocido
+// Y no es papas ni lomo (que también pueden llegar con tipo:"simple" del JSON).
+const isBurger = (it) =>
+  it.tipo != null &&
+  it.tipo in MEDALLON_WEIGHT &&
+  !isFries(it) &&
+  !isLomo(it);
+
+const calcStats = (items) =>
+  items.reduce(
+    (acc, it) => {
+      if (isBurger(it)) {
+        acc.burgers   += it.quantity;
+        acc.medallones += (MEDALLON_WEIGHT[it.tipo] ?? 0) * it.quantity;
+      }
+      if (isFries(it)) acc.fries += it.quantity;
+      if (isLomo(it))  acc.lomos += it.quantity;
+      return acc;
+    },
+    { burgers: 0, medallones: 0, fries: 0, lomos: 0 }
+  );
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
+
+function StatBadges({ stats }) {
+  const badges = [
+    { icon: "🍔", value: stats.burgers,   show: stats.burgers > 0 },
+    { icon: "🥩", value: stats.medallones, show: stats.medallones > 0 },
+    { icon: "🍟", value: stats.fries,     show: stats.fries > 0 },
+    { icon: "🥪", value: stats.lomos,     show: stats.lomos > 0 },
+  ];
+  return (
+    <div className="stats">
+      {badges.filter((b) => b.show).map(({ icon, value }) => (
+        <span key={icon} className="stats__badge">
+          {icon} {value}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function ItemList({ items }) {
+  return (
+    <ul className="items">
+      {items.map((it) => (
+        <li key={`${it.id}-${it.tipo}`} className="items__row">
+          <span className="items__qty">{it.quantity}×</span>
+          <span className="items__name">
+            {it.name}
+            {it.tipo && <small className="items__tag">{it.tipo}</small>}
+          </span>
+          <span className="items__price">${fmt(it.subtotal)}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ClientBox({ buyer, address, showAddress }) {
+  return (
+    <div className="clientBox">
+      <div className="clientBox__main">
+        <span className="clientBox__name">{buyer?.nombre || "Cliente"}</span>
+        {buyer?.telefono && (
+          <span className="clientBox__phone">{buyer.telefono}</span>
+        )}
+      </div>
+      {showAddress && address && (
+        <p className="clientBox__address">{address}</p>
+      )}
+    </div>
+  );
+}
+
+function AddressFields({ orderId, buyer, draft, onChange, onSave }) {
+  const field = (key, placeholder) => (
+    <input
+      className="addressBox__input"
+      placeholder={placeholder}
+      value={draft?.[key] ?? buyer?.[key] ?? ""}
+      onChange={(e) => onChange(orderId, key, e.target.value)}
+    />
+  );
+  return (
+    <div className="addressBox">
+      {field("direccion", "Dirección")}
+      {field("nombre",    "Nombre")}
+      {field("telefono",  "Teléfono")}
+      <button className="btn btn--secondary" onClick={onSave}>
+        Guardar datos
+      </button>
+    </div>
+  );
+}
+
+function PriceSummary({ subtotal, includeEnvio, envioCost }) {
+  const total = subtotal + (includeEnvio ? envioCost : 0);
+  return (
+    <div className="priceBox">
+      <div className="priceBox__line">
+        <span>Subtotal productos</span>
+        <span>${fmt(subtotal)}</span>
+      </div>
+      {includeEnvio && (
+        <div className="priceBox__line priceBox__line--envio">
+          <span>Envío</span>
+          <span>${fmt(envioCost)}</span>
+        </div>
+      )}
+      <div className="priceBox__total">
+        <span>Total</span>
+        <span>${fmt(total)}</span>
+      </div>
+    </div>
+  );
+}
+
+function OrderControls({ order, paid, method, status, onPrint, onPaid, onMethod, onStatus, onDelete }) {
+  return (
+    <div className="controls">
+      <button className="btn btn--print" onClick={onPrint}>
+        🖨 Imprimir
+      </button>
+
+      <div className="controls__row">
+        <label className="check">
+          <input type="checkbox" checked={paid} onChange={onPaid} />
+          Pagado
+        </label>
+
+        <select className="select" value={method} onChange={(e) => onMethod(e.target.value)}>
+          <option value="efectivo">Efectivo</option>
+          <option value="transferencia">Transferencia</option>
+        </select>
+      </div>
+
+      <div className="controls__row">
+        <select className="select" value={status} onChange={(e) => onStatus(e.target.value)}>
+          <option value="PENDING">Pendiente</option>
+          <option value="FINISHED">Finalizado</option>
+        </select>
+
+        <button className="btn btn--danger" onClick={onDelete}>
+          Eliminar
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main component ───────────────────────────────────────────────────────────
+
+export default function Orders() {
   const {
     orders,
     deleteOrder,
@@ -66,490 +189,198 @@ export default function Orders() {
     updateOrderAddress,
     updateOrderNote,
     updateOrderPayment,
-    updateOrderShippingCost // 👈 debe existir en el context
+    updateOrderShippingCost,
   } = useCart();
 
-  const [noteDraft, setNoteDraft] = useState({});
-  const [addrDraft, setAddrDraft] = useState({});
+  // Local UI state keyed by order id
+  const [noteDraft,  setNoteDraft]  = useState({});
+  const [addrDraft,  setAddrDraft]  = useState({});
   const [envioDraft, setEnvioDraft] = useState({});
 
-  const totalGlobal = useMemo(() =>
-    orders.reduce((acc, o) => acc + (o.summary?.total || 0), 0)
-    , [orders]);
+  // ── Derived global stats ──────────────────────────────────────────────────
+  const { totalGlobal, totalBurgersGlobal } = useMemo(() => ({
+    totalGlobal:        orders.reduce((acc, o) => acc + (o.summary?.total || 0), 0),
+    totalBurgersGlobal: orders.reduce((acc, o) => acc + calcStats(o.items).burgers, 0),
+  }), [orders]);
 
-  const totalBurgersGlobal = useMemo(() =>
-    orders.reduce((acc, o) => acc + totalBurgersCount(o.items), 0)
-    , [orders]);
+  // ── Handlers ──────────────────────────────────────────────────────────────
 
   const handleReprint = async (order) => {
-
-    // buscamos la orden actualizada del context
-
-    const updated = orders.find(o => o.id === order.id);
-
+    const updated = orders.find((o) => o.id === order.id);
     await printOrder(updated);
-
   };
-  const saveAddress = (o) => {
 
-    const d = addrDraft[o.id];
+  const handleAddrChange = (id, key, value) =>
+    setAddrDraft((prev) => ({ ...prev, [id]: { ...prev[id], [key]: value } }));
 
+  const handleSaveAddress = (o) => {
+    const d = addrDraft[o.id] ?? {};
     updateOrderAddress(o.id, {
-
-      nombre: d?.nombre ?? o.buyer?.nombre ?? "",
-      telefono: d?.telefono ?? o.buyer?.telefono ?? "",
-      direccion: d?.direccion ?? o.buyer?.direccion ?? "",
-
+      nombre:    d.nombre    ?? o.buyer?.nombre    ?? "",
+      telefono:  d.telefono  ?? o.buyer?.telefono  ?? "",
+      direccion: d.direccion ?? o.buyer?.direccion ?? "",
     });
-
   };
 
-  const handleEnvioChange = (order, value) => {
-
+  const handleEnvioChange = (id, value) => {
     const cost = Number(value);
-
-    // actualiza UI inmediata
-    setEnvioDraft(prev => ({
-      ...prev,
-      [order.id]: cost
-    }));
-
-    // actualiza context (persistente)
-    updateOrderShippingCost(order.id, cost);
-
+    setEnvioDraft((prev) => ({ ...prev, [id]: cost }));
+    updateOrderShippingCost(id, cost);
   };
 
-  if (!orders.length)
+  // ── Empty state ───────────────────────────────────────────────────────────
 
+  if (!orders.length) {
     return (
-
-      <section className="orders empty">
-
-        <h2>Pedidos</h2>
-        <p>No hay pedidos todavía</p>
-
+      <section className="orders orders--empty">
+        <h2 className="orders__title">Pedidos</h2>
+        <p className="orders__emptyMsg">No hay pedidos todavía</p>
       </section>
-
     );
+  }
+
+  // ── Render ────────────────────────────────────────────────────────────────
 
   return (
-
     <section className="orders">
-
-      <div className="ordersTop">
-
+      {/* ── Header ── */}
+      <header className="ordersTop">
         <div>
-
-          <h2>Pedidos</h2>
-
+          <h2 className="orders__title">Pedidos</h2>
           <div className="globalStats">
-
-            <div>
-
-              ventas
-              <b>${fmt(totalGlobal)}</b>
-
-            </div>
-
-            <div>
-
-              hamburguesas
-              <b>{totalBurgersGlobal}</b>
-
-            </div>
-
+            <dl className="globalStats__item">
+              <dt>Ventas</dt>
+              <dd>${fmt(totalGlobal)}</dd>
+            </dl>
+            <dl className="globalStats__item">
+              <dt>Hamburguesas</dt>
+              <dd>{totalBurgersGlobal}</dd>
+            </dl>
           </div>
-
         </div>
-
-        <button
-          className="btn danger"
-          onClick={deleteAllOrders}
-        >
-          borrar todo
+        <button className="btn btn--danger" onClick={deleteAllOrders}>
+          Borrar todo
         </button>
+      </header>
 
-      </div>
-
-
+      {/* ── Cards grid ── */}
       <div className="ordersGrid">
-
-        {orders.map(o => {
-
-          const status = normalizeStatus(o.status);
-          const paid = !!o.payment?.paid;
-          const method = o.payment?.method || "efectivo";
-
-          const includeEnvio =
-            !!o.logistics?.includeEnvio;
-
-          const envioActual =
-            envioDraft[o.id] ??
-            o.summary?.envio ??
-            ENVIO_OPTIONS[0];
-
-          const burgers = totalBurgersCount(o.items);
-          const medallones = calcMedallones(o.items);
-          const fries = totalFries(o.items);
-          const lomos = totalLomos(o.items);
+        {orders.map((o) => {
+          const status      = normalizeStatus(o.status);
+          const paid        = !!o.payment?.paid;
+          const method      = o.payment?.method || "efectivo";
+          const includeEnvio = !!o.logistics?.includeEnvio;
+          const envioCost   = envioDraft[o.id] ?? o.summary?.envio ?? ENVIO_OPTIONS[0];
+          const stats       = calcStats(o.items);
 
           return (
+            <article key={o.id} className={`orderCard orderCard--${status}`}>
 
-            <div
-              key={o.id}
-              className={`orderCard ${status}`}
-            >
-
+              {/* Header */}
               <div className="cardHeader">
-
                 <div>
-
-                  <div className="orderNumber">
-                    #{o.number}
-                  </div>
-
-                  <div className="orderTime">
-                    {fdate(o.createdAt)}
-                  </div>
-
+                  <span className="cardHeader__number">#{o.number}</span>
+                  <span className="cardHeader__time">{fdate(o.createdAt)}</span>
                 </div>
-
-                <div className={`status ${status}`}>
-                  {statusLabel(status)}
-                </div>
-
+                <span className={`statusBadge statusBadge--${status}`}>
+                  {STATUS_LABEL[status]}
+                </span>
               </div>
 
-
-              {/* cliente */}
-
-              <div className="clientBox">
-
-                <div className="clientMain">
-
-                  <div className="clientName">
-                    {o.buyer?.nombre || "Cliente"}
-                  </div>
-
-                  {o.buyer?.telefono && (
-                    <div className="clientPhone">
-                      {o.buyer.telefono}
-                    </div>
-                  )}
-
-                </div>
-
-                {includeEnvio && o.buyer?.direccion && (
-
-                  <div className="clientAddress">
-                    {o.buyer.direccion}
-                  </div>
-
-                )}
-
-              </div>
-
-
-              {/* stats */}
-
-              <div className="stats">
-
-                {burgers > 0 && <span>🍔 {burgers}</span>}
-                {medallones > 0 && <span>🥩 {medallones}</span>}
-                {fries > 0 && <span>🍟 {fries}</span>}
-                {lomos > 0 && <span>🥪 {lomos}</span>}
-
-              </div>
-
-
-              {/* items */}
-
-              <div className="items">
-
-                {o.items.map(it => (
-
-                  <div
-                    key={`${o.id}-${it.id}-${it.tipo}`}
-                    className="item"
-                  >
-
-                    <span className="qty">
-                      {it.quantity}x
-                    </span>
-
-                    <span className="iname">
-
-                      {it.name}
-
-                      {it.tipo &&
-                        <small>{it.tipo}</small>
-                      }
-
-                    </span>
-
-                    <span className="price">
-                      ${fmt(it.subtotal)}
-                    </span>
-
-                  </div>
-
-                ))}
-
-              </div>
-
-
-              {/* nota */}
-              <p style={{ color: "black" }}>Notas</p>
-              <textarea
-
-                placeholder="nota..."
-
-                value={noteDraft[o.id] ?? o.note ?? ""}
-
-                onChange={e =>
-                  setNoteDraft(prev => ({
-                    ...prev,
-                    [o.id]: e.target.value
-                  }))
-                }
-
+              {/* Cliente */}
+              <ClientBox
+                buyer={o.buyer}
+                address={o.buyer?.direccion}
+                showAddress={includeEnvio}
               />
 
-              <button
-                className="btn"
-                onClick={() =>
-                  updateOrderNote(o.id, noteDraft[o.id])
-                }
-              >
-                guardar nota
-              </button>
+              {/* Stats */}
+              <StatBadges stats={stats} />
 
+              {/* Items */}
+              <ItemList items={o.items} />
 
-              {/* envio */}
+              {/* Nota */}
+              <div className="noteBox">
+                <label className="noteBox__label">Notas</label>
+                <textarea
+                  className="noteBox__textarea"
+                  placeholder="Agregar nota..."
+                  value={noteDraft[o.id] ?? o.note ?? ""}
+                  onChange={(e) =>
+                    setNoteDraft((prev) => ({ ...prev, [o.id]: e.target.value }))
+                  }
+                />
+                <button
+                  className="btn btn--secondary"
+                  onClick={() => updateOrderNote(o.id, noteDraft[o.id])}
+                >
+                  Guardar nota
+                </button>
+              </div>
 
-              <div>
+              {/* Envío */}
+              <div className="envioSection">
                 <label className="check">
-
                   <input
                     type="checkbox"
                     checked={includeEnvio}
-                    onChange={e =>
-                      updateOrderShipping(o.id, e.target.checked)
-                    }
+                    onChange={(e) => updateOrderShipping(o.id, e.target.checked)}
                   />
-
-                  envio
-
+                  Envío
                 </label>
 
-
                 {includeEnvio && (
-
-                  <div className="envioBox">
-
-                    <label>
-
-                      costo envío
-
-                      <select
-
-                        value={envioActual}
-
-                        onChange={(e) =>
-                          handleEnvioChange(o, e.target.value)
-                        }
-
-                      >
-
-                        {ENVIO_OPTIONS.map(v => (
-
-                          <option key={v} value={v}>
-                            ${v}
-                          </option>
-
-                        ))}
-
-                      </select>
-
-                    </label>
-
-                  </div>
-
+                  <label className="envioSection__costLabel">
+                    Costo de envío
+                    <select
+                      className="select"
+                      value={envioCost}
+                      onChange={(e) => handleEnvioChange(o.id, e.target.value)}
+                    >
+                      {ENVIO_OPTIONS.map((v) => (
+                        <option key={v} value={v}>${v}</option>
+                      ))}
+                    </select>
+                  </label>
                 )}
-
               </div>
 
-              {/* direccion */}
-
+              {/* Dirección (solo si envío activo) */}
               {includeEnvio && (
-
-                <div className="addressBox">
-
-                  <input
-                    placeholder="direccion"
-                    value={addrDraft[o.id]?.direccion ?? o.buyer?.direccion ?? ""}
-                    onChange={e =>
-                      setAddrDraft(p => ({
-                        ...p,
-                        [o.id]: {
-                          ...p[o.id],
-                          direccion: e.target.value
-                        }
-                      }))
-                    }
-                  />
-
-                  <input
-                    placeholder="nombre"
-                    value={addrDraft[o.id]?.nombre ?? o.buyer?.nombre ?? ""}
-                    onChange={e =>
-                      setAddrDraft(p => ({
-                        ...p,
-                        [o.id]: {
-                          ...p[o.id],
-                          nombre: e.target.value
-                        }
-                      }))
-                    }
-                  />
-
-                  <input
-                    placeholder="telefono"
-                    value={addrDraft[o.id]?.telefono ?? o.buyer?.telefono ?? ""}
-                    onChange={e =>
-                      setAddrDraft(p => ({
-                        ...p,
-                        [o.id]: {
-                          ...p[o.id],
-                          telefono: e.target.value
-                        }
-                      }))
-                    }
-                  />
-
-                  <button
-                    className="btn"
-                    onClick={() => saveAddress(o)}
-                  >
-                    guardar datos
-                  </button>
-
-                </div>
-
+                <AddressFields
+                  orderId={o.id}
+                  buyer={o.buyer}
+                  draft={addrDraft[o.id]}
+                  onChange={handleAddrChange}
+                  onSave={() => handleSaveAddress(o)}
+                />
               )}
 
+              {/* Controles */}
+              <OrderControls
+                order={o}
+                paid={paid}
+                method={method}
+                status={status}
+                onPrint={() => handleReprint(o)}
+                onPaid={() => toggleOrderPaid(o.id)}
+                onMethod={(m) => updateOrderPayment(o.id, true, m)}
+                onStatus={(s) => updateOrderStatus(o.id, s)}
+                onDelete={() => deleteOrder(o.id)}
+              />
 
-              {/* controles */}
+              {/* Precios */}
+              <PriceSummary
+                subtotal={o.summary?.subtotal || 0}
+                includeEnvio={includeEnvio}
+                envioCost={envioCost}
+              />
 
-              <div className="controls">
-
-                <button
-                  className="btn print"
-                  onClick={() => handleReprint(o)}
-                >
-                  imprimir
-                </button>
-
-                <label className="check">
-
-                  <input
-                    type="checkbox"
-                    checked={paid}
-                    onChange={() =>
-                      toggleOrderPaid(o.id)
-                    }
-                  />
-
-                  pagado
-
-                </label>
-
-                <select
-                  value={method}
-                  onChange={e =>
-                    updateOrderPayment(
-                      o.id,
-                      true,
-                      e.target.value
-                    )
-                  }
-                >
-                  <option value="efectivo">efectivo</option>
-                  <option value="transferencia">transferencia</option>
-                </select>
-
-                <select
-                  value={status}
-                  onChange={e =>
-                    updateOrderStatus(o.id, e.target.value)
-                  }
-                >
-                  <option value="PENDING">pendiente</option>
-                  <option value="FINISHED">finalizado</option>
-                </select>
-
-                <button
-                  className="btn danger"
-                  onClick={() => deleteOrder(o.id)}
-                >
-                  eliminar
-                </button>
-
-              </div>
-
-
-              <div className="priceBox">
-
-                <div className="priceLine">
-
-                  <span>Subtotal productos</span>
-
-                  <span>
-                    ${fmt(o.summary?.subtotal)}
-                  </span>
-
-                </div>
-
-
-                {includeEnvio && (
-
-                  <div className="priceLine envio">
-
-                    <span>Envío</span>
-
-                    <span>
-                      ${fmt(envioActual)}
-                    </span>
-
-                  </div>
-
-                )}
-
-
-                <div className="priceTotal">
-
-                  <span>TOTAL</span>
-
-                  <span>
-                    ${fmt(
-                      (o.summary?.subtotal || 0) +
-                      (includeEnvio ? envioActual : 0)
-                    )}
-                  </span>
-
-                </div>
-
-              </div>
-            </div>
-
+            </article>
           );
-
         })}
-
       </div>
-
     </section>
-
   );
-
 }
