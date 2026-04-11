@@ -4,19 +4,14 @@ import React from "react";
 import { toARS } from "../utils/currency";
 
 // Tipos que corresponden a medallones de hamburguesa.
-// Cualquier otro ítem (papas, lomos, adicionales) recibe tipo null.
-const BURGER_TIPOS = new Set(["simple", "doble", "triple"]);
-
-// Determina si un producto es una hamburguesa basándose en su nombre.
-// Ajustá las keywords según tu catálogo.
-const isBurgerProduct = (name) => {
-  const n = name.toLowerCase();
-  return !n.includes("papas") && !n.includes("lomo") && !n.includes("adicional");
-};
+const BURGER_TIPOS      = new Set(["simple", "doble", "triple"]);
+const BURGER_CATEGORIES = new Set(["burger"]);
 
 function parseVariants(product) {
-  const { price, name } = product;
+  const { price } = product;
   if (!price) return [];
+
+  const keepTipo = BURGER_CATEGORIES.has(product.category);
 
   const rawVariants = Array.isArray(price)
     ? price.map((obj) => {
@@ -28,11 +23,6 @@ function parseVariants(product) {
         const n = Number.parseInt(v, 10);
         return { tipo: k, valor: Number.isNaN(n) ? null : n };
       });
-
-  // Solo las burgers conservan el tipo (simple/doble/triple).
-  // Papas, lomos, adicionales y cualquier otro ítem reciben tipo null
-  // para que Orders.jsx no los cuente como medallones.
-  const keepTipo = isBurgerProduct(name);
 
   return rawVariants.map((v) => ({
     tipo:  keepTipo && BURGER_TIPOS.has(v.tipo) ? v.tipo : null,

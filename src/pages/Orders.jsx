@@ -19,42 +19,35 @@ const normalizeStatus = (s) => (s === "FINISHED" ? "FINISHED" : "PENDING");
 
 const STATUS_LABEL = { FINISHED: "Finalizado", PENDING: "Pendiente" };
 
-// Tipos de medallón válidos. "simple" en papas/lomos/adicionales NO cuenta.
-const MEDALLON_WEIGHT = { simple: 1, doble: 2, triple: 3 };
+// Solo para el tag visual en ItemList — no para cálculos.
+const BURGER_TIPOS = new Set(["simple", "doble", "triple"]);
 
-const isFries  = (it) => it.name.toLowerCase().includes("papas");
-const isLomo   = (it) => it.name.toLowerCase().includes("lomo");
-
-// Un ítem es burger solo si su tipo es un tipo de medallón conocido
-// Y no es papas ni lomo (que también pueden llegar con tipo:"simple" del JSON).
-const isBurger = (it) =>
-  it.tipo != null &&
-  it.tipo in MEDALLON_WEIGHT &&
-  !isFries(it) &&
-  !isLomo(it);
-
+// calcStats: los stats ya vienen calculados desde cartItemToOrderItem (domain/cart.js).
+// Esta función solo suma — no infiere nada.
 const calcStats = (items) =>
   items.reduce(
     (acc, it) => {
-      if (isBurger(it)) {
-        acc.burgers   += it.quantity;
-        acc.medallones += (MEDALLON_WEIGHT[it.tipo] ?? 0) * it.quantity;
-      }
-      if (isFries(it)) acc.fries += it.quantity;
-      if (isLomo(it))  acc.lomos += it.quantity;
+      const s   = it.stats ?? {};
+      const qty = it.quantity;
+      acc.burgers    += (s.burgers    ?? 0) * qty;
+      acc.medallones += (s.medallones ?? 0) * qty;
+      acc.fries      += (s.papas      ?? 0) * qty;
+      acc.lomos      += (s.lomos      ?? 0) * qty;
+      acc.helados    += (s.helados    ?? 0) * qty;
       return acc;
     },
-    { burgers: 0, medallones: 0, fries: 0, lomos: 0 }
+    { burgers: 0, medallones: 0, fries: 0, lomos: 0, helados: 0 }
   );
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 function StatBadges({ stats }) {
   const badges = [
-    { icon: "🍔", value: stats.burgers,   show: stats.burgers > 0 },
+    { icon: "🍔", value: stats.burgers,    show: stats.burgers > 0 },
     { icon: "🥩", value: stats.medallones, show: stats.medallones > 0 },
-    { icon: "🍟", value: stats.fries,     show: stats.fries > 0 },
-    { icon: "🥪", value: stats.lomos,     show: stats.lomos > 0 },
+    { icon: "🍟", value: stats.fries,      show: stats.fries > 0 },
+    { icon: "🥪", value: stats.lomos,      show: stats.lomos > 0 },
+    { icon: "🍦", value: stats.helados,    show: stats.helados > 0 },
   ];
   return (
     <div className="stats">
@@ -75,7 +68,9 @@ function ItemList({ items }) {
           <span className="items__qty">{it.quantity}×</span>
           <span className="items__name">
             {it.name}
-            {it.tipo && <small className="items__tag">{it.tipo}</small>}
+            {it.tipo && BURGER_TIPOS.has(it.tipo) && (
+              <small className="items__tag">{it.tipo}</small>
+            )}
           </span>
           <span className="items__price">${fmt(it.subtotal)}</span>
         </li>
@@ -143,7 +138,7 @@ function PriceSummary({ subtotal, includeEnvio, envioCost }) {
   );
 }
 
-function OrderControls({ order, paid, method, status, onPrint, onPaid, onMethod, onStatus, onDelete }) {
+function OrderControls({ paid, method, status, onPrint, onPaid, onMethod, onStatus, onDelete }) {
   return (
     <div className="controls">
       <button className="btn btn--print" onClick={onPrint}>
@@ -192,18 +187,27 @@ export default function Orders() {
     updateOrderShippingCost,
   } = useCart();
 
-  // Local UI state keyed by order id
   const [noteDraft,  setNoteDraft]  = useState({});
   const [addrDraft,  setAddrDraft]  = useState({});
   const [envioDraft, setEnvioDraft] = useState({});
 
-  // ── Derived global stats ──────────────────────────────────────────────────
-  const { totalGlobal, totalBurgersGlobal } = useMemo(() => ({
-    totalGlobal:        orders.reduce((acc, o) => acc + (o.summary?.total || 0), 0),
-    totalBurgersGlobal: orders.reduce((acc, o) => acc + calcStats(o.items).burgers, 0),
-  }), [orders]);
+  const globalStats = useMemo(() => {
+    return orders.reduce((acc, o) => {
+      const s      = calcStats(o.items);
+      const envio  = o.summary?.envio    || 0;
+      const total  = o.summary?.total    || 0;
 
-  // ── Handlers ──────────────────────────────────────────────────────────────
+      acc.ventas     += total;
+      acc.envios     += envio;
+      acc.productos  += total - envio;
+      acc.burgers    += s.burgers;
+      acc.medallones += s.medallones;
+      acc.fries      += s.fries;
+      acc.lomos      += s.lomos;
+      acc.helados    += s.helados;
+      return acc;
+    }, { ventas: 0, envios: 0, productos: 0, burgers: 0, medallones: 0, fries: 0, lomos: 0, helados: 0 });
+  }, [orders]);
 
   const handleReprint = async (order) => {
     const updated = orders.find((o) => o.id === order.id);
@@ -228,8 +232,6 @@ export default function Orders() {
     updateOrderShippingCost(id, cost);
   };
 
-  // ── Empty state ───────────────────────────────────────────────────────────
-
   if (!orders.length) {
     return (
       <section className="orders orders--empty">
@@ -239,44 +241,54 @@ export default function Orders() {
     );
   }
 
-  // ── Render ────────────────────────────────────────────────────────────────
-
   return (
     <section className="orders">
-      {/* ── Header ── */}
       <header className="ordersTop">
         <div>
           <h2 className="orders__title">Pedidos</h2>
-          <div className="globalStats">
-            <dl className="globalStats__item">
-              <dt>Ventas</dt>
-              <dd>${fmt(totalGlobal)}</dd>
-            </dl>
-            <dl className="globalStats__item">
-              <dt>Hamburguesas</dt>
-              <dd>{totalBurgersGlobal}</dd>
-            </dl>
-          </div>
+
         </div>
         <button className="btn btn--danger" onClick={deleteAllOrders}>
           Borrar todo
         </button>
       </header>
 
-      {/* ── Cards grid ── */}
+      <div className="globalStatsBar">
+        <div className="globalStatsBar__group">
+          <dl className="globalStatsBar__item globalStatsBar__item--highlight">
+            <dt>Ventas totales</dt>
+            <dd>${fmt(globalStats.ventas)}</dd>
+          </dl>
+          <dl className="globalStatsBar__item">
+            <dt>Productos</dt>
+            <dd>${fmt(globalStats.productos)}</dd>
+          </dl>
+          <dl className="globalStatsBar__item">
+            <dt>Envíos</dt>
+            <dd>${fmt(globalStats.envios)}</dd>
+          </dl>
+        </div>
+        <div className="globalStatsBar__group">
+          {globalStats.burgers    > 0 && <dl className="globalStatsBar__item"><dt>🍔 Hamburguesas</dt><dd>{globalStats.burgers}</dd></dl>}
+          {globalStats.medallones > 0 && <dl className="globalStatsBar__item"><dt>🥩 Medallones</dt><dd>{globalStats.medallones}</dd></dl>}
+          {globalStats.fries      > 0 && <dl className="globalStatsBar__item"><dt>🍟 Papas</dt><dd>{globalStats.fries}</dd></dl>}
+          {globalStats.lomos      > 0 && <dl className="globalStatsBar__item"><dt>🥪 Lomos</dt><dd>{globalStats.lomos}</dd></dl>}
+          {globalStats.helados    > 0 && <dl className="globalStatsBar__item"><dt>🍦 Helados</dt><dd>{globalStats.helados}</dd></dl>}
+        </div>
+      </div>
+
       <div className="ordersGrid">
         {orders.map((o) => {
-          const status      = normalizeStatus(o.status);
-          const paid        = !!o.payment?.paid;
-          const method      = o.payment?.method || "efectivo";
+          const status       = normalizeStatus(o.status);
+          const paid         = !!o.payment?.paid;
+          const method       = o.payment?.method || "efectivo";
           const includeEnvio = !!o.logistics?.includeEnvio;
-          const envioCost   = envioDraft[o.id] ?? o.summary?.envio ?? ENVIO_OPTIONS[0];
-          const stats       = calcStats(o.items);
+          const envioCost    = envioDraft[o.id] ?? o.summary?.envio ?? ENVIO_OPTIONS[0];
+          const stats        = calcStats(o.items);
 
           return (
             <article key={o.id} className={`orderCard orderCard--${status}`}>
 
-              {/* Header */}
               <div className="cardHeader">
                 <div>
                   <span className="cardHeader__number">#{o.number}</span>
@@ -287,20 +299,16 @@ export default function Orders() {
                 </span>
               </div>
 
-              {/* Cliente */}
               <ClientBox
                 buyer={o.buyer}
                 address={o.buyer?.direccion}
                 showAddress={includeEnvio}
               />
 
-              {/* Stats */}
               <StatBadges stats={stats} />
 
-              {/* Items */}
               <ItemList items={o.items} />
 
-              {/* Nota */}
               <div className="noteBox">
                 <label className="noteBox__label">Notas</label>
                 <textarea
@@ -319,7 +327,6 @@ export default function Orders() {
                 </button>
               </div>
 
-              {/* Envío */}
               <div className="envioSection">
                 <label className="check">
                   <input
@@ -346,7 +353,6 @@ export default function Orders() {
                 )}
               </div>
 
-              {/* Dirección (solo si envío activo) */}
               {includeEnvio && (
                 <AddressFields
                   orderId={o.id}
@@ -357,9 +363,7 @@ export default function Orders() {
                 />
               )}
 
-              {/* Controles */}
               <OrderControls
-                order={o}
                 paid={paid}
                 method={method}
                 status={status}
@@ -370,7 +374,6 @@ export default function Orders() {
                 onDelete={() => deleteOrder(o.id)}
               />
 
-              {/* Precios */}
               <PriceSummary
                 subtotal={o.summary?.subtotal || 0}
                 includeEnvio={includeEnvio}

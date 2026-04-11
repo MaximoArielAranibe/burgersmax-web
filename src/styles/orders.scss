@@ -453,3 +453,65 @@ $transition:  0.15s ease;
     border-top: 2px solid $color-text;
   }
 }
+
+// ─── Global stats bar ─────────────────────────────────────────────────────────
+
+.globalStatsBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 16px 20px;
+
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+
+  &__group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    align-items: center;
+
+    &:first-child {
+      padding-right: 20px;
+      border-right: 2px solid $color-border;
+    }
+  }
+
+  &__item {
+    margin: 0;
+
+    dt {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: $color-text-muted;
+      margin-bottom: 2px;
+    }
+
+    dd {
+      font-size: 17px;
+      font-weight: 700;
+      color: $color-text;
+      margin: 0;
+    }
+
+    &--highlight dd {
+      font-size: 22px;
+      font-weight: 800;
+    }
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+
+    &__group:first-child {
+      padding-right: 0;
+      padding-bottom: 12px;
+      border-right: none;
+      border-bottom: 2px solid $color-border;
+    }
+  }
+}
