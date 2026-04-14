@@ -21,17 +21,19 @@ const fmtARS = (n) =>
 // papas:      porciones de papas (bandeja o individual cuenta como 1)
 // lomos:      cantidad de lomos
 
+
+
 const combosFijos = [
-  {
+/*   {
     nombre: "DOBLE CHEDDAR + papas",
     precio: 13000,
-    thumbnail: promo1,
+    thumbnail: "https://i.ibb.co/99k18Z6w/1-doble-cheddar-papas-individuales-13000.png",
     stats: { burgers: 1, medallones: 2, papas: 1, lomos: 0 },
-  },
+  }, */
   {
     nombre: "DOBLE a eleccion + papas + cuarto de helado",
     precio: 16000,
-    thumbnail: promo1,
+    thumbnail: "https://i.ibb.co/vxMw5WGf/Combo-explosivo-por-16-000.png",
     stats: { burgers: 1, medallones: 2, papas: 1, lomos: 0, helados: 1 },
   },
   {
@@ -105,9 +107,10 @@ export const Promos = () => {
   }, [nombreDia]);
 
   const promos = useMemo(
-    () => [...promosDelDia, ...combosFijos],
+    () => [...promosDelDia],
     [promosDelDia]
   );
+
 
   const handleAdd = (promo, index) => {
     const id =
@@ -127,9 +130,11 @@ export const Promos = () => {
   return (
     <section className="promos">
       <header className="promos__header">
+
         <h2>
           {nombreDia ? `Promos de ${capitalize(nombreDia)}` : "Promos"}
         </h2>
+
         <select
           value={dia}
           onChange={(e) => setDia(Number(e.target.value))}
@@ -140,36 +145,101 @@ export const Promos = () => {
           <option value={5}>Viernes</option>
           <option value={6}>Sábado</option>
         </select>
+
+        <div className="promos__container">
+          {promos.length ? (
+            promos.map((promo, i) => (
+              <article key={promo.id || i} className="promos__card">
+
+                {promo.thumbnail && (
+                  <img
+                    src={promo.thumbnail}
+                    alt={promo.nombre}
+                    className="promos__image"
+                    loading="lazy"
+                  />
+                )}
+
+                <div className="promos__name">
+                  {promo.nombre}
+                </div>
+
+                <div className="promos__footer">
+
+                  <div className="promos__price">
+                    <span className="promos__price-label">
+                      precio
+                    </span>
+
+                    <span className="promos__price-value">
+                      {fmtARS(promo.precio)}
+                    </span>
+                  </div>
+
+                  <button
+                    className="promos__btn"
+                    onClick={() => handleAdd(promo, i)}
+                  >
+                    Agregar
+                  </button>
+
+                </div>
+
+              </article>
+            ))
+          ) : (
+            <p style={{ color: "white" }}>
+              Hoy no hay promos disponibles
+            </p>
+          )}
+        </div>
+
+          <h2>Combos fijos</h2>
+
+        <div className="promos__container">{combosFijos.map((combo, i) => (
+          <article key={combo.id || i} className="promos__card">
+
+            {combo.thumbnail && (
+              <img
+                src={combo.thumbnail}
+                alt={combo.nombre}
+                className="promos__image"
+                loading="lazy"
+              />
+            )}
+
+            <div className="promos__name">
+              {combo.nombre}
+            </div>
+
+            <div className="promos__footer">
+
+              <div className="promos__price">
+                <span className="promos__price-label">
+                  precio
+                </span>
+
+                <span className="promos__price-value">
+                  {fmtARS(combo.precio)}
+                </span>
+              </div>
+
+              <button
+                className="promos__btn"
+                onClick={() => handleAdd(combo, i)}
+              >
+                Agregar
+              </button>
+
+            </div>
+
+          </article>
+        ))}</div>
+
+
       </header>
 
-      <div className="promos__container">
-        {promos.length ? (
-          promos.map((promo, i) => (
-            <article key={promo.id || i} className="promos__card">
-              {promo.thumbnail && (
-                <img
-                  src={promo.thumbnail}
-                  alt={promo.nombre}
-                  className="promos__image"
-                  loading="lazy"
-                />
-              )}
-              <div className="promos__name">{promo.nombre}</div>
-              <div className="promos__footer">
-                <div className="promos__price">
-                  <span className="promos__price-label">precio</span>
-                  <span className="promos__price-value">{fmtARS(promo.precio)}</span>
-                </div>
-                <button className="promos__btn" onClick={() => handleAdd(promo, i)}>
-                  Agregar
-                </button>
-              </div>
-            </article>
-          ))
-        ) : (
-          <p style={{ color: "white" }}>Hoy no hay promos disponibles</p>
-        )}
-      </div>
+
     </section>
   );
 };

@@ -82,40 +82,7 @@
   ],
   "sabado": [
     {
-      "nombre": "2 Doble Oklahoma PROMO",
-      "precio": 21500,
-      "thumbnail": "https://i.ibb.co/TBdZWvbm/2-doble-oklahoma-21500.png",
-      "stats": {
-        "burgers": 2,
-        "medallones": 4,
-        "papas": 0,
-        "lomos": 0
-      }
-    },
-    {
-      "nombre": "2 Triple Cheddar PROMO",
-      "precio": 26000,
-      "thumbnail": "https://i.ibb.co/MyYGPfg8/2-triple-cheddar-26000.png",
-      "stats": {
-        "burgers": 2,
-        "medallones": 6,
-        "papas": 0,
-        "lomos": 0
-      }
-    },
-    {
-      "nombre": "2 Doble Quesita PROMO",
-      "precio": 22000,
-      "thumbnail": "https://i.ibb.co/SwCcHn4w/2-doble-quesita-22000.png",
-      "stats": {
-        "burgers": 2,
-        "medallones": 4,
-        "papas": 0,
-        "lomos": 0
-      }
-    },
-    {
-      "nombre": "1 Doble Cheddar PROMO",
+      "nombre": "1 Doble Cheddar PROMO SABADO",
       "precio": 10000,
       "thumbnail": "https://i.ibb.co/wr4wjhtq/1-doble-cheddar-10000.png",
       "stats": {
@@ -126,18 +93,95 @@
       }
     },
     {
+      "nombre": "2 Doble OKLA PROMO SABADO (!!)",
+      "precio": 19500,
+      "thumbnail": "https://i.ibb.co/wr4wjhtq/1-doble-cheddar-10000.png",
+      "stats": {
+        "burgers": 2,
+        "medallones": 4,
+        "papas": 0,
+        "lomos": 0
+      }
+    },
+    {
       "nombre": "1 Doble CHEDDAR + PAPAS INDIVIDUALES PROMO SABADO",
       "precio": 12500,
-      "thumbnail": "https://i.ibb.co/fVSWddB9/1-doble-cheddar-papas-individuales-12500.png",
+      "thumbnail": "https://i.ibb.co/Kp9xC71Q/1-doble-cheddar-papas-individuales-12500.png",
       "stats": {
         "burgers": 1,
         "medallones": 2,
         "papas": 1,
         "lomos": 0
       }
+    },
+    {
+      "nombre": "2 Doble Oklahoma PROMO SABADO",
+      "precio": 21500,
+      "thumbnail": "https://i.ibb.co/TBdZWvbm/2-doble-oklahoma-21500.png",
+      "stats": {
+        "burgers": 2,
+        "medallones": 4,
+        "papas": 0,
+        "lomos": 0
+      }
+    },
+    {
+      "nombre": "2 Doble Quesita PROMO SABADO",
+      "precio": 22000,
+      "thumbnail": "https://i.ibb.co/SwCcHn4w/2-doble-quesita-22000.png",
+      "stats": {
+        "burgers": 2,
+        "medallones": 4,
+        "papas": 0,
+        "lomos": 0
+      }
+    },
+    {
+      "nombre": "2 Triple Cheddar PROMO SABADO",
+      "precio": 26000,
+      "thumbnail": "https://i.ibb.co/MyYGPfg8/2-triple-cheddar-26000.png",
+      "stats": {
+        "burgers": 2,
+        "medallones": 6,
+        "papas": 0,
+        "lomos": 0
+      }
     }
   ],
   "domingo": [
+    {
+      "nombre": "1 Doble completa DOMINGO",
+      "precio": 9800,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 1,
+        "medallones": 2,
+        "papas": 0,
+        "lomos": 0
+      }
+    },
+    {
+      "nombre": "1 Doble completa + PAPAS DOMINGO",
+      "precio": 12000,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 1,
+        "medallones": 2,
+        "papas": 1,
+        "lomos": 0
+      }
+    },
+    {
+      "nombre": "1 Doble completa DOMINGO",
+      "precio": 9800,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 1,
+        "medallones": 2,
+        "papas": 0,
+        "lomos": 0
+      }
+    },
     {
       "nombre": "2 Doble Cheddar PROMO",
       "precio": 21000,
@@ -162,7 +206,7 @@
     },
     {
       "nombre": "1 Triple Panceta y BBQ PROMO",
-      "precio": 13000,
+      "precio": 12500,
       "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
       "stats": {
         "burgers": 1,

@@ -6,7 +6,17 @@
     "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
     "imagePosition": "50% 74%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
-    "price": [{ "simple": 8000 }, { "doble": 11500 }, { "triple": 14000 }]
+    "price": [
+      {
+        "simple": 8000
+      },
+      {
+        "doble": 11500
+      },
+      {
+        "triple": 14000
+      }
+    ]
   },
   {
     "id": 2,
@@ -15,7 +25,17 @@
     "thumbnail": "https://i.ibb.co/SDD1wwc7/cheddar-hermosa.png",
     "imagePosition": "50% 80%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
-    "price": [{ "simple": 8000 }, { "doble": 11000 }, { "triple": 13500 }]
+    "price": [
+      {
+        "simple": 8000
+      },
+      {
+        "doble": 11000
+      },
+      {
+        "triple": 13500
+      }
+    ]
   },
   {
     "id": 3,
@@ -24,7 +44,17 @@
     "thumbnail": "https://images.unsplash.com/photo-1603508102983-99b101395d1a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "imagePosition": "50% 38%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
-    "price": [{ "simple": 8000 }, { "doble": 11000 }, { "triple": 14000 }]
+    "price": [
+      {
+        "simple": 8000
+      },
+      {
+        "doble": 11000
+      },
+      {
+        "triple": 13500
+      }
+    ]
   },
   {
     "id": 4,
@@ -33,7 +63,17 @@
     "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiMkIZ8-obmFmxJX3KhkhktYWoAerJxp82LA&s",
     "imagePosition": "50% 40%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
-    "price": [{ "simple": 8000 }, { "doble": 11000 }, { "triple": 14000 }]
+    "price": [
+      {
+        "simple": 8000
+      },
+      {
+        "doble": 11500
+      },
+      {
+        "triple": 14500
+      }
+    ]
   },
   {
     "id": 5,
@@ -42,7 +82,17 @@
     "thumbnail": "https://i.ibb.co/HpKZRVGN/panceta-y-bbq-triple.jpg",
     "imagePosition": "60% 50%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
-    "price": [{ "simple": 8000 }, { "doble": 11000 }, { "triple": 14000 }]
+    "price": [
+      {
+        "simple": 8000
+      },
+      {
+        "doble": 11000
+      },
+      {
+        "triple": 13500
+      }
+    ]
   },
   {
     "id": 6,
@@ -51,7 +101,17 @@
     "thumbnail": "https://i.ibb.co/TMhtPs54/provoleta-triple.jpg",
     "imagePosition": "50% 65%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
-    "price": [{ "simple": 8000 }, { "doble": 11000 }, { "triple": 14000 }]
+    "price": [
+      {
+        "simple": 8000
+      },
+      {
+        "doble": 11000
+      },
+      {
+        "triple": 13500
+      }
+    ]
   },
   {
     "id": 7,
@@ -60,7 +120,17 @@
     "thumbnail": "https://thumbs.dreamstime.com/b/hamburguesa-picante-con-cebollas-adobadas-y-chile-en-tablero-de-madera-aj%C3%AD-sobre-fondo-oscuro-225658881.jpg",
     "imagePosition": "50% 50%",
     "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
-    "price": [{ "simple": 8000 }, { "doble": 11000 }, { "triple": 14000 }]
+    "price": [
+      {
+        "simple": 8000
+      },
+      {
+        "doble": 11000
+      },
+      {
+        "triple": 13500
+      }
+    ]
   },
   {
     "id": 8,
@@ -68,7 +138,11 @@
     "thumbnail": "https://i.ibb.co/3d9wM6K/papas-individuales.jpg",
     "imagePosition": "50% 50%",
     "description": "Porción individual de papas fritas",
-    "price": [{ "simple": 2500 }]
+    "price": [
+      {
+        "simple": 2500
+      }
+    ]
   },
   {
     "id": 9,
@@ -76,7 +150,11 @@
     "thumbnail": "https://i.ibb.co/9rS3j0Q/bandeja-papas.jpg",
     "imagePosition": "50% 50%",
     "description": "Bandeja de papas fritas simples",
-    "price": [{ "simple": 6000 }]
+    "price": [
+      {
+        "simple": 6000
+      }
+    ]
   },
   {
     "id": 10,
@@ -84,7 +162,11 @@
     "thumbnail": "https://i.ibb.co/4YdLzVx/bandeja-papas-cheddar.jpg",
     "imagePosition": "50% 50%",
     "description": "Bandeja de papas fritas con cheddar",
-    "price": [{ "simple": 7500 }]
+    "price": [
+      {
+        "simple": 7500
+      }
+    ]
   },
   {
     "id": 11,
@@ -92,7 +174,11 @@
     "thumbnail": "https://i.ibb.co/Nt6Z0Gt/bandeja-papas-cheddar-panceta.jpg",
     "imagePosition": "50% 50%",
     "description": "Bandeja de papas fritas con cheddar y panceta",
-    "price": [{ "simple": 9000 }]
+    "price": [
+      {
+        "simple": 9000
+      }
+    ]
   },
   {
     "id": 12,
@@ -101,7 +187,11 @@
     "thumbnail": "https://i.ibb.co/Nt6Z0Gt/bandeja-papas-cheddar-panceta.jpg",
     "imagePosition": "50% 50%",
     "description": "220grs lomo, jamón, queso, lechuga, tomate, doble huevo",
-    "price": [{ "simple": 17500 }]
+    "price": [
+      {
+        "simple": 17500
+      }
+    ]
   },
   {
     "id": 13,
@@ -110,7 +200,11 @@
     "thumbnail": "https://i.ibb.co/Nt6Z0Gt/bandeja-papas-cheddar-panceta.jpg",
     "imagePosition": "50% 50%",
     "description": "Adicional bacon para hamburguesa o papas",
-    "price": [{ "simple": 1500 }]
+    "price": [
+      {
+        "simple": 1500
+      }
+    ]
   },
   {
     "id": 14,
@@ -119,6 +213,23 @@
     "thumbnail": "https://...",
     "imagePosition": "50% 50%",
     "description": "Cuarto de helado artesanal",
-    "price": [{ "simple": 4000 }]
+    "price": [
+      {
+        "simple": 4000
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Sandwich de mila + papas",
+    "category": "lomo",
+    "thumbnail": "https://...",
+    "imagePosition": "50% 50%",
+    "description": "Sandwich de mila + papas",
+    "price": [
+      {
+        "simple": 12000
+      }
+    ]
   }
 ]
