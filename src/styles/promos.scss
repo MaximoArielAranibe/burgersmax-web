@@ -318,3 +318,27 @@
   }
 
 }
+
+.admin-actions {
+  display: flex;
+  gap: .4rem;
+  margin-top: .5rem;
+
+  button {
+    flex: 1;
+    border: none;
+    padding: .4rem;
+    border-radius: .5rem;
+    font-size: .7rem;
+    cursor: pointer;
+  }
+
+  button:first-child {
+    background: #ddd;
+  }
+
+  button:last-child {
+    background: #ff4d4d;
+    color: #fff;
+  }
+}

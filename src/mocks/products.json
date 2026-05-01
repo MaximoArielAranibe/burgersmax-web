@@ -68,10 +68,10 @@
         "simple": 8000
       },
       {
-        "doble": 11500
+        "doble": 11000
       },
       {
-        "triple": 14500
+        "triple": 14000
       }
     ]
   },
@@ -114,8 +114,8 @@
     ]
   },
   {
-    "id": 7,
-    "name": "Picante",
+    "id": 16,
+    "name": "Jamón y cheddar",
     "category": "burger",
     "thumbnail": "https://thumbs.dreamstime.com/b/hamburguesa-picante-con-cebollas-adobadas-y-chile-en-tablero-de-madera-aj%C3%AD-sobre-fondo-oscuro-225658881.jpg",
     "imagePosition": "50% 50%",
@@ -125,19 +125,20 @@
         "simple": 8000
       },
       {
-        "doble": 11000
+        "doble": 10500
       },
       {
-        "triple": 13500
+        "triple": 13000
       }
     ]
   },
   {
     "id": 8,
     "name": "Papas individuales",
+    "category": "papas_ind",
     "thumbnail": "https://i.ibb.co/3d9wM6K/papas-individuales.jpg",
     "imagePosition": "50% 50%",
-    "description": "Porción individual de papas fritas",
+    "description": "Porción individual de papas fritas (~100grs)",
     "price": [
       {
         "simple": 2500
@@ -147,9 +148,10 @@
   {
     "id": 9,
     "name": "Bandeja de papas",
+    "category": "papas_bandeja",
     "thumbnail": "https://i.ibb.co/9rS3j0Q/bandeja-papas.jpg",
     "imagePosition": "50% 50%",
-    "description": "Bandeja de papas fritas simples",
+    "description": "Bandeja de papas fritas simples (~360grs)",
     "price": [
       {
         "simple": 6000
@@ -159,9 +161,10 @@
   {
     "id": 10,
     "name": "Bandeja de papas con cheddar",
+    "category": "papas_bandeja_cheddar",
     "thumbnail": "https://i.ibb.co/4YdLzVx/bandeja-papas-cheddar.jpg",
     "imagePosition": "50% 50%",
-    "description": "Bandeja de papas fritas con cheddar",
+    "description": "Bandeja de papas fritas con cheddar (~360grs)",
     "price": [
       {
         "simple": 7500
@@ -171,9 +174,10 @@
   {
     "id": 11,
     "name": "Bandeja de papas con cheddar y panceta",
+    "category": "papas_bandeja_cheddar_panceta",
     "thumbnail": "https://i.ibb.co/Nt6Z0Gt/bandeja-papas-cheddar-panceta.jpg",
     "imagePosition": "50% 50%",
-    "description": "Bandeja de papas fritas con cheddar y panceta",
+    "description": "Bandeja de papas fritas con cheddar y panceta (~360grs)",
     "price": [
       {
         "simple": 9000
@@ -222,13 +226,39 @@
   {
     "id": 15,
     "name": "Sandwich de mila + papas",
-    "category": "lomo",
+    "category": "milanesa_pollo",
     "thumbnail": "https://...",
     "imagePosition": "50% 50%",
     "description": "Sandwich de mila + papas",
     "price": [
       {
         "simple": 12000
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Nugget Pollo 10U",
+    "category": "varios",
+    "thumbnail": "https://...",
+    "imagePosition": "50% 50%",
+    "description": "Nugget Pollo 10U",
+    "price": [
+      {
+        "simple": 5000
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "name": "Aros de cebolla 10U",
+    "category": "varios",
+    "thumbnail": "https://...",
+    "imagePosition": "50% 50%",
+    "description": "Aros de cebolla 10U",
+    "price": [
+      {
+        "simple": 5000
       }
     ]
   }

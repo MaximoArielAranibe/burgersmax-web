@@ -1,207 +1,503 @@
 {
   "jueves": [
     {
-      "nombre": "2 Doble Cheddar PROMO",
-      "precio": 21000,
-      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
-      "stats": {
-        "burgers": 2,
-        "medallones": 4,
-        "papas": 0,
-        "lomos": 0
-      }
-    },
-    {
-      "nombre": "2 Doble OKLAHOMA + PAPAS",
-      "precio": 20000,
-      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
-      "stats": {
-        "burgers": 2,
-        "medallones": 4,
-        "papas": 2,
-        "lomos": 0
-      }
-    },
-    {
-      "nombre": "4 Simple Cheddar PROMO",
-      "precio": 28000,
-      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
-      "stats": {
-        "burgers": 4,
-        "medallones": 4,
-        "papas": 0,
-        "lomos": 0
-      }
-    },
-    {
-      "nombre": "2 Doble Panceta y BBQ PROMO",
-      "precio": 21500,
-      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
-      "stats": {
-        "burgers": 2,
-        "medallones": 4,
-        "papas": 0,
-        "lomos": 0
-      }
-    }
-  ],
-  "viernes": [
-    {
-      "nombre": "2 Doble Cheddar PROMO",
-      "precio": 21000,
-      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
-      "stats": {
-        "burgers": 2,
-        "medallones": 4,
-        "papas": 0,
-        "lomos": 0
-      }
-    },
-    {
-      "nombre": "4 Simple Cheddar PROMO",
-      "precio": 28000,
-      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
-      "stats": {
-        "burgers": 4,
-        "medallones": 4,
-        "papas": 0,
-        "lomos": 0
-      }
-    },
-    {
-      "nombre": "2 Doble Panceta y BBQ PROMO",
-      "precio": 21500,
-      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
-      "stats": {
-        "burgers": 2,
-        "medallones": 4,
-        "papas": 0,
-        "lomos": 0
-      }
-    }
-  ],
-  "sabado": [
-    {
-      "nombre": "1 Doble Cheddar PROMO SABADO",
+      "nombre": "Sandwich de mila pollo + papas",
       "precio": 10000,
-      "thumbnail": "https://i.ibb.co/wr4wjhtq/1-doble-cheddar-10000.png",
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
       "stats": {
-        "burgers": 1,
-        "medallones": 2,
-        "papas": 0,
-        "lomos": 0
+        "burgers": 0,
+        "medallones": 0,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 1,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
       }
     },
     {
-      "nombre": "2 Doble OKLA PROMO SABADO (!!)",
-      "precio": 19500,
-      "thumbnail": "https://i.ibb.co/wr4wjhtq/1-doble-cheddar-10000.png",
+      "nombre": "Sandwich de mila pollo + papas",
+      "precio": 10000,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
       "stats": {
-        "burgers": 2,
-        "medallones": 4,
-        "papas": 0,
-        "lomos": 0
+        "burgers": 0,
+        "medallones": 0,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 1,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
       }
     },
     {
-      "nombre": "1 Doble CHEDDAR + PAPAS INDIVIDUALES PROMO SABADO",
-      "precio": 12500,
-      "thumbnail": "https://i.ibb.co/Kp9xC71Q/1-doble-cheddar-papas-individuales-12500.png",
+      "nombre": "4 Doble Cheddar + papas PROMO",
+      "precio": 43900,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
       "stats": {
-        "burgers": 1,
-        "medallones": 2,
-        "papas": 1,
-        "lomos": 0
+        "burgers": 4,
+        "medallones": 8,
+        "papas_ind": 4,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
       }
     },
     {
-      "nombre": "2 Doble Oklahoma PROMO SABADO",
-      "precio": 21500,
-      "thumbnail": "https://i.ibb.co/TBdZWvbm/2-doble-oklahoma-21500.png",
-      "stats": {
-        "burgers": 2,
-        "medallones": 4,
-        "papas": 0,
-        "lomos": 0
-      }
-    },
-    {
-      "nombre": "2 Doble Quesita PROMO SABADO",
-      "precio": 22000,
-      "thumbnail": "https://i.ibb.co/SwCcHn4w/2-doble-quesita-22000.png",
-      "stats": {
-        "burgers": 2,
-        "medallones": 4,
-        "papas": 0,
-        "lomos": 0
-      }
-    },
-    {
-      "nombre": "2 Triple Cheddar PROMO SABADO",
-      "precio": 26000,
-      "thumbnail": "https://i.ibb.co/MyYGPfg8/2-triple-cheddar-26000.png",
-      "stats": {
-        "burgers": 2,
-        "medallones": 6,
-        "papas": 0,
-        "lomos": 0
-      }
-    }
-  ],
-  "domingo": [
-    {
-      "nombre": "1 Doble completa DOMINGO",
-      "precio": 9800,
+      "nombre": "Simple cheddar + papas PROMO",
+      "precio": 7800,
       "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
       "stats": {
         "burgers": 1,
-        "medallones": 2,
-        "papas": 0,
-        "lomos": 0
+        "medallones": 1,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
       }
     },
     {
-      "nombre": "1 Doble completa + PAPAS DOMINGO",
+      "nombre": "Simple completa + papas PROMO",
+      "precio": 8900,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 1,
+        "medallones": 1,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "Doble cheddar + papas PROMO",
       "precio": 12000,
       "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
       "stats": {
         "burgers": 1,
         "medallones": 2,
-        "papas": 1,
-        "lomos": 0
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
       }
     },
     {
-      "nombre": "1 Doble completa DOMINGO",
-      "precio": 9800,
+      "nombre": "Doble completa + papas PROMO",
+      "precio": 12500,
       "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
       "stats": {
         "burgers": 1,
-        "medallones": 2,
-        "papas": 0,
-        "lomos": 0
+        "medallones": 1,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
       }
     },
     {
-      "nombre": "2 Doble Cheddar PROMO",
-      "precio": 21000,
+      "nombre": "Papas con cheddar PROMO",
+      "precio": 7000,
       "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
       "stats": {
-        "burgers": 2,
-        "medallones": 4,
-        "papas": 0,
-        "lomos": 0
+        "burgers": 0,
+        "medallones": 0,
+        "papas_ind": 0,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 1,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
       }
     },
     {
-      "nombre": "2 Triple Cheddar PROMO",
-      "precio": 26000,
+      "nombre": "Lomo completo con papas PROMO",
+      "precio": 16500,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 0,
+        "medallones": 0,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 1,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "Triple cheddar PROMO",
+      "precio": 13000,
       "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
       "stats": {
         "burgers": 2,
         "medallones": 6,
-        "papas": 0,
-        "lomos": 0
+        "papas_ind": 0,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    }
+  ],
+  "viernes": [
+    {
+      "nombre": "Sandwich de mila pollo + papas",
+      "precio": 10000,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 0,
+        "medallones": 0,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 1,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "4 Doble Cheddar + papas PROMO",
+      "precio": 43900,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 4,
+        "medallones": 8,
+        "papas_ind": 4,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "Simple cheddar + papas PROMO",
+      "precio": 7800,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 1,
+        "medallones": 1,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "Simple completa + papas PROMO",
+      "precio": 8900,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 1,
+        "medallones": 1,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "Doble cheddar + papas PROMO",
+      "precio": 12000,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 1,
+        "medallones": 2,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "Doble completa + papas PROMO",
+      "precio": 12500,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 1,
+        "medallones": 1,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "Papas con cheddar PROMO",
+      "precio": 7000,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 0,
+        "medallones": 0,
+        "papas_ind": 0,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 1,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "Lomo completo con papas PROMO",
+      "precio": 16500,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 0,
+        "medallones": 0,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 1,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "Triple cheddar PROMO",
+      "precio": 13000,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 2,
+        "medallones": 6,
+        "papas_ind": 0,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    }
+  ],
+  "sabado": [
+    {
+      "nombre": "2 DOBLE OKLAHOMA promo",
+      "precio": 21500,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 2,
+        "medallones": 4,
+        "papas_ind": 0,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "1 TRIPLE Cheddar PROMO",
+      "precio": 13000,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 1,
+        "medallones": 3,
+        "papas_ind": 0,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "2 Doble QUESITA PROMO",
+      "precio": 21500,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 2,
+        "medallones": 4,
+        "papas_ind": 0,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "1 Doble Cheddar + papas individuales PROMO",
+      "precio": 11000,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 1,
+        "medallones": 2,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "1 Doble Cheddar + papas individuales c/cheddar PROMO",
+      "precio": 11000,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 1,
+        "medallones": 2,
+        "papas_ind": 1,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    }
+  ],
+  "domingo": [
+    {
+      "nombre": "1 Doble Cheddar PROMO",
+      "precio": 10000,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 1,
+        "medallones": 2,
+        "papas_ind": 0,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "2 Doble Cheddar PROMO",
+      "precio": 19000,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 2,
+        "medallones": 4,
+        "papas_ind": 0,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "3 Doble Cheddar PROMO",
+      "precio": 28000,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 2,
+        "medallones": 4,
+        "papas_ind": 0,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+    {
+      "nombre": "4 Doble Cheddar PROMO",
+      "precio": 36000,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 2,
+        "medallones": 4,
+        "papas_ind": 0,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
+      }
+    },
+
+    {
+      "nombre": "2 Triple COMPLETO PROMO",
+      "precio": 26500,
+      "thumbnail": "https://i.ibb.co/w5yJzGN/completa-hermosa.png",
+      "stats": {
+        "burgers": 2,
+        "medallones": 6,
+        "papas_ind": 0,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
       }
     },
     {
@@ -211,8 +507,14 @@
       "stats": {
         "burgers": 1,
         "medallones": 3,
-        "papas": 0,
-        "lomos": 0
+        "papas_ind": 0,
+        "papas_bandeja": 0,
+        "papas_bandeja_cheddar": 0,
+        "papas_bandeja_cheddar_panceta": 0,
+        "milanesa_pollo": 0,
+        "milanesa_carne": 0,
+        "lomos": 0,
+        "helados": 0
       }
     }
   ]

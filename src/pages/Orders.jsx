@@ -24,36 +24,51 @@ const BURGER_TIPOS = new Set(["simple", "doble", "triple"]);
 
 // calcStats: los stats ya vienen calculados desde cartItemToOrderItem (domain/cart.js).
 // Esta función solo suma — no infiere nada.
+const EMPTY_STATS = {
+  burgers: 0,
+  medallones: 0,
+  papas_ind: 0,
+  papas_bandeja: 0,
+  papas_bandeja_cheddar: 0,
+  papas_bandeja_cheddar_panceta: 0,
+  milanesa_pollo: 0,
+  milanesa_carne: 0,
+  lomos: 0,
+  helados: 0,
+};
+
 const calcStats = (items) =>
-  items.reduce(
-    (acc, it) => {
-      const s   = it.stats ?? {};
-      const qty = it.quantity;
-      acc.burgers    += (s.burgers    ?? 0) * qty;
-      acc.medallones += (s.medallones ?? 0) * qty;
-      acc.fries      += (s.papas      ?? 0) * qty;
-      acc.lomos      += (s.lomos      ?? 0) * qty;
-      acc.helados    += (s.helados    ?? 0) * qty;
-      return acc;
-    },
-    { burgers: 0, medallones: 0, fries: 0, lomos: 0, helados: 0 }
-  );
+  items.reduce((acc, it) => {
+    const s = it.stats ?? {};
+    const qty = it.quantity;
+
+    for (const key in EMPTY_STATS) {
+      acc[key] += (s[key] ?? 0) * qty;
+    }
+
+    return acc;
+  }, { ...EMPTY_STATS });
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 function StatBadges({ stats }) {
   const badges = [
-    { icon: "🍔", value: stats.burgers,    show: stats.burgers > 0 },
-    { icon: "🥩", value: stats.medallones, show: stats.medallones > 0 },
-    { icon: "🍟", value: stats.fries,      show: stats.fries > 0 },
-    { icon: "🥪", value: stats.lomos,      show: stats.lomos > 0 },
-    { icon: "🍦", value: stats.helados,    show: stats.helados > 0 },
+    { icon: "🍔", value: stats.burgers, label: "", show: stats.burgers > 0 },
+    { icon: "🥩", value: stats.medallones, label: "medallones", show: stats.medallones > 0 },
+    { icon: "🍟", value: stats.papas_ind, label: "ind", show: stats.papas_ind > 0 },
+    { icon: "🍟", value: stats.papas_bandeja, label: "bandeja", show: stats.papas_bandeja > 0 },
+    { icon: "🍟", value: stats.papas_bandeja_cheddar, label: "bandeja cheddar", show: stats.papas_bandeja_cheddar > 0 },
+    { icon: "🍟", value: stats.papas_bandeja_cheddar_panceta, label: "bandeja cheddar y panceta", show: stats.papas_bandeja_cheddar_panceta > 0 },
+    { icon: "🥪", value: stats.lomos, label: "lomo", show: stats.lomos > 0 },
+    { icon: "🐔", value: stats.milanesa_pollo, label: "milanesa pollo", show: stats.milanesa_pollo > 0 },
+    { icon: "🍲", value: stats.milanesa_carne, label: "milanesa carne", show: stats.milanesa_carne > 0 },
+    { icon: "🍦", value: stats.helados, label: "helado", show: stats.helados > 0 },
   ];
   return (
     <div className="stats">
-      {badges.filter((b) => b.show).map(({ icon, value }) => (
-        <span key={icon} className="stats__badge">
-          {icon} {value}
+      {badges.filter((b) => b.show).map(({ icon, value, label }) => (
+        <span key={icon + label} className="stats__badge">
+          {icon} {value}{label && <small> {label}</small>}
         </span>
       ))}
     </div>
@@ -107,8 +122,8 @@ function AddressFields({ orderId, buyer, draft, onChange, onSave }) {
   return (
     <div className="addressBox">
       {field("direccion", "Dirección")}
-      {field("nombre",    "Nombre")}
-      {field("telefono",  "Teléfono")}
+      {field("nombre", "Nombre")}
+      {field("telefono", "Teléfono")}
       <button className="btn btn--secondary" onClick={onSave}>
         Guardar datos
       </button>
@@ -187,27 +202,42 @@ export default function Orders() {
     updateOrderShippingCost,
   } = useCart();
 
-  const [noteDraft,  setNoteDraft]  = useState({});
-  const [addrDraft,  setAddrDraft]  = useState({});
+  const [noteDraft, setNoteDraft] = useState({});
+  const [addrDraft, setAddrDraft] = useState({});
   const [envioDraft, setEnvioDraft] = useState({});
 
+  // ── Global stats — un solo reduce sobre todas las órdenes ─────────────────
   const globalStats = useMemo(() => {
     return orders.reduce((acc, o) => {
-      const s      = calcStats(o.items);
-      const envio  = o.summary?.envio    || 0;
-      const total  = o.summary?.total    || 0;
+      const s = calcStats(o.items);
+      const envio = o.summary?.envio || 0;
+      const total = o.summary?.total || 0;
 
-      acc.ventas     += total;
-      acc.envios     += envio;
-      acc.productos  += total - envio;
-      acc.burgers    += s.burgers;
+      acc.ventas += total;
+      acc.envios += envio;
+      acc.productos += total - envio;
+      acc.burgers += s.burgers;
       acc.medallones += s.medallones;
-      acc.fries      += s.fries;
-      acc.lomos      += s.lomos;
-      acc.helados    += s.helados;
+      acc.papas_ind += s.papas_ind;
+      acc.papas_bandeja += s.papas_bandeja;
+      acc.papas_bandeja_cheddar += s.papas_bandeja_cheddar;
+      acc.papas_bandeja_cheddar_panceta += s.papas_bandeja_cheddar_panceta;
+      acc.lomos += s.lomos;
+      acc.milanesa_pollo += s.milanesa_pollo;
+      acc.milanesa_carne += s.milanesa_carne;
+      acc.helados += s.helados;
       return acc;
-    }, { ventas: 0, envios: 0, productos: 0, burgers: 0, medallones: 0, fries: 0, lomos: 0, helados: 0 });
+    }, {
+      ventas: 0, envios: 0, productos: 0,
+      burgers: 0, medallones: 0,
+      papas_ind: 0, papas_bandeja: 0,
+      papas_bandeja_cheddar: 0, papas_bandeja_cheddar_panceta: 0,
+      milanesa_pollo: 0, milanesa_carne: 0,
+      lomos: 0, helados: 0,
+    });
   }, [orders]);
+
+  // ── Handlers ──────────────────────────────────────────────────────────────
 
   const handleReprint = async (order) => {
     const updated = orders.find((o) => o.id === order.id);
@@ -220,8 +250,8 @@ export default function Orders() {
   const handleSaveAddress = (o) => {
     const d = addrDraft[o.id] ?? {};
     updateOrderAddress(o.id, {
-      nombre:    d.nombre    ?? o.buyer?.nombre    ?? "",
-      telefono:  d.telefono  ?? o.buyer?.telefono  ?? "",
+      nombre: d.nombre ?? o.buyer?.nombre ?? "",
+      telefono: d.telefono ?? o.buyer?.telefono ?? "",
       direccion: d.direccion ?? o.buyer?.direccion ?? "",
     });
   };
@@ -232,6 +262,8 @@ export default function Orders() {
     updateOrderShippingCost(id, cost);
   };
 
+  // ── Empty state ───────────────────────────────────────────────────────────
+
   if (!orders.length) {
     return (
       <section className="orders orders--empty">
@@ -241,18 +273,19 @@ export default function Orders() {
     );
   }
 
+  // ── Render ────────────────────────────────────────────────────────────────
+
   return (
     <section className="orders">
-      <header className="ordersTop">
-        <div>
-          <h2 className="orders__title">Pedidos</h2>
 
-        </div>
+      <header className="ordersTop">
+        <h2 className="orders__title">Pedidos</h2>
         <button className="btn btn--danger" onClick={deleteAllOrders}>
           Borrar todo
         </button>
       </header>
 
+      {/* ── Barra de stats globales ── */}
       <div className="globalStatsBar">
         <div className="globalStatsBar__group">
           <dl className="globalStatsBar__item globalStatsBar__item--highlight">
@@ -269,22 +302,26 @@ export default function Orders() {
           </dl>
         </div>
         <div className="globalStatsBar__group">
-          {globalStats.burgers    > 0 && <dl className="globalStatsBar__item"><dt>🍔 Hamburguesas</dt><dd>{globalStats.burgers}</dd></dl>}
+          {globalStats.burgers > 0 && <dl className="globalStatsBar__item"><dt>🍔 Hamburguesas</dt><dd>{globalStats.burgers}</dd></dl>}
           {globalStats.medallones > 0 && <dl className="globalStatsBar__item"><dt>🥩 Medallones</dt><dd>{globalStats.medallones}</dd></dl>}
-          {globalStats.fries      > 0 && <dl className="globalStatsBar__item"><dt>🍟 Papas</dt><dd>{globalStats.fries}</dd></dl>}
-          {globalStats.lomos      > 0 && <dl className="globalStatsBar__item"><dt>🥪 Lomos</dt><dd>{globalStats.lomos}</dd></dl>}
-          {globalStats.helados    > 0 && <dl className="globalStatsBar__item"><dt>🍦 Helados</dt><dd>{globalStats.helados}</dd></dl>}
+          {globalStats.papas_ind > 0 && <dl className="globalStatsBar__item"><dt>🍟 Papas ind.</dt><dd>{globalStats.papas_ind}</dd></dl>}
+          {globalStats.papas_bandeja > 0 && <dl className="globalStatsBar__item"><dt>🍟 Bandejas</dt><dd>{globalStats.papas_bandeja}</dd></dl>}
+          {globalStats.papas_bandeja_cheddar > 0 && <dl className="globalStatsBar__item"><dt>🍟 Bandejas cheddar</dt><dd>{globalStats.papas_bandeja_cheddar}</dd></dl>}
+          {globalStats.papas_bandeja_cheddar_panceta > 0 && <dl className="globalStatsBar__item"><dt>🍟 Bandejas cheddar panceta</dt><dd>{globalStats.papas_bandeja_cheddar_panceta}</dd></dl>}
+          {globalStats.lomos > 0 && <dl className="globalStatsBar__item"><dt>🥪 Lomos</dt><dd>{globalStats.lomos}</dd></dl>}
+          {globalStats.helados > 0 && <dl className="globalStatsBar__item"><dt>🍦 Helados</dt><dd>{globalStats.helados}</dd></dl>}
         </div>
       </div>
 
+      {/* ── Cards grid ── */}
       <div className="ordersGrid">
         {orders.map((o) => {
-          const status       = normalizeStatus(o.status);
-          const paid         = !!o.payment?.paid;
-          const method       = o.payment?.method || "efectivo";
+          const status = normalizeStatus(o.status);
+          const paid = !!o.payment?.paid;
+          const method = o.payment?.method || "efectivo";
           const includeEnvio = !!o.logistics?.includeEnvio;
-          const envioCost    = envioDraft[o.id] ?? o.summary?.envio ?? ENVIO_OPTIONS[0];
-          const stats        = calcStats(o.items);
+          const envioCost = envioDraft[o.id] ?? o.summary?.envio ?? ENVIO_OPTIONS[0];
+          const stats = calcStats(o.items);
 
           return (
             <article key={o.id} className={`orderCard orderCard--${status}`}>
