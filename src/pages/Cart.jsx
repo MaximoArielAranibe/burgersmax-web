@@ -38,7 +38,7 @@ const Cart = () => {
   const addressRef = useRef(null);
 
   // costos disponibles
-  const ENVIO_OPTIONS = [2000, 2500, 3000, 3500];
+  const ENVIO_OPTIONS = [2000, 2500, 3000, 3500, 4000];
 
   const [envioCost, setEnvioCost] = useState(ENVIO_OPTIONS[0]);
 

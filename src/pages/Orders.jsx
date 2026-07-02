@@ -13,7 +13,7 @@ const fdate = (iso) =>
 
 // ─── Domain helpers ───────────────────────────────────────────────────────────
 
-const ENVIO_OPTIONS = [2000, 2500, 3000, 3500];
+const ENVIO_OPTIONS = [2000, 2500, 3000, 3500, 4000];
 
 const normalizeStatus = (s) => (s === "FINISHED" ? "FINISHED" : "PENDING");
 
@@ -36,6 +36,8 @@ const EMPTY_STATS = {
   lomos: 0,
   helados: 0,
 };
+
+
 
 const calcStats = (items) =>
   items.reduce((acc, it) => {
@@ -98,14 +100,16 @@ function ClientBox({ buyer, address, showAddress }) {
   return (
     <div className="clientBox">
       <div className="clientBox__main">
-        <span className="clientBox__name">{buyer?.nombre || "Cliente"}</span>
+        <span className="clientBox__name"><strong>CLIENTE:</strong> {buyer?.nombre || "Cliente"}</span>
+      </div>
+
+      <div>
         {buyer?.telefono && (
-          <span className="clientBox__phone">{buyer.telefono}</span>
+          <span className="clientBox__name"><strong>TELÉFONO: </strong> {buyer.telefono}</span>
         )}
       </div>
-      {showAddress && address && (
-        <p className="clientBox__address">{address}</p>
-      )}
+
+      {showAddress && (<p className="clientBox__address"><strong>DIRECCIÓN: </strong>{`${address ? (`${address}`) : "A confirmar"}`}</p>)}
     </div>
   );
 }
@@ -202,6 +206,7 @@ export default function Orders() {
     updateOrderShippingCost,
   } = useCart();
 
+
   const [noteDraft, setNoteDraft] = useState({});
   const [addrDraft, setAddrDraft] = useState({});
   const [envioDraft, setEnvioDraft] = useState({});
@@ -236,6 +241,8 @@ export default function Orders() {
       lomos: 0, helados: 0,
     });
   }, [orders]);
+
+
 
   // ── Handlers ──────────────────────────────────────────────────────────────
 
@@ -289,7 +296,7 @@ export default function Orders() {
       <div className="globalStatsBar">
         <div className="globalStatsBar__group">
           <dl className="globalStatsBar__item globalStatsBar__item--highlight">
-            <dt>Ventas totales</dt>
+            <dt>Total</dt>
             <dd>${fmt(globalStats.ventas)}</dd>
           </dl>
           <dl className="globalStatsBar__item">
@@ -328,7 +335,7 @@ export default function Orders() {
 
               <div className="cardHeader">
                 <div>
-                  <span className="cardHeader__number">#{o.number}</span>
+                  <span className="cardHeader__number">Pedido #{o.number}</span>
                   <span className="cardHeader__time">{fdate(o.createdAt)}</span>
                 </div>
                 <span className={`statusBadge statusBadge--${status}`}>
@@ -336,13 +343,17 @@ export default function Orders() {
                 </span>
               </div>
 
+              <StatBadges stats={stats} />
+
               <ClientBox
                 buyer={o.buyer}
                 address={o.buyer?.direccion}
                 showAddress={includeEnvio}
               />
 
-              <StatBadges stats={stats} />
+              <div className="delivery__options">
+                <p>Envio: {`${includeEnvio ? "Si" : "No"}`}</p>
+              </div>
 
               <ItemList items={o.items} />
 
@@ -352,53 +363,69 @@ export default function Orders() {
                   className="noteBox__textarea"
                   placeholder="Agregar nota..."
                   value={noteDraft[o.id] ?? o.note ?? ""}
-                  onChange={(e) =>
-                    setNoteDraft((prev) => ({ ...prev, [o.id]: e.target.value }))
-                  }
+                  onChange={(e) => {
+                    const value = e.target.value;
+
+                    setNoteDraft((prev) => ({
+                      ...prev,
+                      [o.id]: value,
+                    }));
+
+                    clearTimeout(window.__noteTimeout);
+
+                    window.__noteTimeout = setTimeout(() => {
+                      if (value !== o.note) {
+                        updateOrderNote(o.id, value);
+                      }
+                    }, 500);
+                  }}
                 />
-                <button
-                  className="btn btn--secondary"
-                  onClick={() => updateOrderNote(o.id, noteDraft[o.id])}
-                >
-                  Guardar nota
-                </button>
               </div>
 
-              <div className="envioSection">
-                <label className="check">
-                  <input
-                    type="checkbox"
-                    checked={includeEnvio}
-                    onChange={(e) => updateOrderShipping(o.id, e.target.checked)}
-                  />
-                  Envío
-                </label>
 
-                {includeEnvio && (
-                  <label className="envioSection__costLabel">
-                    Costo de envío
-                    <select
-                      className="select"
-                      value={envioCost}
-                      onChange={(e) => handleEnvioChange(o.id, e.target.value)}
-                    >
-                      {ENVIO_OPTIONS.map((v) => (
-                        <option key={v} value={v}>${v}</option>
-                      ))}
-                    </select>
-                  </label>
-                )}
-              </div>
 
-              {includeEnvio && (
-                <AddressFields
-                  orderId={o.id}
-                  buyer={o.buyer}
-                  draft={addrDraft[o.id]}
-                  onChange={handleAddrChange}
-                  onSave={() => handleSaveAddress(o)}
-                />
-              )}
+<div className={`envioSection ${includeEnvio ? "is-active" : ""}`}>
+
+  <label className="envioSection__toggle">
+    <input
+      type="checkbox"
+      checked={includeEnvio}
+      onChange={(e) => updateOrderShipping(o.id, e.target.checked)}
+    />
+
+    <span className="envioSection__label">
+      {includeEnvio ? "Delivery activo" : "Sin envío"}
+    </span>
+  </label>
+
+  {includeEnvio && (
+    <div className="envioSection__content">
+
+      <div className="envioSection__row">
+        <span className="envioSection__text">Costo</span>
+
+        <select
+          className="select envioSection__select"
+          value={envioCost}
+          onChange={(e) => handleEnvioChange(o.id, e.target.value)}
+        >
+          {ENVIO_OPTIONS.map((v) => (
+            <option key={v} value={v}>${v}</option>
+          ))}
+        </select>
+      </div>
+
+      <AddressFields
+        orderId={o.id}
+        buyer={o.buyer}
+        draft={addrDraft[o.id]}
+        onChange={handleAddrChange}
+        onSave={() => handleSaveAddress(o)}
+      />
+
+    </div>
+  )}
+</div>
 
               <OrderControls
                 paid={paid}

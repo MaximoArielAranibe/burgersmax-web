@@ -1,4 +1,4 @@
-@import 'variables.scss';
+@use 'abstract/variables' as *;
 
 .footer {
   max-width: 100%;
@@ -12,7 +12,7 @@
   // Propiedades del contenedor principal
   color: black;
   gap: 2rem;
-  @include montserrat(500);
+  @include font-montserrat(500);
 
   // ⭐️ AÑADIDO: Necesario para que el pseudo-elemento se posicione correctamente
   position: relative;
@@ -33,7 +33,7 @@
     height: 100%;
 
     // Propiedades del fondo movidas aquí
-    background-color: $background-color;
+    background-color: $color-bg;
     background-image: url(../assets/landing-image-6-small.jpg);
     background-attachment: fixed;
     background-position: 50% -20%;
@@ -80,13 +80,13 @@
       }
 
       a {
-        color: $button-color; // links también en color acento
+        color: $color-bg; // links también en color acento
         font-weight: 500;
         text-decoration: none;
         transition: all 0.3s ease;
 
         &:hover {
-          color: lighten($button-color, 15%);
+          color: lighten($color-bg, 15%);
           text-decoration: underline;
         }
       }

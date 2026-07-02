@@ -1,4 +1,4 @@
-@import "variables.scss";
+@use 'abstract/variables' as *;
 
 .modal-overlay {
   position: fixed;
@@ -37,13 +37,13 @@
   gap: 1rem;
 
   h2 {
-    @include montserrat(700);
+    @include font-montserrat(700);
     font-size: 1.4rem;
     margin-bottom: .3rem;
   }
 
   h4 {
-    @include montserrat(600);
+    @include font-montserrat(600);
     font-size: .85rem;
     text-transform: uppercase;
     letter-spacing: .05em;
@@ -72,7 +72,7 @@
 
     &:focus {
       outline: none;
-      border-color: $button-color;
+      border-color: $color-bg;
       box-shadow: 0 0 0 2px rgba(255,209,18,.25);
     }
 
@@ -113,13 +113,13 @@
 
     cursor: pointer;
 
-    @include montserrat(600);
+    @include font-montserrat(600);
 
     transition: all .12s ease;
   }
 
   button[type="submit"] {
-    background: $button-color;
+    background: $color-bg;
     color: #000;
 
     box-shadow:

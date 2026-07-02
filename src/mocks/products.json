@@ -17,10 +17,30 @@
         "triple": 14000
       }
     ]
+
   },
   {
     "id": 2,
     "name": "Cheddar",
+    "category": "burger",
+    "thumbnail": "https://i.ibb.co/SDD1wwc7/cheddar-hermosa.png",
+    "imagePosition": "50% 80%",
+    "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
+    "price": [
+      {
+        "simple": 8000
+      },
+      {
+        "doble": 11000
+      },
+      {
+        "triple": 13500
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "name": "Picante",
     "category": "burger",
     "thumbnail": "https://i.ibb.co/SDD1wwc7/cheddar-hermosa.png",
     "imagePosition": "50% 80%",
@@ -71,7 +91,7 @@
         "doble": 11000
       },
       {
-        "triple": 14000
+        "triple": 14500
       }
     ]
   },
@@ -129,6 +149,25 @@
       },
       {
         "triple": 13000
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Americana",
+    "category": "burger",
+    "thumbnail": "https://thumbs.dreamstime.com/b/hamburguesa-picante-con-cebollas-adobadas-y-chile-en-tablero-de-madera-aj%C3%AD-sobre-fondo-oscuro-225658881.jpg",
+    "imagePosition": "50% 50%",
+    "description": "Pan de papa, medallon 100grs, jamon, queso, lechuga, tomate, huevo",
+    "price": [
+      {
+        "simple": 8000
+      },
+      {
+        "doble": 11500
+      },
+      {
+        "triple": 14500
       }
     ]
   },
@@ -232,7 +271,7 @@
     "description": "Sandwich de mila + papas",
     "price": [
       {
-        "simple": 12000
+        "simple": 12500
       }
     ]
   },
@@ -245,7 +284,7 @@
     "description": "Nugget Pollo 10U",
     "price": [
       {
-        "simple": 5000
+        "simple": 5500
       }
     ]
   },
@@ -258,7 +297,7 @@
     "description": "Aros de cebolla 10U",
     "price": [
       {
-        "simple": 5000
+        "simple": 5500
       }
     ]
   }

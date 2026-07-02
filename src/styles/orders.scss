@@ -1,132 +1,114 @@
-// ─── Design tokens ────────────────────────────────────────────────────────────
+@use 'abstract/variables'as *;
+@use 'abstract/mixins'as m;
 
-$color-bg:          #f3f4f6;
-$color-surface:     #ffffff;
-$color-surface-alt: #f9fafb;
-$color-border:      #e5e7eb;
-$color-border-dash: #d1d5db;
-$color-text:        #111827;
-$color-text-muted:  #6b7280;
-$color-text-mid:    #374151;
-
-$color-pending-bg:  #fde68a;
-$color-pending-fg:  #92400e;
-$color-done-bg:     #bbf7d0;
-$color-done-fg:     #065f46;
-
-$color-danger:      #dc2626;
-$color-danger-hover:#b91c1c;
-$color-dark:        #111827;
-$color-dark-hover:  #1f2937;
-
-$radius-sm:  8px;
-$radius-md:  12px;
-$radius-lg:  16px;
-$radius-pill: 999px;
-
-$shadow-card: 0 4px 16px rgba(0, 0, 0, 0.07);
-$transition:  0.15s ease;
-
-// ─── Mixins ───────────────────────────────────────────────────────────────────
-
-@mixin flex-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-@mixin surface($radius: $radius-lg) {
-  background: $color-surface;
-  border: 1px solid $color-border;
-  border-radius: $radius;
-}
-
-// ─── Page shell ──────────────────────────────────────────────────────────────
+/* ===============================
+   PAGE
+================================= */
 
 .orders {
-  padding: 24px;
-  background: $color-bg;
+  padding: $space-xl;
+  background-color: $color-bg-light;
   min-height: 100vh;
-
-  &--empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    color: $color-text-muted;
-  }
+  max-width: 100%;
+  @include font-nunito(400);
 
   &__title {
-    font-size: 22px;
+    font-size: $text-xl;
     font-weight: 800;
-    color: $color-text;
-    margin: 0;
+    margin-bottom: $space-md;
   }
 
-  &__emptyMsg {
-    font-size: 15px;
+  &--empty {
+    @include m.flex-center;
+    flex-direction: column;
+    gap: $space-sm;
+    color: $color-text-muted;
   }
 }
 
-// ─── Top bar ──────────────────────────────────────────────────────────────────
+/* ===============================
+   TOP BAR
+================================= */
 
 .ordersTop {
-  @include flex-between;
-  margin-bottom: 24px;
+  @include m.flex-between;
+  margin-bottom: $space-lg;
 }
 
-.globalStats {
+/* ===============================
+   GLOBAL STATS (KPI)
+================================= */
+
+.globalStatsBar {
+  @include m.card;
   display: flex;
-  gap: 24px;
-  margin-top: 8px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: $space-lg;
+  margin-bottom: $space-xl;
+  color: #fff;
+
+  &__group {
+    min-width: 100%;
+    display: flex;
+    align-items: center;
+    @include m.flex-center;
+    flex-wrap: wrap;
+  }
 
   &__item {
-    margin: 0;
+    min-width: 120px;
+    @include m.flex-center;
+    flex-direction: column;
 
     dt {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      font-size: $text-xs;
       color: $color-text-muted;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
     }
 
     dd {
-      font-size: 20px;
-      font-weight: 800;
-      color: $color-text;
+      font-size: $text-lg;
+      font-weight: 700;
       margin: 0;
+      padding: 0 2rem;
+    }
+
+    &--highlight dd {
+      font-size: 1.8rem;
+      color: $color-accent;
     }
   }
 }
 
-// ─── Grid ────────────────────────────────────────────────────────────────────
+/* ===============================
+   GRID
+================================= */
 
 .ordersGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 18px;
-
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-  }
+  @include m.grid-auto(320px);
+  gap: $space-lg;
 }
 
-// ─── Card ────────────────────────────────────────────────────────────────────
+/* ===============================
+   CARD
+================================= */
 
 .orderCard {
-  @include surface($radius-lg);
-  padding: 16px;
+  @include m.card;
+  background: #1c1c1c;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #fff;
+
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  box-shadow: $shadow-card;
-  transition: transform $transition, box-shadow $transition;
+  gap: $space-sm;
+
+  transition: all $transition-base;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
   }
 
   &--FINISHED {
@@ -134,384 +116,290 @@ $transition:  0.15s ease;
   }
 }
 
-// ─── Card header ─────────────────────────────────────────────────────────────
+/* ===============================
+   HEADER
+================================= */
 
 .cardHeader {
-  @include flex-between;
+  @include m.flex-between;
 
   &__number {
-    display: block;
-    font-size: 18px;
+    font-size: $text-lg;
     font-weight: 800;
-    color: $color-text;
   }
 
   &__time {
-    font-size: 12px;
+    display: block;
+    font-size: $text-xs;
     color: $color-text-muted;
   }
 }
 
-// ─── Status badge ─────────────────────────────────────────────────────────────
+/* ===============================
+   STATUS
+================================= */
 
 .statusBadge {
-  padding: 4px 12px;
+  padding: 4px 10px;
   border-radius: $radius-pill;
-  font-size: 11px;
+  font-size: $text-xs;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 
-  &--PENDING  { background: $color-pending-bg; color: $color-pending-fg; }
-  &--FINISHED { background: $color-done-bg;    color: $color-done-fg;    }
+  &--PENDING {
+    background: rgba($color-warning, 0.15);
+    color: $color-warning;
+  }
+
+  &--FINISHED {
+    background: rgba($color-success, 0.15);
+    color: $color-success;
+  }
 }
 
-// ─── Client box ──────────────────────────────────────────────────────────────
+/* ===============================
+   CLIENT
+================================= */
 
 .clientBox {
-  background: $color-surface-alt;
-  border: 1px solid $color-border;
+  padding: $space-md;
   border-radius: $radius-md;
-  padding: 10px 12px;
+  background: #181818;
+
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: flex-start;
+  gap: $space-sm;
 
+  border: 1px solid rgba(255, 255, 255, 0.05);
+
+  /* HEADER (cliente) */
   &__main {
-    @include flex-between;
-    gap: 8px;
+    width: 100%;
   }
 
+  /* nombre (protagonista) */
   &__name {
-    font-size: 15px;
     font-weight: 700;
-    color: $color-text;
+    font-size: $text-md;
+
+    strong {
+      font-size: $text-xs;
+      color: $color-text-muted;
+      font-weight: 500;
+      margin-right: 4px;
+    }
   }
 
-  &__phone {
-    font-size: 13px;
-    font-weight: 600;
-    color: $color-text-mid;
+  /* teléfono (secundario) */
+  &__phone,
+  >div:nth-of-type(2) span {
+    font-size: $text-sm;
+    color: $color-text-muted;
   }
 
+  /* dirección (bloque separado) */
   &__address {
-    font-size: 13px;
-    color: $color-text-mid;
-    padding-top: 6px;
-    border-top: 1px dashed $color-border-dash;
+    width: 100%;
+    padding-top: $space-sm;
+    margin-top: $space-xs;
+
+    font-size: $text-sm;
+
+    border-top: 1px dashed $color-border;
+
+    strong {
+      display: block;
+      font-size: $text-xs;
+      color: $color-text-muted;
+      margin-bottom: 2px;
+    }
+  }
+}
+
+/* ENVÍO → transformarlo en badge sin tocar JSX */
+.delivery__options {
+  width: 100%;
+
+  p {
     margin: 0;
-  }
-}
 
-// ─── Stats ───────────────────────────────────────────────────────────────────
-
-.stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-
-  &__badge {
-    background: $color-dark;
-    color: #fff;
-    padding: 3px 10px;
-    border-radius: $radius-pill;
-    font-size: 12px;
+    display: inline-block;
+    font-size: $text-xs;
     font-weight: 600;
+
+    padding: 4px 10px;
+    border-radius: $radius-pill;
+
+    background: rgba($color-accent, 0.15);
+    color: $color-accent;
   }
 }
 
-// ─── Items list ──────────────────────────────────────────────────────────────
 
-.items {
-  list-style: none;
-  margin: 0;
-  padding: 8px 0;
-  border-top: 1px dashed $color-border-dash;
-  border-bottom: 1px dashed $color-border-dash;
+/* =========== ENVIO SECTION ====== */
+
+.envioSection {
+  border-radius: $radius-md;
+  border: 1px solid $color-border;
+  padding: $space-sm;
+  background: #151515;
+
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: $space-sm;
+
+  transition: all $transition-base;
+
+  &.is-active {
+    border-color: rgba($color-accent, 0.3);
+    background: rgba($color-accent, 0.05);
+  }
+
+  /* toggle */
+  &__toggle {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    cursor: pointer;
+  }
+
+  &__label {
+    font-size: $text-sm;
+    font-weight: 600;
+  }
+
+  /* contenido */
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+  }
 
   &__row {
     display: flex;
-    align-items: baseline;
-    font-size: 14px;
-    color: $color-text;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  &__qty {
-    font-weight: 700;
-    min-width: 28px;
-    flex-shrink: 0;
+  &__text {
+    font-size: $text-xs;
+    color: $color-text-muted;
+  }
+
+  &__select {
+    max-width: 120px;
+  }
+}
+
+
+/* ===============================
+   ITEMS
+================================= */
+
+.items {
+  border-block: 1px dashed $color-border;
+  padding: $space-lg $space-md;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &__row {
+    @include m.flex-between;
+    font-size: $text-sm;
   }
 
   &__name {
     flex: 1;
-    padding: 0 6px;
-  }
-
-  &__tag {
-    font-size: 11px;
-    color: $color-text-muted;
-    margin-left: 6px;
-    text-transform: capitalize;
+    margin: 0 $space-xs;
+    @include m.text-truncate;
   }
 
   &__price {
     font-weight: 600;
-    white-space: nowrap;
+    color: $color-accent;
   }
 }
 
-// ─── Note box ────────────────────────────────────────────────────────────────
+/* ===============================
+   FORM
+================================= */
 
 .noteBox {
+  min-width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: $space-xs;
+  position: relative;
 
   &__label {
-    font-size: 12px;
-    font-weight: 600;
+    font-size: $text-xs;
     color: $color-text-muted;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
   }
 
   &__textarea {
-    width: 100%;
-    min-height: 72px;
-    padding: 8px;
-    border-radius: $radius-sm;
-    border: 1px solid $color-border;
-    font-size: 13px;
-    color: $color-text;
-    resize: vertical;
-    transition: border-color $transition;
-    box-sizing: border-box;
-
-    &:focus {
-      outline: none;
-      border-color: $color-dark;
-    }
+    @include m.input-base;
+    @include m.text-truncate;
+    display: block;
+    min-height: 70px;
+    max-width: calc(100% - 1.8rem);
   }
 }
 
-// ─── Envío section ───────────────────────────────────────────────────────────
-
-.envioSection {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-
-  &__costLabel {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    color: $color-text-mid;
-    font-weight: 600;
-  }
-}
-
-// ─── Address box ─────────────────────────────────────────────────────────────
-
-.addressBox {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-
-  &__input {
-    padding: 8px 10px;
-    border-radius: $radius-sm;
-    border: 1px solid $color-border;
-    font-size: 13px;
-    color: $color-text;
-    transition: border-color $transition;
-
-    &:focus {
-      outline: none;
-      border-color: $color-dark;
-    }
-  }
-}
-
-// ─── Controls ────────────────────────────────────────────────────────────────
+/* ===============================
+   CONTROLS
+================================= */
 
 .controls {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: $space-xs;
 
   &__row {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    gap: $space-xs;
   }
 }
 
-// ─── Shared: check label ──────────────────────────────────────────────────────
-
-.check {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: $color-text-mid;
-  cursor: pointer;
-  user-select: none;
-
-  input[type="checkbox"] {
-    width: 15px;
-    height: 15px;
-    cursor: pointer;
-    accent-color: $color-dark;
-  }
-}
-
-// ─── Shared: select ───────────────────────────────────────────────────────────
-
-.select {
-  padding: 6px 10px;
-  border-radius: $radius-sm;
-  border: 1px solid $color-border;
-  font-size: 13px;
-  color: $color-text;
-  background: $color-surface;
-  cursor: pointer;
-  transition: border-color $transition;
-  flex: 1;
-
-  &:focus {
-    outline: none;
-    border-color: $color-dark;
-  }
-}
-
-// ─── Shared: buttons ─────────────────────────────────────────────────────────
+/* ===============================
+   BUTTONS
+================================= */
 
 .btn {
-  padding: 7px 12px;
-  border-radius: $radius-sm;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-  transition: background $transition, opacity $transition;
+  @include m.button-base;
+  @include m.hover-scale;
 
   &--secondary {
-    background: $color-border;
-    color: $color-text;
-
-    &:hover { background: darken($color-border, 6%); }
+    background: #2a2a2a;
   }
 
   &--print {
-    background: $color-dark;
+    background: $color-primary;
     color: #fff;
-
-    &:hover { background: $color-dark-hover; }
   }
 
   &--danger {
     background: $color-danger;
     color: #fff;
-
-    &:hover { background: $color-danger-hover; }
   }
 }
 
-// ─── Price summary ───────────────────────────────────────────────────────────
+/* ===============================
+   PRICE
+================================= */
 
 .priceBox {
-  @include surface($radius-md);
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  border-top: 1px solid $color-border;
+  padding-top: $space-sm;
 
   &__line {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    color: $color-text-mid;
-
-    &--envio {
-      font-weight: 600;
-      color: $color-text;
-    }
+    @include m.flex-between;
+    font-size: $text-sm;
   }
 
   &__total {
-    display: flex;
-    justify-content: space-between;
-    font-size: 17px;
+    @include m.flex-between;
+    font-size: $text-lg;
     font-weight: 800;
-    color: $color-text;
-    padding-top: 8px;
-    margin-top: 4px;
-    border-top: 2px solid $color-text;
-  }
-}
-
-// ─── Global stats bar ─────────────────────────────────────────────────────────
-
-.globalStatsBar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 24px;
-  padding: 16px 20px;
-
-  background: $color-surface;
-  border: 1px solid $color-border;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-card;
-
-  &__group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 20px;
-    align-items: center;
-
-    &:first-child {
-      padding-right: 20px;
-      border-right: 2px solid $color-border;
-    }
-  }
-
-  &__item {
-    margin: 0;
-
-    dt {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: $color-text-muted;
-      margin-bottom: 2px;
-    }
-
-    dd {
-      font-size: 17px;
-      font-weight: 700;
-      color: $color-text;
-      margin: 0;
-    }
-
-    &--highlight dd {
-      font-size: 22px;
-      font-weight: 800;
-    }
-  }
-
-  @media (max-width: 600px) {
-    flex-direction: column;
-
-    &__group:first-child {
-      padding-right: 0;
-      padding-bottom: 12px;
-      border-right: none;
-      border-bottom: 2px solid $color-border;
-    }
+    margin-top: $space-xs;
   }
 }

@@ -31,7 +31,8 @@ function parseVariants(product) {
 }
 
 export default React.memo(function ProductCard({ product, onAdd }) {
-  const { id, name, thumbnail, description } = product;
+  const { id, name, thumbnail, description, category } = product; // 👈 extraer category
+
   const variants = parseVariants(product);
 
   return (
@@ -77,7 +78,15 @@ export default React.memo(function ProductCard({ product, onAdd }) {
                 aria-disabled={!hasPrice}
                 onClick={() =>
                   hasPrice &&
-                  onAdd({ id, name, thumbnail, description, tipo, precio: valor })
+                  onAdd({
+                    id,
+                    name,
+                    thumbnail,
+                    description,
+                    category,  // 👈 category viaja al carrito
+                    tipo,
+                    precio: valor,
+                  })
                 }
               >
                 Comprar 🛒

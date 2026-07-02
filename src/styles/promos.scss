@@ -1,4 +1,4 @@
-@import "variables.scss";
+@use 'abstract/variables' as *;
 
 .promos {
 
@@ -41,7 +41,7 @@
 
       color: #fff;
 
-      @include montserrat(700);
+      @include font-montserrat(700);
 
       font-size: 1.6rem;
 
@@ -80,7 +80,7 @@
 
         outline: none;
 
-        border-color: $button-color;
+        border-color: $color-accent;
 
       }
 
@@ -102,7 +102,7 @@
 
     color: #fff;
 
-    @include montserrat(700);
+    @include font-montserrat(700);
 
     font-size: 1.3rem;
 
@@ -170,7 +170,7 @@
 
   &__name {
 
-    @include montserrat(600);
+    @include font-montserrat(600);
 
     font-size: 1rem;
 
@@ -224,9 +224,9 @@
 
     &-value {
 
-      @include nunito-sans(800);
+      @include font-nunito(800);
 
-      color: $button-color;
+      color: $color-surface;
 
       font-size: 1rem;
 
@@ -238,7 +238,7 @@
 
   &__btn {
 
-    background: $button-color;
+    background: $color-accent;
 
     color: #000;
 
@@ -254,7 +254,7 @@
 
     cursor: pointer;
 
-    @include montserrat(600);
+    @include font-montserrat(600);
 
     transition:
       transform .06s ease,

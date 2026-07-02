@@ -1,0 +1,147 @@
+@use './variables' as *;
+/* ===============================
+   MIXINS UTILITARIOS
+================================= */
+
+/* ========= RESPONSIVE ========= */
+// Uso: @include respond(md) {}
+@mixin respond($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $bp-sm) { @content; }
+  }
+  @else if $breakpoint == md {
+    @media (min-width: $bp-md) { @content; }
+  }
+  @else if $breakpoint == lg {
+    @media (min-width: $bp-lg) { @content; }
+  }
+  @else if $breakpoint == xl {
+    @media (min-width: $bp-xl) { @content; }
+  }
+  @else if $breakpoint == 2xl {
+    @media (min-width: $bp-2xl) { @content; }
+  }
+}
+
+
+/* ========= FLEX CENTER ========= */
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ========= FLEX BETWEEN ========= */
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+/* ========= BUTTON BASE ========= */
+// Base reutilizable para TODOS los botones
+@mixin button-base {
+  border: none;
+  border-radius: $radius-md;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform $transition-base, background-color $transition-base;
+}
+
+
+/* ========= HOVER SCALE ========= */
+@mixin hover-scale($scale: 1.03) {
+  &:hover,
+  &:focus {
+    transform: scale($scale);
+  }
+}
+
+
+/* ========= FOCUS RING ========= */
+// Accesibilidad (clave)
+@mixin focus-ring($color) {
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($color, 0.3);
+  }
+}
+
+
+/* ========= INPUT BASE ========= */
+// Inputs consistentes en toda la app
+@mixin input-base {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border-radius: $radius-md;
+  border: 1px solid $color-border;
+  background: $color-surface;
+  color: $color-text;
+  font-size: $text-md;
+
+  transition: border-color $transition-base, box-shadow $transition-base;
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px rgba($color-primary, 0.2);
+    outline: none;
+  }
+
+  &:disabled {
+    background: $color-disabled-bg;
+    cursor: not-allowed;
+  }
+}
+
+
+/* ========= TEXT TRUNCATE ========= */
+// Para evitar overflow feo
+@mixin text-truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+/* ========= CARD ========= */
+// Base para contenedores
+@mixin card {
+  background: $color-surface;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  padding: $space-md;
+}
+
+
+/* ========= SCROLL CUSTOM ========= */
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-border;
+    border-radius: $radius-sm;
+  }
+}
+
+
+/* ========= ABSOLUTE CENTER ========= */
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+/* ========= GRID AUTO ========= */
+// Grid flexible sin pensar mucho
+@mixin grid-auto($min: 200px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min, 1fr));
+  gap: $space-md;
+}

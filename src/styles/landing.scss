@@ -1,4 +1,4 @@
-@import 'variables.scss';
+@use 'abstract/variables' as *;
 
 @keyframes tracking-in-contract {
   0% {
@@ -66,11 +66,11 @@
 }
 
 .landing {
-  color: $white;
+  color: #FFF;
   max-width: 100%;
   height: calc(100vh - 60px);
   font-size: 16px;
-  @include nunito-sans(200);
+  @include font-nunito(200);
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -162,14 +162,14 @@
   &__title {
     display: flex;
     flex-direction: column;
-    @include nunito-sans(900);
+    @include font-nunito(900);
     font-size: 3rem;
     margin-top: 1rem;
     position: relative;
     z-index: 10;
 
     span:last-child {
-      color: $button-color;
+      color: $color-accent;
     }
   }
 
@@ -194,11 +194,11 @@
     }
 
     .first__text {
-      color: $button-color;
+      color: $color-accent;
     }
 
     .second {
-      color: $button-color;
+      color: $color-text;
     }
 
     button {
@@ -211,6 +211,8 @@
 
       &:hover {
         transform: scale(1.1);
+        color: $color-accent;
+
       }
 
       &:active {
@@ -227,7 +229,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    
+
 
 
     &__title, &__description{

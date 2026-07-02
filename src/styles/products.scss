@@ -1,5 +1,4 @@
-@import 'variables.scss'
-;
+@use 'abstract/variables' as *;
 
 .products {
 
@@ -11,7 +10,7 @@
     flex-flow: column wrap; // Correcto para mobile-first
     justify-content: center;
     align-items: center;
-    @include nunito-sans(800);
+    @include font-nunito(800);
   }
 
   // Tarjeta de Producto individual
@@ -71,7 +70,7 @@
         align-items: center;
 
         &-title {
-          @include montserrat(600);
+          @include font-montserrat(600);
           font-size: 1.1rem;
           font-weight: 700;
           text-transform: uppercase;
@@ -82,7 +81,7 @@
         margin-top: 0.5rem;
         font-size: 0.9rem;
         color: #ccc;
-        @include roboto(400);
+        @include font-roboto(400);
       }
     }
 
@@ -111,15 +110,15 @@
         letter-spacing: .01em;
         font-variant-numeric: tabular-nums;
         line-height: 1.1;
-        @include nunito-sans(800);
+        @include font-nunito(800);
 
         &-type {
           display: inline-block;
         }
 
         &-value {
-          @include nunito-sans(600);
-          color: $button-color;
+          @include font-nunito(600);
+          color: $color-accent;
           font-size: .9rem;
           line-height: 1;
           display: inline-block;
@@ -127,7 +126,7 @@
       }
 
       &-btn {
-        background-color: $button-color; // Asumo que $button-color es este valor
+        background-color: $color-accent; // Asumo que $color-accent es este valor
         color: #000;
         display: inline-flex;
         align-items: center;
@@ -139,7 +138,7 @@
         border: 1px solid rgba(0, 0, 0, .12);
         border-radius: .65rem;
         cursor: pointer;
-        @include montserrat(500);
+        @include font-montserrat(500);
         letter-spacing: .01em;
         font-size: .9rem;
         box-shadow: 0 2px 0 rgba(0, 0, 0, .16), 0 6px 16px rgba(255, 209, 18, .14);

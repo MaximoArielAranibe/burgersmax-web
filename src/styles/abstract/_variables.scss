@@ -1,0 +1,191 @@
+/* ===============================
+   FONTS
+================================= */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+
+/* ===============================
+   COLORS (LEGACY BASE → mapear a design tokens)
+================================= */
+$color-bg: #1E1E1E;
+$color-text: #FDFCFC;
+$color-bg-light: #FDFCFC;
+
+$color-surface: #141212;
+$color-surface-deep: #070505;
+
+$color-accent: #FFD112;
+$color-success-dark: #19371d;
+
+/* ===============================
+   SPACING SYSTEM (OBLIGATORIO)
+================================= */
+
+$space-xxs: 2px;
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 12px;
+$space-lg: 16px;
+$space-xl: 24px;
+$space-2xl: 32px;
+
+/* ===============================
+   EXTENSIONES NECESARIAS
+================================= */
+
+// Colores UI faltantes
+$color-border: #2a2a2a;
+$color-text-muted: #a1a1a1;
+
+$color-primary: #3498db;
+$color-danger: #e74c3c;
+$color-warning: #f39c12;
+$color-success: #27ae60;
+
+// Disabled
+$color-disabled-bg: #2a2a2a;
+
+// Radius
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 14px;
+$radius-pill: 999px;
+
+// Typography scale
+$text-xs: 0.75rem;
+$text-sm: 0.875rem;
+$text-md: 1rem;
+$text-lg: 1.25rem;
+$text-xl: 1.5rem;
+
+// Shadow
+$shadow-sm: 0 2px 6px rgba(0,0,0,0.2);
+$shadow-md: 0 6px 18px rgba(0,0,0,0.3);
+
+// Transition
+$transition-base: 0.2s ease;
+
+// Breakpoints faltantes
+$bp-xl: 1280px;
+$bp-2xl: 1536px;
+
+
+/* ===============================
+   TYPOGRAPHY MIXINS
+================================= */
+@mixin font-nunito($weight: 400) {
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: $weight;
+  font-style: normal;
+}
+
+@mixin font-roboto($weight: 400) {
+  font-family: "Roboto", sans-serif;
+  font-weight: $weight;
+  font-style: normal;
+}
+
+@mixin font-montserrat($weight: 400) {
+  font-family: "Montserrat", sans-serif;
+  font-weight: $weight;
+  font-style: normal;
+}
+
+
+/* ===============================
+   LAYOUT MIXINS
+================================= */
+
+// Centro absoluto en flex
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Distribución horizontal típica UI
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Reset de spacing
+@mixin reset-spacing {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ===============================
+   RESPONSIVE SYSTEM
+================================= */
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $bp-sm) { @content; }
+  }
+  @else if $breakpoint == md {
+    @media (min-width: $bp-md) { @content; }
+  }
+  @else if $breakpoint == lg {
+    @media (min-width: $bp-lg) { @content; }
+  }
+}
+
+
+/* ===============================
+   TEXT UTILITIES
+================================= */
+@mixin text-primary {
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+
+/* ===============================
+   LINK RESET
+================================= */
+@mixin link-reset {
+  all: unset;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+
+/* ===============================
+   TYPOGRAPHY UTILITY CLASSES
+================================= */
+@each $font in (nunito, roboto, montserrat) {
+  @for $i from 4 through 8 {
+    .#{$font}-#{$i}00 {
+      @if $font == nunito {
+        @include font-nunito(#{$i}00);
+      }
+      @else if $font == roboto {
+        @include font-roboto(#{$i}00);
+      }
+      @else {
+        @include font-montserrat(#{$i}00);
+      }
+    }
+  }
+}
+
+
+/* ===============================
+   GLOBAL RESET
+================================= */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link-reset {
+  @include link-reset;
+}
