@@ -28,6 +28,8 @@ const Cart = () => {
   const [readyTime, setReadyTime] = useState('');
   const [paid, setPaid] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('efectivo');
+  const [cashAmount, setCashAmount] = useState('');
+  const [transferAmount, setTransferAmount] = useState('');
   const [note, setNote] = useState('');
 
   // Datos cliente
@@ -51,6 +53,19 @@ const Cart = () => {
     () => subtotal + envioCalc,
     [subtotal, envioCalc]
   );
+
+  const mixedTotal =
+    Number(cashAmount || 0) +
+    Number(transferAmount || 0);
+
+  const remaining =
+    Math.max(totalCalc - mixedTotal, 0);
+
+  const paymentCompleted =
+    paymentMethod !== "mixto" ||
+    remaining === 0;
+
+
 
   const [lastOrder, setLastOrder] = useState(null);
 
@@ -94,6 +109,24 @@ const Cart = () => {
 
       paymentMethod: paid ? paymentMethod : null,
 
+      payment: paid
+        ? {
+          method: paymentMethod,
+          cash:
+            paymentMethod === "mixto"
+              ? Number(cashAmount)
+              : paymentMethod === "efectivo"
+                ? totalCalc
+                : 0,
+          transfer:
+            paymentMethod === "mixto"
+              ? Number(transferAmount)
+              : paymentMethod === "transferencia"
+                ? totalCalc
+                : 0,
+        }
+        : null,
+
       note
 
     });
@@ -113,6 +146,10 @@ const Cart = () => {
       setReadyTime('');
 
       setPaid(false);
+
+      setCashAmount('');
+
+      setTransferAmount('');
 
       setPaymentMethod('efectivo');
 
@@ -200,19 +237,6 @@ const Cart = () => {
 
           <div className="cart__options">
 
-            <label className="opt">
-
-              <input
-                type="checkbox"
-                checked={includeEnvio}
-                onChange={(e) =>
-                  setIncludeEnvio(e.target.checked)
-                }
-              />
-
-              Agregar envío
-
-            </label>
 
 
             {includeEnvio && (
@@ -339,36 +363,79 @@ const Cart = () => {
 
               Pagado
 
-            </label>
-
-
-            <label className="opt">
-
-              Método:
-
-              <select
-                value={paymentMethod}
-                onChange={(e) =>
-                  setPaymentMethod(e.target.value)
-                }
-                disabled={!paid}
-              >
-
-                <option value="efectivo">
-
-                  Efectivo
-
-                </option>
-
-                <option value="transferencia">
-
-                  Transferencia
-
-                </option>
-
-              </select>
 
             </label>
+
+            {paid && (
+              <>
+                <label className="opt">
+
+                  Método:
+
+                  <select
+                    value={paymentMethod}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  >
+                    <option value="efectivo">Efectivo</option>
+                    <option value="transferencia">Transferencia</option>
+                    <option value="mixto">Mixto (Efectivo + Transferencia)</option>
+                  </select>
+
+                </label>
+
+                {paymentMethod === "mixto" && (
+
+                  <div className="cart__mixed-payment">
+
+                    <label className="opt">
+
+                      Efectivo
+
+                      <input
+                        type="number"
+                        min="0"
+                        value={cashAmount}
+                        onChange={(e) => setCashAmount(e.target.value)}
+                      />
+
+                    </label>
+
+                    <label className="opt">
+
+                      Transferencia
+
+                      <input
+                        type="number"
+                        min="0"
+                        value={transferAmount}
+                        onChange={(e) => setTransferAmount(e.target.value)}
+                      />
+
+                    </label>
+
+                    <div className="cart__payment-summary">
+
+                      <p>
+                        Total: <strong>${totalCalc}</strong>
+                      </p>
+
+                      <p>
+                        Pagado: <strong>${mixedTotal}</strong>
+                      </p>
+
+                      <p>
+                        Restante: <strong>${remaining}</strong>
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                )}
+
+              </>
+            )}
+
 
 
             <label className="opt opt--full">
@@ -433,10 +500,9 @@ const Cart = () => {
             <button
               onClick={handleCheckout}
               className="btn-primary"
+              disabled={!paymentCompleted}
             >
-
               Comprar
-
             </button>
 
           </div>

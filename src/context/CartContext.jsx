@@ -19,7 +19,7 @@ export const CartProvider = ({ children }) => {
     (arr) => arr.map(normalizeItem).filter(i => i.quantity > 0)
   );
 
-  const [orders, setOrders]           = usePersistentState('orders:v1', [], (v) => v || []);
+  const [orders, setOrders] = usePersistentState('orders:v1', [], (v) => v || []);
   const [orderCounter, setOrderCounter] = usePersistentState('orderCounter:v1', 0, Number);
 
   const costoEnvio = 2000;
@@ -68,30 +68,50 @@ export const CartProvider = ({ children }) => {
     if (!cart.length) return null;
 
     const {
-      buyer         = { nombre: 'Invitado' },
-      includeEnvio  = false,
-      envioCost     = costoEnvio,
-      readyAt       = null,
-      paid          = false,
+      buyer = { nombre: 'Invitado' },
+      includeEnvio = false,
+      envioCost = costoEnvio,
+      readyAt = null,
+      paid = false,
       paymentMethod = null,
-      note          = '',
+      payment = null,
+      note = '',
     } = options;
 
-    const envio      = includeEnvio ? Number(envioCost || costoEnvio) : 0;
-    const total      = subtotal + envio;
-    const newNumber  = Number(orderCounter) + 1;
+    const envio = includeEnvio ? Number(envioCost || costoEnvio) : 0;
+    const total = subtotal + envio;
+    const newNumber = Number(orderCounter) + 1;
 
     const order = {
-      id:        `ORD-${newNumber}`,
-      number:    newNumber,
+      id: `ORD-${newNumber}`,
+      number: newNumber,
       createdAt: new Date().toISOString(),
       buyer,
-      items:     cart.map(cartItemToOrderItem), // stats viaja aquí ✅
-      summary:   { subtotal, envio, total },
-      logistics: { includeEnvio, readyAt },
-      payment:   { paid: !!paid, method: paid ? paymentMethod : null },
+      items: cart.map(cartItemToOrderItem),
+      summary: {
+        subtotal,
+        envio,
+        total,
+      },
+      logistics: {
+        includeEnvio,
+        readyAt,
+      },
+      payment: payment
+        ? {
+            paid: !!paid,
+            method: payment.method,
+            cash: payment.cash,
+            transfer: payment.transfer,
+          }
+        : {
+            paid: !!paid,
+            method: paid ? paymentMethod : null,
+            cash: paymentMethod === 'efectivo' ? total : 0,
+            transfer: paymentMethod === 'transferencia' ? total : 0,
+          },
       note,
-      status:    'CREATED',
+      status: 'CREATED',
     };
 
     setOrders(prev => [order, ...prev]);
@@ -102,8 +122,7 @@ export const CartProvider = ({ children }) => {
 
   // ── Gestión de pedidos ─────────────────────────────────────────────────────
 
-  const deleteOrder = (orderId) =>
-    setOrders(prev => prev.filter(o => o.id !== orderId));
+  const deleteOrder = (orderId) => setOrders(prev => prev.filter(o => o.id !== orderId));
 
   const deleteAllOrders = () => setOrders([]);
 
@@ -124,7 +143,7 @@ export const CartProvider = ({ children }) => {
         return {
           ...o,
           payment: {
-            paid:   !!paid,
+            paid: !!paid,
             method: paid ? (method || o.payment?.method || 'efectivo') : null,
           },
         };
@@ -139,7 +158,7 @@ export const CartProvider = ({ children }) => {
         return {
           ...o,
           payment: {
-            paid:   nextPaid,
+            paid: nextPaid,
             method: nextPaid ? (o.payment?.method || 'efectivo') : null,
           },
         };
@@ -152,11 +171,11 @@ export const CartProvider = ({ children }) => {
         if (o.id !== orderId) return o;
         const subtotalSafe = o.summary?.subtotal ?? o.items.reduce((a, it) => a + it.unitPrice * it.quantity, 0);
         const currentEnvio = o.summary?.envio ?? costoEnvio;
-        const envio        = includeEnvio ? currentEnvio : 0;
+        const envio = includeEnvio ? currentEnvio : 0;
         return {
           ...o,
           logistics: { ...(o.logistics || {}), includeEnvio },
-          summary:   { ...o.summary, subtotal: subtotalSafe, envio, total: subtotalSafe + envio },
+          summary: { ...o.summary, subtotal: subtotalSafe, envio, total: subtotalSafe + envio },
         };
       })
     );
@@ -165,12 +184,12 @@ export const CartProvider = ({ children }) => {
     setOrders(prev =>
       prev.map(o => {
         if (o.id !== orderId) return o;
-        const envio        = Number(cost);
+        const envio = Number(cost);
         const subtotalSafe = o.summary?.subtotal ?? o.items.reduce((a, it) => a + it.unitPrice * it.quantity, 0);
         return {
           ...o,
           logistics: { ...(o.logistics || {}), includeEnvio: envio > 0 },
-          summary:   { ...o.summary, envio, subtotal: subtotalSafe, total: subtotalSafe + envio },
+          summary: { ...o.summary, envio, subtotal: subtotalSafe, total: subtotalSafe + envio },
         };
       })
     );

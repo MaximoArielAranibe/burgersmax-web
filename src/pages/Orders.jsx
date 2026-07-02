@@ -157,6 +157,34 @@ function PriceSummary({ subtotal, includeEnvio, envioCost }) {
   );
 }
 
+function PaymentSummary({ payment }) {
+  if (!payment?.paid) return null;
+
+  return (
+    <div className="paymentBox">
+
+      <h4 className="paymentBox__title">
+        💳 Pago
+      </h4>
+
+      {payment.cash > 0 && (
+        <div className="paymentBox__line">
+          <span>💵 Efectivo</span>
+          <strong>${fmt(payment.cash)}</strong>
+        </div>
+      )}
+
+      {payment.transfer > 0 && (
+        <div className="paymentBox__line">
+          <span>🏦 Transferencia</span>
+          <strong>${fmt(payment.transfer)}</strong>
+        </div>
+      )}
+
+    </div>
+  );
+}
+
 function OrderControls({ paid, method, status, onPrint, onPaid, onMethod, onStatus, onDelete }) {
   return (
     <div className="controls">
@@ -166,18 +194,32 @@ function OrderControls({ paid, method, status, onPrint, onPaid, onMethod, onStat
 
       <div className="controls__row">
         <label className="check">
-          <input type="checkbox" checked={paid} onChange={onPaid} />
+          <input
+            type="checkbox"
+            checked={paid}
+            onChange={onPaid}
+          />
           Pagado
         </label>
 
-        <select className="select" value={method} onChange={(e) => onMethod(e.target.value)}>
+        <select
+          className="select"
+          value={method}
+          onChange={(e) => onMethod(e.target.value)}
+        >
           <option value="efectivo">Efectivo</option>
           <option value="transferencia">Transferencia</option>
+          <option value="mixto">Mixto</option>
         </select>
       </div>
 
+
       <div className="controls__row">
-        <select className="select" value={status} onChange={(e) => onStatus(e.target.value)}>
+        <select
+          className="select"
+          value={status}
+          onChange={(e) => onStatus(e.target.value)}
+        >
           <option value="PENDING">Pendiente</option>
           <option value="FINISHED">Finalizado</option>
         </select>
@@ -211,6 +253,8 @@ export default function Orders() {
   const [addrDraft, setAddrDraft] = useState({});
   const [envioDraft, setEnvioDraft] = useState({});
 
+
+
   // ── Global stats — un solo reduce sobre todas las órdenes ─────────────────
   const globalStats = useMemo(() => {
     return orders.reduce((acc, o) => {
@@ -231,6 +275,8 @@ export default function Orders() {
       acc.milanesa_pollo += s.milanesa_pollo;
       acc.milanesa_carne += s.milanesa_carne;
       acc.helados += s.helados;
+      acc.efectivo += o.payment?.cash || 0;
+      acc.transferencia += o.payment?.transfer || 0;
       return acc;
     }, {
       ventas: 0, envios: 0, productos: 0,
@@ -239,6 +285,8 @@ export default function Orders() {
       papas_bandeja_cheddar: 0, papas_bandeja_cheddar_panceta: 0,
       milanesa_pollo: 0, milanesa_carne: 0,
       lomos: 0, helados: 0,
+      efectivo: 0,
+      transferencia: 0,
     });
   }, [orders]);
 
@@ -307,6 +355,15 @@ export default function Orders() {
             <dt>Envíos</dt>
             <dd>${fmt(globalStats.envios)}</dd>
           </dl>
+          <dl className="globalStatsBar__item">
+            <dt>💵 Efectivo</dt>
+            <dd>${fmt(globalStats.efectivo)}</dd>
+          </dl>
+
+          <dl className="globalStatsBar__item">
+            <dt>🏦 Transferencia</dt>
+            <dd>${fmt(globalStats.transferencia)}</dd>
+          </dl>
         </div>
         <div className="globalStatsBar__group">
           {globalStats.burgers > 0 && <dl className="globalStatsBar__item"><dt>🍔 Hamburguesas</dt><dd>{globalStats.burgers}</dd></dl>}
@@ -325,7 +382,7 @@ export default function Orders() {
         {orders.map((o) => {
           const status = normalizeStatus(o.status);
           const paid = !!o.payment?.paid;
-          const method = o.payment?.method || "efectivo";
+          const method = o.payment?.method || "efectivo" || "mixto";
           const includeEnvio = !!o.logistics?.includeEnvio;
           const envioCost = envioDraft[o.id] ?? o.summary?.envio ?? ENVIO_OPTIONS[0];
           const stats = calcStats(o.items);
@@ -384,48 +441,48 @@ export default function Orders() {
 
 
 
-<div className={`envioSection ${includeEnvio ? "is-active" : ""}`}>
+              <div className={`envioSection ${includeEnvio ? "is-active" : ""}`}>
 
-  <label className="envioSection__toggle">
-    <input
-      type="checkbox"
-      checked={includeEnvio}
-      onChange={(e) => updateOrderShipping(o.id, e.target.checked)}
-    />
+                <label className="envioSection__toggle">
+                  <input
+                    type="checkbox"
+                    checked={includeEnvio}
+                    onChange={(e) => updateOrderShipping(o.id, e.target.checked)}
+                  />
 
-    <span className="envioSection__label">
-      {includeEnvio ? "Delivery activo" : "Sin envío"}
-    </span>
-  </label>
+                  <span className="envioSection__label">
+                    {includeEnvio ? "Delivery activo" : "Sin envío"}
+                  </span>
+                </label>
 
-  {includeEnvio && (
-    <div className="envioSection__content">
+                {includeEnvio && (
+                  <div className="envioSection__content">
 
-      <div className="envioSection__row">
-        <span className="envioSection__text">Costo</span>
+                    <div className="envioSection__row">
+                      <span className="envioSection__text">Costo</span>
 
-        <select
-          className="select envioSection__select"
-          value={envioCost}
-          onChange={(e) => handleEnvioChange(o.id, e.target.value)}
-        >
-          {ENVIO_OPTIONS.map((v) => (
-            <option key={v} value={v}>${v}</option>
-          ))}
-        </select>
-      </div>
+                      <select
+                        className="select envioSection__select"
+                        value={envioCost}
+                        onChange={(e) => handleEnvioChange(o.id, e.target.value)}
+                      >
+                        {ENVIO_OPTIONS.map((v) => (
+                          <option key={v} value={v}>${v}</option>
+                        ))}
+                      </select>
+                    </div>
 
-      <AddressFields
-        orderId={o.id}
-        buyer={o.buyer}
-        draft={addrDraft[o.id]}
-        onChange={handleAddrChange}
-        onSave={() => handleSaveAddress(o)}
-      />
+                    <AddressFields
+                      orderId={o.id}
+                      buyer={o.buyer}
+                      draft={addrDraft[o.id]}
+                      onChange={handleAddrChange}
+                      onSave={() => handleSaveAddress(o)}
+                    />
 
-    </div>
-  )}
-</div>
+                  </div>
+                )}
+              </div>
 
               <OrderControls
                 paid={paid}
@@ -442,6 +499,16 @@ export default function Orders() {
                 subtotal={o.summary?.subtotal || 0}
                 includeEnvio={includeEnvio}
                 envioCost={envioCost}
+              />
+
+              <PriceSummary
+                subtotal={o.summary?.subtotal || 0}
+                includeEnvio={includeEnvio}
+                envioCost={envioCost}
+              />
+
+              <PaymentSummary
+                payment={o.payment}
               />
 
             </article>
